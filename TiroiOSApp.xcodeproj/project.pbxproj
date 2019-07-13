@@ -1,0 +1,614 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F775134622DA42D700FE5334 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775134522DA42D700FE5334 /* AppDelegate.swift */; };
+		F775134822DA42D700FE5334 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775134722DA42D700FE5334 /* SceneDelegate.swift */; };
+		F775134B22DA42D700FE5334 /* TiroiOSApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F775134922DA42D700FE5334 /* TiroiOSApp.xcdatamodeld */; };
+		F775134D22DA42D700FE5334 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775134C22DA42D700FE5334 /* ContentView.swift */; };
+		F775134F22DA42D900FE5334 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F775134E22DA42D900FE5334 /* Assets.xcassets */; };
+		F775135222DA42D900FE5334 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F775135122DA42D900FE5334 /* Preview Assets.xcassets */; };
+		F775135522DA42D900FE5334 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F775135322DA42D900FE5334 /* LaunchScreen.storyboard */; };
+		F775136022DA42DA00FE5334 /* TiroiOSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775135F22DA42DA00FE5334 /* TiroiOSAppTests.swift */; };
+		F775136B22DA42DA00FE5334 /* TiroiOSAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775136A22DA42DA00FE5334 /* TiroiOSAppUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F775135C22DA42D900FE5334 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F775133A22DA42D700FE5334 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F775134122DA42D700FE5334;
+			remoteInfo = TiroiOSApp;
+		};
+		F775136722DA42DA00FE5334 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F775133A22DA42D700FE5334 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F775134122DA42D700FE5334;
+			remoteInfo = TiroiOSApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F775134222DA42D700FE5334 /* TiroiOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiroiOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F775134522DA42D700FE5334 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F775134722DA42D700FE5334 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		F775134A22DA42D700FE5334 /* TiroiOSApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TiroiOSApp.xcdatamodel; sourceTree = "<group>"; };
+		F775134C22DA42D700FE5334 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F775134E22DA42D900FE5334 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F775135122DA42D900FE5334 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F775135422DA42D900FE5334 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F775135622DA42D900FE5334 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F775135B22DA42D900FE5334 /* TiroiOSAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TiroiOSAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F775135F22DA42DA00FE5334 /* TiroiOSAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiroiOSAppTests.swift; sourceTree = "<group>"; };
+		F775136122DA42DA00FE5334 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F775136622DA42DA00FE5334 /* TiroiOSAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TiroiOSAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F775136A22DA42DA00FE5334 /* TiroiOSAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiroiOSAppUITests.swift; sourceTree = "<group>"; };
+		F775136C22DA42DA00FE5334 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F775133F22DA42D700FE5334 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F775135822DA42D900FE5334 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F775136322DA42DA00FE5334 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F775133922DA42D700FE5334 = {
+			isa = PBXGroup;
+			children = (
+				F775134422DA42D700FE5334 /* TiroiOSApp */,
+				F775135E22DA42D900FE5334 /* TiroiOSAppTests */,
+				F775136922DA42DA00FE5334 /* TiroiOSAppUITests */,
+				F775134322DA42D700FE5334 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F775134322DA42D700FE5334 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F775134222DA42D700FE5334 /* TiroiOSApp.app */,
+				F775135B22DA42D900FE5334 /* TiroiOSAppTests.xctest */,
+				F775136622DA42DA00FE5334 /* TiroiOSAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F775134422DA42D700FE5334 /* TiroiOSApp */ = {
+			isa = PBXGroup;
+			children = (
+				F775134522DA42D700FE5334 /* AppDelegate.swift */,
+				F775134722DA42D700FE5334 /* SceneDelegate.swift */,
+				F775134C22DA42D700FE5334 /* ContentView.swift */,
+				F775134E22DA42D900FE5334 /* Assets.xcassets */,
+				F775135322DA42D900FE5334 /* LaunchScreen.storyboard */,
+				F775135622DA42D900FE5334 /* Info.plist */,
+				F775134922DA42D700FE5334 /* TiroiOSApp.xcdatamodeld */,
+				F775135022DA42D900FE5334 /* Preview Content */,
+			);
+			path = TiroiOSApp;
+			sourceTree = "<group>";
+		};
+		F775135022DA42D900FE5334 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F775135122DA42D900FE5334 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F775135E22DA42D900FE5334 /* TiroiOSAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				F775135F22DA42DA00FE5334 /* TiroiOSAppTests.swift */,
+				F775136122DA42DA00FE5334 /* Info.plist */,
+			);
+			path = TiroiOSAppTests;
+			sourceTree = "<group>";
+		};
+		F775136922DA42DA00FE5334 /* TiroiOSAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F775136A22DA42DA00FE5334 /* TiroiOSAppUITests.swift */,
+				F775136C22DA42DA00FE5334 /* Info.plist */,
+			);
+			path = TiroiOSAppUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F775134122DA42D700FE5334 /* TiroiOSApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F775136F22DA42DA00FE5334 /* Build configuration list for PBXNativeTarget "TiroiOSApp" */;
+			buildPhases = (
+				F775133E22DA42D700FE5334 /* Sources */,
+				F775133F22DA42D700FE5334 /* Frameworks */,
+				F775134022DA42D700FE5334 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TiroiOSApp;
+			productName = TiroiOSApp;
+			productReference = F775134222DA42D700FE5334 /* TiroiOSApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F775135A22DA42D900FE5334 /* TiroiOSAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F775137222DA42DA00FE5334 /* Build configuration list for PBXNativeTarget "TiroiOSAppTests" */;
+			buildPhases = (
+				F775135722DA42D900FE5334 /* Sources */,
+				F775135822DA42D900FE5334 /* Frameworks */,
+				F775135922DA42D900FE5334 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F775135D22DA42D900FE5334 /* PBXTargetDependency */,
+			);
+			name = TiroiOSAppTests;
+			productName = TiroiOSAppTests;
+			productReference = F775135B22DA42D900FE5334 /* TiroiOSAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F775136522DA42DA00FE5334 /* TiroiOSAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F775137522DA42DA00FE5334 /* Build configuration list for PBXNativeTarget "TiroiOSAppUITests" */;
+			buildPhases = (
+				F775136222DA42DA00FE5334 /* Sources */,
+				F775136322DA42DA00FE5334 /* Frameworks */,
+				F775136422DA42DA00FE5334 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F775136822DA42DA00FE5334 /* PBXTargetDependency */,
+			);
+			name = TiroiOSAppUITests;
+			productName = TiroiOSAppUITests;
+			productReference = F775136622DA42DA00FE5334 /* TiroiOSAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F775133A22DA42D700FE5334 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = "Wilson Cusack";
+				TargetAttributes = {
+					F775134122DA42D700FE5334 = {
+						CreatedOnToolsVersion = 11.0;
+					};
+					F775135A22DA42D900FE5334 = {
+						CreatedOnToolsVersion = 11.0;
+						TestTargetID = F775134122DA42D700FE5334;
+					};
+					F775136522DA42DA00FE5334 = {
+						CreatedOnToolsVersion = 11.0;
+						TestTargetID = F775134122DA42D700FE5334;
+					};
+				};
+			};
+			buildConfigurationList = F775133D22DA42D700FE5334 /* Build configuration list for PBXProject "TiroiOSApp" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F775133922DA42D700FE5334;
+			productRefGroup = F775134322DA42D700FE5334 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F775134122DA42D700FE5334 /* TiroiOSApp */,
+				F775135A22DA42D900FE5334 /* TiroiOSAppTests */,
+				F775136522DA42DA00FE5334 /* TiroiOSAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F775134022DA42D700FE5334 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F775135522DA42D900FE5334 /* LaunchScreen.storyboard in Resources */,
+				F775135222DA42D900FE5334 /* Preview Assets.xcassets in Resources */,
+				F775134F22DA42D900FE5334 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F775135922DA42D900FE5334 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F775136422DA42DA00FE5334 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F775133E22DA42D700FE5334 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F775134B22DA42D700FE5334 /* TiroiOSApp.xcdatamodeld in Sources */,
+				F775134622DA42D700FE5334 /* AppDelegate.swift in Sources */,
+				F775134D22DA42D700FE5334 /* ContentView.swift in Sources */,
+				F775134822DA42D700FE5334 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F775135722DA42D900FE5334 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F775136022DA42DA00FE5334 /* TiroiOSAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F775136222DA42DA00FE5334 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F775136B22DA42DA00FE5334 /* TiroiOSAppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F775135D22DA42D900FE5334 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F775134122DA42D700FE5334 /* TiroiOSApp */;
+			targetProxy = F775135C22DA42D900FE5334 /* PBXContainerItemProxy */;
+		};
+		F775136822DA42DA00FE5334 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F775134122DA42D700FE5334 /* TiroiOSApp */;
+			targetProxy = F775136722DA42DA00FE5334 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F775135322DA42D900FE5334 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F775135422DA42D900FE5334 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F775136D22DA42DA00FE5334 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F775136E22DA42DA00FE5334 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F775137022DA42DA00FE5334 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "TiroiOSApp/Preview\\ Content";
+				DEVELOPMENT_TEAM = 28J96X49L6;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = TiroiOSApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.TiroiOSApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F775137122DA42DA00FE5334 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "TiroiOSApp/Preview\\ Content";
+				DEVELOPMENT_TEAM = 28J96X49L6;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = TiroiOSApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.TiroiOSApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F775137322DA42DA00FE5334 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28J96X49L6;
+				INFOPLIST_FILE = TiroiOSAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.TiroiOSAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TiroiOSApp.app/TiroiOSApp";
+			};
+			name = Debug;
+		};
+		F775137422DA42DA00FE5334 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28J96X49L6;
+				INFOPLIST_FILE = TiroiOSAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.TiroiOSAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TiroiOSApp.app/TiroiOSApp";
+			};
+			name = Release;
+		};
+		F775137622DA42DA00FE5334 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28J96X49L6;
+				INFOPLIST_FILE = TiroiOSAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.TiroiOSAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TiroiOSApp;
+			};
+			name = Debug;
+		};
+		F775137722DA42DA00FE5334 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28J96X49L6;
+				INFOPLIST_FILE = TiroiOSAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.TiroiOSAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TiroiOSApp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F775133D22DA42D700FE5334 /* Build configuration list for PBXProject "TiroiOSApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F775136D22DA42DA00FE5334 /* Debug */,
+				F775136E22DA42DA00FE5334 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F775136F22DA42DA00FE5334 /* Build configuration list for PBXNativeTarget "TiroiOSApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F775137022DA42DA00FE5334 /* Debug */,
+				F775137122DA42DA00FE5334 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F775137222DA42DA00FE5334 /* Build configuration list for PBXNativeTarget "TiroiOSAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F775137322DA42DA00FE5334 /* Debug */,
+				F775137422DA42DA00FE5334 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F775137522DA42DA00FE5334 /* Build configuration list for PBXNativeTarget "TiroiOSAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F775137622DA42DA00FE5334 /* Debug */,
+				F775137722DA42DA00FE5334 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F775134922DA42D700FE5334 /* TiroiOSApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F775134A22DA42D700FE5334 /* TiroiOSApp.xcdatamodel */,
+			);
+			currentVersion = F775134A22DA42D700FE5334 /* TiroiOSApp.xcdatamodel */;
+			path = TiroiOSApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = F775133A22DA42D700FE5334 /* Project object */;
+}
