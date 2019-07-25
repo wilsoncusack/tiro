@@ -58,6 +58,7 @@ struct AddLearners : View {
             }.padding(.bottom, 15)
         }
         .navigationBarTitle("Add Learners", displayMode: .inline)
+            .sheet(isPresented: $showModal, content: {LearnerCreateModal(showModal: self.$showModal).environmentObject(self.mainEnv)})
 //            .presentation(showModal ? Modal(LearnerCreateModal(showModal: $showModal).environmentObject(mainEnv), onDismiss: {self.showModal.toggle()}) : nil)
         
     }

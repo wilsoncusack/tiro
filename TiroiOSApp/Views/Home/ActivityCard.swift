@@ -9,12 +9,14 @@
 import SwiftUI
 
 struct ActivityCard : View {
+   // @EnvironmentObject var mainEnv: MainEnvObj
     //var activity : Activity
    // var image : Image? {log.presentable.mainImage()}
-    var activity : Activity
-    var participants : [Learner] {
-        activity.participants!.allObjects as! [Learner]
-    }
+    var title : String
+    var activity_date : Date
+    var image : Data?
+    var participants : [Learner]
+    
     
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -24,16 +26,14 @@ struct ActivityCard : View {
     }()
     
     var learnerTrailingOffset : Length = 0
-    @State var showModal = false
     
     
     var body: some View {
     
         ZStack(alignment: .bottom){
             
-            if(activity.image_name != nil){
-               Image(activity.image_name!)
-                    .resizable()
+            if(image != nil){
+                DisplayUIImage(uiImageData: image!)
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 210, height: 215)
             } else {
@@ -45,6 +45,7 @@ struct ActivityCard : View {
                 .frame(width: 210, height: 90)
                 //.opacity(0.9)
                 .foregroundColor(.white)
+                //.blendMode(.overlay)
                 .overlay(
                     ZStack(alignment: .bottomTrailing){
                         ForEach(0 ..< participants.count){
@@ -60,32 +61,29 @@ struct ActivityCard : View {
                     
                     , alignment: .bottomTrailing)
                 .overlay(
-                    Text(activity.title)
+                    Text(title)
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .fontWeight(.semibold)
                         //.frame(width: 195)
-                        .lineLimit(3)
+                        .lineLimit(2)
                         .multilineTextAlignment(.leading)
                         .padding(.top, 10)
                         .padding(.leading, 15)
                     , alignment: .topLeading)
                 .overlay(
-                    Text( Self.dateFormatter.string(from: activity.activity_date))
+                    Text( Self.dateFormatter.string(from: activity_date))
                         .foregroundColor(.black)
                         .font(.caption)
                         .padding(.leading, 15)
                         .padding(.bottom, 10)
                     , alignment: .bottomLeading)
-                //.tapAction({self.showModal.toggle()})
+                
             
             
         }
         .cornerRadius(4)
         .shadow(radius: 5)
-        //.present(Modal(ActivityDetailView(activity: activity, showModal: $showModal)))
-        
-        
     }
 }
 
@@ -93,7 +91,7 @@ struct ActivityCard : View {
 struct ActivityCard_Previews : PreviewProvider {
     static var data = DemoData()
     static var previews: some View {
-        ActivityCard(activity: data.activityStore.activities[0])
+        ActivityCard(title: "test", activity_date: Date(), participants: [])
        // Home().environmentObject(MainEnvObj())
     }
 }

@@ -18,7 +18,8 @@ struct Main : View {
         VStack{
             if(mainEnv.userStore.user != nil && mainEnv.userStore.user!.has_finished_setup){
                 
-                TabbedMain().environmentObject(mainEnv)
+                //TabbedMain()
+                Home()
                 
             } else if(mainEnv.userStore.user == nil){
                 Landing().environmentObject(mainEnv)

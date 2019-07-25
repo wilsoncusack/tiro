@@ -6,71 +6,57 @@
 //  Copyright © 2019 Wilson Cusack. All rights reserved.
 //
 
-import SwiftUI
-import Combine
 import UIKit
+import SwiftUI
 
-struct ImagePicker: UIViewControllerRepresentable {
-    
-    @Binding var isShown: Bool
-    @Binding var image: Image?
-    @Binding var uiImage : UIImage?
-    
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-        
-//        @Binding var isShown: Bool
-//        @Binding var image: Image?
-//        @Binding var uiImage : UIImage?
-        var imagePicker : ImagePicker
-        
-//        init(isShown: Binding<Bool>, image: Binding<Image?>, uiImage: Binding<UIImage?>) {
-//            super.init()
-////            self.$isShown = isShown
-////            self.$image = image
-////            self.$uiImage = uiImage
-//        }
-        init(_ imagePicker : ImagePicker){
-            self.imagePicker = imagePicker
-        }
-        
-        func imagePickerController(_ picker: UIImagePickerController,
-                                   didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            imagePicker.uiImage =  (info[UIImagePickerController.InfoKey.originalImage] as! UIImage)
-//            print("called")
-            imagePicker.image = Image(uiImage: imagePicker.uiImage!)
-//            if(uiImage!.imageOrientation == UIImage.Orientation.right){
-//                print(uiImage!.imageOrientation)
-//                image = image!.rotationEffect(.degrees(90.0))
-//            }else {
-//                print("baddd!!!!")
-//            }
-        
-            //image = Image(uiImage: uiImage!)
-            
-            imagePicker.isShown = false
-        }
-        
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
 
-            imagePicker.isShown = false
-        }
-        
+struct ImagePickerViewController: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePickerViewController>) {
     }
-    
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePickerViewController>) -> UIImagePickerController {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+        imagePicker.allowsEditing = true
+        
+        imagePicker.delegate = context.coordinator
+        return imagePicker
+    }
+
     func makeCoordinator() -> Coordinator {
-//        return Coordinator(isShown: $isShown, image: $image, uiImage: $uiImage)
-        Coordinator(self)
+        return Coordinator(self)
     }
-    
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
-        let picker = UIImagePickerController()
-        picker.delegate = context.coordinator
-        return picker
+
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+
+        var parent: ImagePickerViewController
+
+        init(_ parent: ImagePickerViewController) {
+            self.parent = parent
+        }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            let imagePicked = info[.editedImage] as! UIImage
+            parent.image = imagePicked
+//            let imageURL = info[.imageURL] as! NSURL
+//            let imageName = imageURL.lastPathComponent!
+//            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first as! String
+////            let localPath = documentDirectory.appendingPathComponent(imageName)
+//            print(imageName)
+//            print(documentDirectory)
+//            print(imageURL.absoluteString)
+
+//            let image = info[.originalImage] as! UIImage
+//            let data = image.pngData()
+//            data.writeToFile(localPath, atomically: true)
+//
+//            let imageData = NSData(contentsOfFile: localPath)!
+//            let photoURL = NSURL(fileURLWithPath: localPath)
+//            let imageWithData = UIImage(data: imageData)!
+            
+            picker.dismiss(animated: true, completion: nil)
+        }
     }
-    
-    func updateUIViewController(_ uiViewController: UIImagePickerController,
-                                context: UIViewControllerRepresentableContext<ImagePicker>) {
-        
-    }
-    
 }

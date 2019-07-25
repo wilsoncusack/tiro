@@ -10,10 +10,10 @@ import SwiftUI
 
 struct ContentView : View {
     //@State private var selection = 0
-    @EnvironmentObject var mainEnvObj : MainEnvObj
+    @EnvironmentObject var mainEnv : MainEnvObj
  
     var body: some View {
-            Main().environmentObject(mainEnvObj)
+            Main()//.environmentObject(mainEnvObj)
     }
 }
 

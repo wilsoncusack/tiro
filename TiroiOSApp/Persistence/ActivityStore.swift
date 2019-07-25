@@ -7,8 +7,10 @@
 //
 
 import CoreData
+import SwiftUI
+import Combine
 
-class ActivityStore : NSObject {
+class ActivityStore : NSObject, BindableObject {
     
     //let context = AppDelegate.viewContext
     
@@ -31,7 +33,7 @@ class ActivityStore : NSObject {
         return fetchedResultsController.fetchedObjects ?? []
     }
     
-    //let didChange = PassthroughSubject<UserStore, Never>()
+    let willChange = PassthroughSubject<ActivityStore, Never>()
     
     override init() {
         super.init()
@@ -51,11 +53,26 @@ class ActivityStore : NSObject {
         guard self.persistenceManager.managedObjectContext.hasChanges else { return }
         do {
             try self.persistenceManager.managedObjectContext.save()
+            print("saved successfully")
         } catch { fatalError() }
     }
     
-    public func create(activity_date : Date, title: String, notes: String?, created_by: User, image_name: String?, participants : NSSet?) {
-        Activity.create(activity_date: activity_date, title: title, notes: notes, created_by: created_by, image_name: image_name, participants: participants, in: self.persistenceManager.managedObjectContext)
+//    func saveContext () {
+//            let context = self.persistenceManager.managedObjectContext
+//            if context.hasChanges {
+//                do {
+//                    try context.save()
+//                } catch {
+//                    // Replace this implementation with code to handle the error appropriately.
+//                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                    let nserror = error as NSError
+//                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//                }
+//            }
+//        }
+    
+    public func create(activity_date : Date, title: String, notes: String?, image: Data?, created_by: User, image_name: String?, participants : NSSet?) {
+        Activity.create(activity_date: activity_date, title: title, notes: notes, image: image, created_by: created_by, image_name: image_name, participants: participants, in: self.persistenceManager.managedObjectContext)
         saveChanges()
     }
     
@@ -67,8 +84,12 @@ class ActivityStore : NSObject {
 }
 
 extension ActivityStore: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        //didChange.send(self)
-        // this seems like a waste. I think we need to find a way to make the main env obj the delegate. But probably not worth worrying about now.
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        willChange.send(self)
     }
+//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        willChange.send(self)
+//        //didChange.send(self)
+//        // this seems like a waste. I think we need to find a way to make the main env obj the delegate. But probably not worth worrying about now.
+//    }
 }

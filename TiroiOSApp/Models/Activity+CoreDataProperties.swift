@@ -15,6 +15,8 @@ public class Activity: NSManagedObject {
     
 }
 
+
+
 extension Activity : Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Activity> {
@@ -26,17 +28,19 @@ extension Activity : Identifiable {
     @NSManaged public var id: UUID
     @NSManaged public var title: String
     @NSManaged public var notes: String?
+    @NSManaged public var image: Data?
     @NSManaged public var image_name: String?
     @NSManaged public var participants: NSSet?
     @NSManaged public var created_by: User
     
-    static func create(activity_date: Date, title : String, notes : String?, created_by : User, image_name: String?, participants : NSSet?, in context: NSManagedObjectContext) {
+    static func create(activity_date: Date, title : String, notes : String?, image: Data?, created_by : User, image_name: String?, participants : NSSet?, in context: NSManagedObjectContext) {
         let newActivity = Activity(context: context)
         newActivity.id = UUID()
         newActivity.date_created = Date()
         newActivity.activity_date = activity_date
         newActivity.title = title
         newActivity.notes = notes
+        newActivity.image = image
         newActivity.created_by = created_by
         newActivity.image_name = image_name
         newActivity.participants = participants
