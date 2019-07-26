@@ -38,12 +38,26 @@ class ActivityBindable : BindableObject {
         }
     }
     
+//    var participantSet : Set<Learner> {
+//        willSet{
+//           willChange.send()
+//       }
+//    }
+//
+//    var participantSelectionManger: MySelectionManager {
+//        willSet{
+//                   willChange.send()
+//               }
+//    }
+    
     init(title: String, notes : String?, activityDate : Date, image : Data?, participants: [Learner]){
         self.title = title
         self.notes = notes ?? ""
         self.activityDate = activityDate
         self.image = image
         self.participants = participants
+//        self.participantSet = Set(participants)
+//        self.participantSelectionManger = MySelectionManager(selected: participantSet)
     }
     
 }

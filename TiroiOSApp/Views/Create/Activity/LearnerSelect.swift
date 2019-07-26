@@ -9,91 +9,111 @@
 import SwiftUI
 import Combine
 
-class mySelectionManager : SelectionManager, BindableObject {
+class MySelectionManager : SelectionManager, BindableObject {
     let willChange = PassthroughSubject<Void, Never>()
     
-    var selectedLearners = Set<AnyHashable>(){
+    var selected : Set<AnyHashable> {
         willSet{
             willChange.send(())
         }
     }
     
+    init(selected: Set<AnyHashable> ){
+        self.selected = selected
+    }
+    
     var selectedAsArray : [AnyHashable] {
-        Array(selectedLearners)
+        return Array(selected)
     }
     
     func select(_ value: AnyHashable) {
         willChange.send()
-        selectedLearners.insert(value)
+        selected.insert(value)
     }
     
     func deselect(_ value: AnyHashable) {
         willChange.send()
-        selectedLearners.remove(value)
+        selected.remove(value)
     }
     
     func isSelected(_ value: AnyHashable) -> Bool {
-        return selectedLearners.contains(value)
+        return selected.contains(value)
         
     }
     
     typealias SelectionValue = AnyHashable
 }
 
-struct SelectRow : View {
-    @ObjectBinding var selectionManager : mySelectionManager
-    var learner : Learner
-//    var isSelected : Bool {
-//        selectionManager.isSelected(learner)
-//    }
+protocol SelectableItemProtocol : Hashable, Identifiable {
+    var id: UUID {get set}
+    var name : String {get set}
+}
 
+struct SelectableItem : SelectableItemProtocol {
+    var id: UUID
+    var name : String
+}
+
+struct SelectRow : View {
+    @ObjectBinding var selectionManager : MySelectionManager
+    var selectableItem : Learner
+    
     var body: some View {
         HStack{
-            Image(systemName: self.selectionManager.isSelected(self.learner) ? "circle.fill" : "circle")
-            Text(learner.name)
+            ZStack{
+                if(self.selectionManager.isSelected(self.selectableItem)) {
+                Circle()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.yellow)
+                }
+                Circle()
+                    .stroke(Color.gray, lineWidth: 2)
+                   .frame(width: 30, height: 30)
+                    .foregroundColor(.white)
+            }
+            Text(selectableItem.name).padding(.leading, 10)
         }.tapAction {
-            if(self.selectionManager.isSelected(self.learner)){
-                self.selectionManager.deselect(self.learner)
+            if(self.selectionManager.isSelected(self.selectableItem)){
+                self.selectionManager.deselect(self.selectableItem)
             }else{
-                self.selectionManager.select(self.learner)
+                self.selectionManager.select(self.selectableItem)
             }
         }
+    }
+}
+
+struct Select : View {
+    var selectableItems : [Learner]
+    //@Binding var selected : Set<Learner>
+    @ObjectBinding var selectionManager : MySelectionManager
+    var body: some View {
+        List(selectableItems){learner in
+            SelectRow(selectionManager: self.selectionManager, selectableItem: learner)
+       }
     }
 }
 
 
 
 struct LearnerSelect : View {
-    @EnvironmentObject var data : DemoData
-    @ObjectBinding var selectionManager = mySelectionManager()
-    var learners : [Learner] {
-        selectionManager.selectedAsArray as! [Learner]
-    }
+    @EnvironmentObject var data : MainEnvObj
+    //@Binding var selected : Set<Learner>
+    @ObjectBinding var selectionManager : MySelectionManager
+//    var learners : [Learner] {
+//        selectionManager.selectedAsArray as! [Learner]
+//    }
     
     var body: some View {
-        VStack{
-            HStack{
-            Text("Selected: \(selectionManager.selectedLearners.count)")
-            ForEach(learners){learner in
-                Text(learner.name)
-                }
-                
-            }
-                    List(data.learnerStore.learners){learner in
-                        SelectRow(selectionManager: self.selectionManager, learner: learner)
-                    }
-            Button(action: {}){
-                Text("New")
-            }
+            Select(selectableItems: data.learnerStore.learners, selectionManager: selectionManager)
         }
-    }
 }
 
 #if DEBUG
-struct LearnerSelect_Previews : PreviewProvider {
-    //static var data = DemoData()
-    static var previews: some View {
-        LearnerSelect().environmentObject(DemoData())
-    }
-}
+//struct LearnerSelect_Previews : PreviewProvider {
+//   // @EnvironmentObject static var data = MainEnvObj()
+//    @ObjectBinding static var selectionManager = MySelectionManager(selected: )
+//    static var previews: some View {
+//        LearnerSelect(selectionManager: selectionManager).environmentObject(MainEnvObj())
+//    }
+//}
 #endif

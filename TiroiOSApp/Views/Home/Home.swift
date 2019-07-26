@@ -66,7 +66,6 @@ struct Home : View {
                             self.showModal = true
                             self.selectedActivity = nil
                             self.modalKind = "activityCreate"
-                            print("modal kind: \(self.modalKind)")
 
                         }){
                             Image(systemName: "plus.circle")

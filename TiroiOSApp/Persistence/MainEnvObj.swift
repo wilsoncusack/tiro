@@ -101,7 +101,7 @@ class MainEnvObj : BindableObject {
             notes: bindable.notes,
             image: bindable.image,
             image_name: nil,
-            participants: [learnerStore.learners[0]]
+            participants: bindable.participants
         //    participants: bindable.participants
         )
     }

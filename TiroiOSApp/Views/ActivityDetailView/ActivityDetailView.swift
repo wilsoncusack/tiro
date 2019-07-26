@@ -21,6 +21,9 @@ struct ActivityDetailView : View {
     }
     
     var participantString : String {
+        if participants.count == 0 {
+            return ""
+        }
         var str = "with "
         for index in 0...(participants.count - 1){
             if(participants.count == 1 || self.participants.count - 1 == index){
