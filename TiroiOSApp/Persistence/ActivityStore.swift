@@ -9,8 +9,8 @@
 import CoreData
 import SwiftUI
 import Combine
-
-class ActivityStore : NSObject, BindableObject {
+//check to see if this needs to be serverable 
+class ActivityStore : NSObject {
     
     //let context = AppDelegate.viewContext
     
@@ -33,7 +33,7 @@ class ActivityStore : NSObject, BindableObject {
         return fetchedResultsController.fetchedObjects ?? []
     }
     
-    let willChange = PassthroughSubject<ActivityStore, Never>()
+    //let willChange = PassthroughSubject<ActivityStore, Never>()
     
     override init() {
         super.init()
@@ -71,7 +71,7 @@ class ActivityStore : NSObject, BindableObject {
 //            }
 //        }
     
-    public func create(activity_date : Date, title: String, notes: String?, image: Data?, created_by: User, image_name: String?, participants : NSSet?) {
+    public func create(activity_date : Date, title: String?, notes: String?, image: Data?, created_by: User, image_name: String?, participants : NSSet?) {
         Activity.create(activity_date: activity_date, title: title, notes: notes, image: image, created_by: created_by, image_name: image_name, participants: participants, in: self.persistenceManager.managedObjectContext)
         saveChanges()
     }
@@ -85,7 +85,7 @@ class ActivityStore : NSObject, BindableObject {
 
 extension ActivityStore: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        willChange.send(self)
+        //willChange.send(self)
     }
 //    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
 //        willChange.send(self)

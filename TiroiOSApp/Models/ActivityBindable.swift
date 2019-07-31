@@ -9,34 +9,14 @@
 import SwiftUI
 import Combine
 
-class ActivityBindable : BindableObject {
-    let willChange = PassthroughSubject<Void, Never>()
+class ActivityBindable : ObservableObject {
     
-    var title : String {
-        willSet{
-            willChange.send()
-        }
-    }
-    var notes : String {
-        willSet{
-            willChange.send()
-        }
-    }
-    var activityDate: Date {
-        willSet{
-            willChange.send()
-        }
-    }
-    var image : Data? {
-        willSet{
-            willChange.send()
-        }
-    }
-    var participants : [Learner] {
-        willSet{
-            willChange.send()
-        }
-    }
+    @Published var title : String
+    @Published var notes : String
+    @Published var activityDate: Date
+    @Published var image : Data?
+    @Published var participants : [Learner]
+    @Published var tags : [Tag]
     
 //    var participantSet : Set<Learner> {
 //        willSet{

@@ -13,7 +13,7 @@ struct TabbedMain : View {
     @EnvironmentObject var mainEnvObj : MainEnvObj
     
     var body: some View {
-        TabbedView(selection: $selection){
+        TabView(selection: $selection){
             //Home()//.environmentObject(mainEnvObj)
             Home()
                 .tabItem({
@@ -27,8 +27,8 @@ struct TabbedMain : View {
                 .tag(0)
             
             //CreateMain().environmentObject(mainEnvObj)
-            //CreateMain()
-                Text("hey")
+           CreateMain(tabSelection: $selection)
+                //Text("hey")
                 .tabItem({
                     selection == 1 ?
                         Image(systemName: "plus.square.fill")
@@ -51,7 +51,7 @@ struct TabbedMain : View {
                 })
                 .tag(2)
             
-        }.environmentObject(mainEnvObj)
+        }
     }
 }
 

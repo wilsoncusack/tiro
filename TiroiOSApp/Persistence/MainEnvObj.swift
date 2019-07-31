@@ -10,15 +10,21 @@ import SwiftUI
 import Combine
 import CoreData
 
-class MainEnvObj : BindableObject {
+struct Icon : Identifiable {
+    var id : Int
+    var image : String
+}
+
+class MainEnvObj : ObservableObject {
    // typealias PublisherType = type
     
     private let persistenceManager = PersistenceManager()
-     let willChange = PassthroughSubject<Void, Never>()
+     //let willChange = PassthroughSubject<Void, Never>()
     
-    var userStore = UserStore()
-    var learnerStore = LearnerStore()
-    var activityStore = ActivityStore()
+    @Published var userStore = UserStore()
+    @Published var learnerStore = LearnerStore()
+    @Published  var activityStore = ActivityStore()
+    @Published  var questionStore = QuestionStore()
     
 
     
@@ -26,42 +32,48 @@ class MainEnvObj : BindableObject {
         return userStore.user != nil
         
     }
-//    var icons = [
+    
+    
+    var icons : [Icon] = [
+        Icon(id: 1, image: "dog"),
+        Icon(id: 2, image: "rabbit"),
+        Icon(id: 3, image: "multi-oragami"),
+        Icon(id: 4, image: "red-oragami")
 //        ["id": 1, "image": "dog"],
 //        ["id": 2, "image": "rabbit"],
 //        ["id": 3, "image": "multi-oragami"],
 //        ["id": 4, "image": "red-oragami"]
-//    ]
-    var icons = ["dog", "rabbit", "multi-oragami", "red-oragami"]
+    ]
+    //var icons = ["dog", "rabbit", "multi-oragami", "red-oragami"]
     
     init(){
         
     }
     
+    //MARK: user
+    
     public func deleteUser(){
-       willChange.send()
         self.userStore.delete()
-       
     }
     
     public func createUser(first_name: String, last_name : String) {
-        willChange.send()
+       // willChange.send()
         self.userStore.create(first_name: first_name, last_name: last_name)
         
     }
     
     public func userFinishedSetup(){
-        willChange.send()
+       // willChange.send()
         self.userStore.user?.has_finished_setup = true
     }
     
     public func createLearner(name : String, profile_image_name : String?){
-       willChange.send()
+       //willChange.send()
         self.learnerStore.create(name: name, created_by: userStore.user!, profile_image_name : profile_image_name)
     }
     
     public func deleteLearner(learner : Learner) {
-        willChange.send()
+       // willChange.send()
         self.learnerStore.delete(learner: learner)
     }
     
@@ -69,22 +81,22 @@ class MainEnvObj : BindableObject {
     //MARK: activity
     
     public func createActivity(activity_date : Date, title: String, notes: String?, image: Data?, image_name: String?, participants : [Learner]) {
-        willChange.send()
+       // willChange.send()
         self.activityStore.create(activity_date: activity_date, title: title, notes: notes, image: image, created_by: userStore.user!, image_name: image_name, participants: NSSet(array: participants))
     }
     
     
     public func deleteActivity(activity : Activity) {
-        willChange.send()
+       // willChange.send()
         self.activityStore.delete(activity: activity)
     }
     
     func createBindablefromActivity(activity : Activity) -> ActivityBindable{
-        return ActivityBindable(title: activity.title, notes: activity.notes, activityDate: activity.activity_date, image: activity.image, participants: (activity.participants != nil ? activity.participants!.sortedArray(using: [NSSortDescriptor(key: "name", ascending: false)]) : [])  as! [Learner])
+        return ActivityBindable(title: activity.title ?? "", notes: activity.notes, activityDate: activity.activity_date, image: activity.image, participants: (activity.participants != nil ? activity.participants!.sortedArray(using: [NSSortDescriptor(key: "name", ascending: false)]) : [])  as! [Learner])
     }
     
     func saveActivityFromBindable(bindableActivity: ActivityBindable, activity : Activity){
-        willChange.send()
+       // willChange.send()
             activity.title = bindableActivity.title
             activity.activity_date = bindableActivity.activityDate
             activity.notes = bindableActivity.notes.isEmpty ? nil : bindableActivity.notes
@@ -94,7 +106,7 @@ class MainEnvObj : BindableObject {
     }
         
     func createActivtyFromBindable(bindable : ActivityBindable) {
-        willChange.send()
+       // willChange.send()
         createActivity(
             activity_date: bindable.activityDate,
             title: bindable.title,
@@ -102,8 +114,13 @@ class MainEnvObj : BindableObject {
             image: bindable.image,
             image_name: nil,
             participants: bindable.participants
-        //    participants: bindable.participants
         )
+    }
+    
+    //MARK: question
+    
+    func createQuestion(question: String, asker: Learner, answer: String?){
+        questionStore.create(question_text: question, asker: asker, answer_text: answer, created_by: userStore.user!)
     }
     
    

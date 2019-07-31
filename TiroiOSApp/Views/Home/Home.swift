@@ -14,7 +14,9 @@ struct PopoverContainer : View {
     @Binding var modalKind : String
     @Binding var activity : Activity?
     @Binding var showModal : Bool
-
+    var q : Question {
+       Question(question_text: "", answer_text: nil, asker: mainEnv.learnerStore.learners[0], created_by: mainEnv.userStore.user!)
+    }
     
     var body : some View {
         NavigationView{
@@ -23,8 +25,13 @@ struct PopoverContainer : View {
             ActivityDetailView(activity: activity!, showModal: $showModal)//.environmentObject(self.mainEnv)
            }
        } else if (self.modalKind == "activityCreate") {
-            ActivityCreateDetailView(showModal: $showModal, activity: activity).environmentObject(mainEnv)
-       }
+            //ActivityCreateDetailView(showModal: $showModal, activity: activity).environmentObject(mainEnv)
+        } else if (self.modalKind == "questionCreate"){
+            QuestionCreateDetailView()
+        } else if (self.modalKind == "learnerCreate"){
+            LearnerCreateModal(showModal: $showModal).environmentObject(mainEnv)
+        }
+            
         }
     }
 }
@@ -35,59 +42,91 @@ struct Home : View {
     @State var selectedActivity : Activity? = nil
     @State var showModal = false
     @State var modalKind = ""
-    var activities : [Activity] {
-        mainEnv.activityStore.activities
-    }
-    
-    
-    func activityCardBuilder(activity : Activity) -> ActivityCard{
-        var participants : [Learner] = []
-        if(activity.participants != nil) {
-                participants = activity.participants!.allObjects as! [Learner]
-        }
-        return ActivityCard(title : activity.title, activity_date: activity.activity_date, image: activity.image, participants: participants)
-    }
-    
-    
-    
+
     var body: some View {
         NavigationView {
+            
             ScrollView{
+                VStack(alignment:.leading){
                 Divider().padding(.leading, 15)
-                //Text(mainEnv.activityStore.activities[0].title)
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("Activities")
-                            .font(.system(size: 22))
-                            .bold()
-                            .padding(.leading, 15)
-                        Spacer()
-                        Button(action: {
-                            self.showModal = true
-                            self.selectedActivity = nil
-                            self.modalKind = "activityCreate"
-
-                        }){
-                            Image(systemName: "plus.circle")
-                                .imageScale(.large)
-                                .foregroundColor(.black)
-                                .padding(.trailing, 15)
-                        }
-                        
+                
+                Text("Summary")
+                .font(.system(size: 22))
+                .bold()
+                .padding(.leading, 15)
+                ZStack(alignment: .center){
+                     
+                    Rectangle()
+                        .foregroundColor(.white)
+                        .frame(width: UIScreen.main.bounds.width, height: 100)
+                    VStack{
+                   Rectangle()
+                   .foregroundColor(.orange)
+                   .frame(width: UIScreen.main.bounds.width - 50, height: 40)
+                    
                     }
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10){
-                            ForEach(activities){ activity in
-                                self.activityCardBuilder(activity: activity)
-                                    .tapAction({
-                                    self.selectedActivity = activity
-                                    self.showModal = true
-                                    self.modalKind = "activity"
-                                })
-                            }
-                        }.frame(height:230).padding(.leading, 15)
-                    }.padding(.bottom,20)
                 }
+                
+                //Text(mainEnv.activityStore.activities[0].title)
+                ActivitiesHorizontalList(showModal: $showModal, modalKind: $modalKind, selectedActivity: $selectedActivity)
+                  
+                HStack {
+                    Text("Questions")
+                        .font(.system(size: 22))
+                        .bold()
+                        .padding(.leading, 15)
+                    Spacer()
+                    Button(action: {
+                        self.modalKind = "questionCreate"
+                        self.showModal = true
+                        
+                    }){
+                        Image(systemName: "plus.circle")
+                            .imageScale(.large)
+                            .foregroundColor(.black)
+                            .padding(.trailing, 15)
+                    }
+                    
+                }
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .bottom, spacing: 10){
+                        ForEach(mainEnv.questionStore.questions){question in
+                            QuestionCard(question: question.question_text, answer: nil, learner: question.asker)
+                        }
+                    }.frame(height:125).padding(.leading, 15)
+                }
+                
+                HStack {
+                    Text("Learners")
+                        .font(.system(size: 22))
+                        .bold()
+                        .padding(.leading, 15)
+                    Spacer()
+                    Button(action: {
+                        self.modalKind = "learnerCreate"
+                        self.showModal = true
+                        
+                    }){
+                        Image(systemName: "plus.circle")
+                            .imageScale(.large)
+                            .foregroundColor(.black)
+                            .padding(.trailing, 15)
+                    }
+                    
+                }
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .bottom, spacing: 10){
+                        ForEach(mainEnv.learnerStore.learners){learner in
+                            VStack{
+                            ProfileImage(imageName: learner.profile_image_name!, size: 100)
+                            Text(learner.name)
+                            }
+                        }
+                    }.padding(.leading, 15)
+                    
+                }
+                //QuestionCard(question: "Why don't cockroaches like cucumbers?", answer: nil, learner: mainEnv.learnerStore.learners[0] )
+                    
                 
                 Button(action: {
                     self.mainEnv.deleteUser()
@@ -101,13 +140,22 @@ struct Home : View {
                         Text("Reset")
                 }
                 
+            
+                }
                 
-            }
+            }.edgesIgnoringSafeArea(.top)
+            .background(Color.init(red: 0.95, green: 0.95, blue: 0.95))
+            
             .sheet(isPresented: $showModal, content: {
                 PopoverContainer(modalKind: self.$modalKind, activity: self.$selectedActivity, showModal: self.$showModal).environmentObject(self.mainEnv)
             })
-                
+            
+            
+           
+            
                 .navigationBarTitle("Home")
+            .navigationBarHidden(true)
+                
             
         }
         

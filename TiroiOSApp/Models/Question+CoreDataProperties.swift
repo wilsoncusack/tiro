@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-public class Question: NSManagedObject {
+public class Question: NSManagedObject, Identifiable {
     
 }
 
@@ -37,4 +37,22 @@ extension Question {
         newQuestion.created_by = created_by
     }
 
+}
+
+extension Question {
+    convenience init(
+        id: UUID = UUID(),
+        question_text : String,
+        answer_text : String?,
+        asker : Learner,
+        date_created: Date = Date(),
+        created_by: User)
+    {
+        self.init(context: AppDelegate.viewContext)
+        self.question_text = question_text
+        self.answer_text = answer_text
+        self.asker = asker
+        self.created_by = created_by
+        
+    }
 }

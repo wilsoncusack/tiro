@@ -69,12 +69,14 @@ struct ActivityDetailView : View {
                 }
                 VStack(alignment: .leading){
                     HStack{
-                    Text(activity.title)
+                        if(activity.title != nil ){
+                    Text(activity.title!)
                         .font(.title)
                         .bold()
                         .lineLimit(nil)
                         Spacer()
-                    NavigationLink(destination: ActivityCreateDetailView(showModal : $showModal, activity: activity)){
+                        }
+                        NavigationLink(destination: ActivityCreateDetailView(showModal : $showModal, activity: activity, done : {})){
                                                            Text("Edit")
                                                                .foregroundColor(.white)
                                                                .padding(.leading, 10)

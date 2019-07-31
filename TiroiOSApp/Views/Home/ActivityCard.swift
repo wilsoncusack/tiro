@@ -12,7 +12,7 @@ struct ActivityCard : View {
    // @EnvironmentObject var mainEnv: MainEnvObj
     //var activity : Activity
    // var image : Image? {log.presentable.mainImage()}
-    var title : String
+    var title : String?
     var activity_date : Date
     var image : Data?
     var participants : [Learner]
@@ -25,7 +25,9 @@ struct ActivityCard : View {
         return formatter
     }()
     
-    var learnerTrailingOffset : Length = 0
+    @State var learnerTrailingOffset : CGFloat = 0
+    @State var iteration : Int = 0
+
     
     
     var body: some View {
@@ -36,6 +38,18 @@ struct ActivityCard : View {
                 DisplayUIImage(uiImageData: image!)
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 210, height: 215)
+//                    .overlay(
+//                                        ZStack(alignment: .bottomTrailing){
+//                                            ForEach(0 ..< participants.count){
+//                                                ProfileImage(imageName: self.participants[$0].profile_image_name!, size: 30)
+//                                                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
+//                                                    .padding(.trailing, Length(22 * $0))
+//                                                    .zIndex(Double(self.participants.count - $0))
+//                                            }
+//                                        } .padding(.trailing, 15)
+//                                                                .padding(.bottom, 10)
+//
+//                                                            , alignment: .bottomTrailing)
             } else {
                 Rectangle()
                     .frame(width: 210, height: 215)
@@ -43,7 +57,10 @@ struct ActivityCard : View {
             }
             Rectangle()
                 .frame(width: 210, height: 90)
-                //.opacity(0.9)
+                .opacity(0.9)
+//                .background(
+//                    LinearGradient(gradient:
+//                        Gradient(colors: [.white, .black]), startPoint: .center, endPoint: .bottom))
                 .foregroundColor(.white)
                 //.blendMode(.overlay)
                 .overlay(
@@ -51,7 +68,7 @@ struct ActivityCard : View {
                         ForEach(0 ..< participants.count){
                             ProfileImage(imageName: self.participants[$0].profile_image_name!, size: 30)
                                 .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                                .padding(.trailing, Length(22 * $0))
+                                .padding(.trailing, CGFloat(22 * $0))
                                 .zIndex(Double(self.participants.count - $0))
                         }
                     }
@@ -61,7 +78,7 @@ struct ActivityCard : View {
                     
                     , alignment: .bottomTrailing)
                 .overlay(
-                    Text(title)
+                    Text(title ?? "")
                         .font(.subheadline)
                         .foregroundColor(.black)
                         .fontWeight(.semibold)
@@ -73,8 +90,11 @@ struct ActivityCard : View {
                     , alignment: .topLeading)
                 .overlay(
                     Text( Self.dateFormatter.string(from: activity_date))
-                        .foregroundColor(.black)
+                       // .foregroundColor(.white)
+                         .foregroundColor(.black)
                         .font(.caption)
+                        .bold()
+                        //.shadow(radius: 5)
                         .padding(.leading, 15)
                         .padding(.bottom, 10)
                     , alignment: .bottomLeading)
@@ -83,7 +103,7 @@ struct ActivityCard : View {
             
         }
         .cornerRadius(4)
-        .shadow(radius: 5)
+//        .shadow(radius: 5)
     }
 }
 

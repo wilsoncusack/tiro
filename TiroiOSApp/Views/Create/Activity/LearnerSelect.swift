@@ -9,14 +9,10 @@
 import SwiftUI
 import Combine
 
-class MySelectionManager : SelectionManager, BindableObject {
+class MySelectionManager : ObservableObject {
     let willChange = PassthroughSubject<Void, Never>()
     
-    var selected : Set<AnyHashable> {
-        willSet{
-            willChange.send(())
-        }
-    }
+    @Published var selected : Set<AnyHashable>
     
     init(selected: Set<AnyHashable> ){
         self.selected = selected
@@ -27,12 +23,10 @@ class MySelectionManager : SelectionManager, BindableObject {
     }
     
     func select(_ value: AnyHashable) {
-        willChange.send()
         selected.insert(value)
     }
     
     func deselect(_ value: AnyHashable) {
-        willChange.send()
         selected.remove(value)
     }
     
@@ -55,7 +49,7 @@ struct SelectableItem : SelectableItemProtocol {
 }
 
 struct SelectRow : View {
-    @ObjectBinding var selectionManager : MySelectionManager
+    @ObservedObject var selectionManager : MySelectionManager
     var selectableItem : Learner
     
     var body: some View {
@@ -72,7 +66,7 @@ struct SelectRow : View {
                     .foregroundColor(.white)
             }
             Text(selectableItem.name).padding(.leading, 10)
-        }.tapAction {
+        }.onTapGesture {
             if(self.selectionManager.isSelected(self.selectableItem)){
                 self.selectionManager.deselect(self.selectableItem)
             }else{
@@ -85,7 +79,7 @@ struct SelectRow : View {
 struct Select : View {
     var selectableItems : [Learner]
     //@Binding var selected : Set<Learner>
-    @ObjectBinding var selectionManager : MySelectionManager
+    @ObservedObject var selectionManager : MySelectionManager
     var body: some View {
         List(selectableItems){learner in
             SelectRow(selectionManager: self.selectionManager, selectableItem: learner)
@@ -97,11 +91,8 @@ struct Select : View {
 
 struct LearnerSelect : View {
     @EnvironmentObject var data : MainEnvObj
-    //@Binding var selected : Set<Learner>
-    @ObjectBinding var selectionManager : MySelectionManager
-//    var learners : [Learner] {
-//        selectionManager.selectedAsArray as! [Learner]
-//    }
+
+    @ObservedObject var selectionManager : MySelectionManager
     
     var body: some View {
             Select(selectableItems: data.learnerStore.learners, selectionManager: selectionManager)

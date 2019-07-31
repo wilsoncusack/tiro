@@ -11,10 +11,12 @@ import UIKit
 import Combine
 
 struct ImagePicker : View {
+    @Binding var showModal: Bool
     @Binding var image: UIImage?
     
+    
     var body: some View {
-        ImagePickerViewController(image: $image)
+        ImagePickerViewController(showModal: $showModal, image: $image)
     }
 }
 
@@ -24,10 +26,15 @@ struct ActivityEditableForm : View {
     @EnvironmentObject var mainEnv : MainEnvObj
     @Binding var showModal : Bool
     var activity : Activity?
-    @ObjectBinding var activityBindable : ActivityBindable
+    @ObservedObject var activityBindable : ActivityBindable
+    
     
     @State var image : UIImage? = nil
-    @ObjectBinding var learnerSelectionManger : MySelectionManager
+    @ObservedObject var learnerSelectionManger : MySelectionManager
+    var done : () -> Void
+    
+    @State var presentImagePicker : Bool = false
+    @Environment(\.presentationMode) var presentationMode
     
     var participants : [Learner] {
         learnerSelectionManger.selectedAsArray as! [Learner]
@@ -82,7 +89,7 @@ struct ActivityEditableForm : View {
                         
                         ForEach(participants){learner in
                             Text(learner.name)
-                                .color(.secondary)
+                                .foregroundColor(.secondary)
                         }
                     }
                 }
@@ -93,9 +100,12 @@ struct ActivityEditableForm : View {
                         DisplayUIImage(uiImageData: activityBindable.image!)
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 100)
-                        PresentationLink(destination: ImagePicker(image: $image), label: {
-                            Text("Change Photo")
-                        }).padding(.leading, 15)
+                        Button(action: {self.presentImagePicker = true}){
+                                               Text("Change Photo")
+                                           }
+//                        PresentationLink(destination: ImagePicker(image: $image), label: {
+//                            Text("Change Photo")
+//                        }).padding(.leading, 15)
                     }
                 } else if(image != nil) {
                     HStack{
@@ -103,17 +113,24 @@ struct ActivityEditableForm : View {
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 100)
                         
-                        
-                        PresentationLink(destination: ImagePicker(image: $image), label: {
-                            Text("Change Photo")
-                        }).padding(.leading, 15)
+                        Button(action: {self.presentImagePicker = true}){
+                                               Text("Change Photo")
+                                           }
+//                        PresentationLink(destination: ImagePicker(image: $image), label: {
+//                            Text("Change Photo")
+//                        }).padding(.leading, 15)
                     }
                 }
                 else {
-                    PresentationLink(destination: ImagePicker(image: $image), label: {
+                    Button(action: {self.presentImagePicker = true}){
                         Text("Add Photo")
-                    })
+                    }
+//                    PresentationLink(destination: ImagePicker(image: $image), label: {
+//                        Text("Add Photo")
+//                    })
                 }
+            }.sheet(isPresented: $presentImagePicker) {
+                ImagePicker(showModal: self.$presentImagePicker, image: self.$image)
             }
             
             
@@ -131,6 +148,8 @@ struct ActivityEditableForm : View {
             Button(action: {
                 self.save()
                 self.showModal = false
+                self.presentationMode.value.dismiss()
+                self.done()
             }){
                 Text("Save")
             }
@@ -142,6 +161,7 @@ struct ActivityCreateDetailView : View {
     @EnvironmentObject var mainEnv : MainEnvObj
     @Binding var showModal : Bool
     var activity : Activity?
+    var done : () -> Void
     
     
     var activityBindable : ActivityBindable {
@@ -166,7 +186,7 @@ struct ActivityCreateDetailView : View {
     
     var body: some View {
         
-        ActivityEditableForm(showModal: $showModal, activity: activity, activityBindable: activityBindable, learnerSelectionManger: MySelectionManager(selected: Set(participants)))
+        ActivityEditableForm(showModal: $showModal, activity: activity, activityBindable: activityBindable, learnerSelectionManger: MySelectionManager(selected: Set(participants)), done: done)
             .navigationBarTitle("\(activity != nil ? "Edit" : "Create") Activity", displayMode: .inline)
         
         
@@ -174,10 +194,10 @@ struct ActivityCreateDetailView : View {
 }
 
 #if DEBUG
-struct ActivityCreateDetailView_Previews : PreviewProvider {
-    @State static var showModal = false
-    static var previews: some View {
-        ActivityCreateDetailView(showModal: $showModal).environmentObject(MainEnvObj())
-    }
-}
+//struct ActivityCreateDetailView_Previews : PreviewProvider {
+//    @State static var showModal = false
+//    static var previews: some View {
+//        ActivityCreateDetailView(showModal: $showModal).environmentObject(MainEnvObj())
+//    }
+//}
 #endif

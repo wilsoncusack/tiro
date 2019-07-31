@@ -11,7 +11,9 @@ import SwiftUI
 
 
 struct ImagePickerViewController: UIViewControllerRepresentable {
+    @Binding var showModal: Bool
     @Binding var image: UIImage?
+    
 
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePickerViewController>) {
     }
@@ -40,6 +42,7 @@ struct ImagePickerViewController: UIViewControllerRepresentable {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             let imagePicked = info[.editedImage] as! UIImage
             parent.image = imagePicked
+            parent.showModal = false
 //            let imageURL = info[.imageURL] as! NSURL
 //            let imageName = imageURL.lastPathComponent!
 //            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first as! String

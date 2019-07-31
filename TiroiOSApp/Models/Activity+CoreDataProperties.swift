@@ -26,14 +26,15 @@ extension Activity : Identifiable {
     @NSManaged public var date_created: Date
     @NSManaged public var activity_date: Date
     @NSManaged public var id: UUID
-    @NSManaged public var title: String
+    @NSManaged public var title: String?
     @NSManaged public var notes: String?
     @NSManaged public var image: Data?
     @NSManaged public var image_name: String?
     @NSManaged public var participants: NSSet?
+    @NSManaged public var tags: NSSet?
     @NSManaged public var created_by: User
     
-    static func create(activity_date: Date, title : String, notes : String?, image: Data?, created_by : User, image_name: String?, participants : NSSet?, in context: NSManagedObjectContext) {
+    static func create(activity_date: Date, title : String?, notes : String?, image: Data?, created_by : User, image_name: String?, participants : NSSet?, tags : NSSet?, in context: NSManagedObjectContext) {
         let newActivity = Activity(context: context)
         newActivity.id = UUID()
         newActivity.date_created = Date()
@@ -44,6 +45,7 @@ extension Activity : Identifiable {
         newActivity.created_by = created_by
         newActivity.image_name = image_name
         newActivity.participants = participants
+        newActivity.tags = tags
     }
 
 }

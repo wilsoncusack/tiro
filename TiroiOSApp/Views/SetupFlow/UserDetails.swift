@@ -21,9 +21,9 @@ struct UserDetails : View {
                 Text("Enter your profile information")
                 Spacer()
                 TextField("First name", text: $first_name)
-                    .textFieldStyle(.roundedBorder)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                 TextField("Last name", text: $last_name)
-                    .textFieldStyle(.roundedBorder)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
             }.frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
                 .padding(.top, 50)
             Spacer()
@@ -43,7 +43,7 @@ struct UserDetails : View {
                         .frame(width: UIScreen.main.bounds.width * 0.95)
                         .background(Color.blue)
                         .cornerRadius(8)
-                        .tapAction {
+                        .onTapGesture {
                             self.mainEnv.createUser(first_name: self.first_name, last_name: self.last_name)
                     }
                 }.padding(.bottom, 15)
