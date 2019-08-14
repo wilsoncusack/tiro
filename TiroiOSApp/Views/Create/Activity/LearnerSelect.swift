@@ -10,8 +10,6 @@ import SwiftUI
 import Combine
 
 class MySelectionManager : ObservableObject {
-    let willChange = PassthroughSubject<Void, Never>()
-    
     @Published var selected : Set<AnyHashable>
     
     init(selected: Set<AnyHashable> ){
@@ -38,17 +36,7 @@ class MySelectionManager : ObservableObject {
     typealias SelectionValue = AnyHashable
 }
 
-protocol SelectableItemProtocol : Hashable, Identifiable {
-    var id: UUID {get set}
-    var name : String {get set}
-}
-
-struct SelectableItem : SelectableItemProtocol {
-    var id: UUID
-    var name : String
-}
-
-struct SelectRow : View {
+struct LearnerSelectRow : View {
     @ObservedObject var selectionManager : MySelectionManager
     var selectableItem : Learner
     
@@ -67,22 +55,21 @@ struct SelectRow : View {
             }
             Text(selectableItem.name).padding(.leading, 10)
         }.onTapGesture {
-            if(self.selectionManager.isSelected(self.selectableItem)){
+            if (self.selectionManager.isSelected(self.selectableItem)){
                 self.selectionManager.deselect(self.selectableItem)
-            }else{
+            } else {
                 self.selectionManager.select(self.selectableItem)
             }
         }
     }
 }
 
-struct Select : View {
+struct LearnerSelectList : View {
     var selectableItems : [Learner]
-    //@Binding var selected : Set<Learner>
     @ObservedObject var selectionManager : MySelectionManager
     var body: some View {
         List(selectableItems){learner in
-            SelectRow(selectionManager: self.selectionManager, selectableItem: learner)
+            LearnerSelectRow(selectionManager: self.selectionManager, selectableItem: learner)
        }
     }
 }
@@ -91,11 +78,10 @@ struct Select : View {
 
 struct LearnerSelect : View {
     @EnvironmentObject var data : MainEnvObj
-
     @ObservedObject var selectionManager : MySelectionManager
     
     var body: some View {
-            Select(selectableItems: data.learnerStore.learners, selectionManager: selectionManager)
+            LearnerSelectList(selectableItems: data.learnerStore.learners, selectionManager: selectionManager)
         }
 }
 

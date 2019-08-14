@@ -12,6 +12,7 @@ import Combine
 //check to see if this needs to be serverable 
 class ActivityStore : NSObject {
     
+    //var tags : [TagCount] = []
     //let context = AppDelegate.viewContext
     
     private let persistenceManager = PersistenceManager()
@@ -33,14 +34,91 @@ class ActivityStore : NSObject {
         return fetchedResultsController.fetchedObjects ?? []
     }
     
-    //let willChange = PassthroughSubject<ActivityStore, Never>()
+    public func activitiesInDateRange(activities: [Activity], startDate: Date, endDate: Date) -> [Activity]{
+        activities.filter { (activity) -> Bool in
+            activity.activity_date.compare(startDate) == ComparisonResult.orderedDescending
+                && (activity.activity_date.compare(endDate) == ComparisonResult.orderedAscending || activity.activity_date.compare(endDate) == ComparisonResult.orderedSame)
+        }
+    }
+    
+    public var activitiesLastSevenDays: [Activity] {
+        let activities = fetchedResultsController.fetchedObjects ?? []
+        return activitiesInDateRange(activities: activities, startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date())!, endDate: Date())
+    }
+    
+    struct TagCount : Hashable {
+        var tag: Tag
+        var count: Int
+        var percentage : Double
+    }
+    
+    public var mostCommonTagsLastSevenDays: [TagCount] {
+        let activities = fetchedResultsController.fetchedObjects ?? []
+        let activitiesLastSevenDays = activitiesInDateRange(activities: activities, startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date())!, endDate: Date())
+        
+        
+        var counter = [Tag: Int]()
+        for a in activitiesLastSevenDays {
+            let tags = a.tags?.allObjects as! [Tag]
+            for tag in tags {
+                let currentCount = counter[tag] ?? 0
+                counter[tag] = currentCount + 1
+            }
+        }
+        var tagTouples = [TagCount]()
+        
+        for (tag, count) in counter {
+            tagTouples.append(TagCount(tag: tag, count: count, percentage: Double(count)/Double(activitiesLastSevenDays.count)))
+            //tagTouples.append((tag, count))
+        }
+        tagTouples.sort { (touple1, touple2) -> Bool in
+            return touple1.count - touple2.count > 0
+        }
+        var toReturn = tagTouples[..<min(tagTouples.count, 4)]
+        return Array(toReturn)
+
+    }
+    
+    public func getTags() {
+        let activities = fetchedResultsController.fetchedObjects ?? []
+        
+        let activitiesLastSevenDays = activitiesInDateRange(activities: activities, startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date())!, endDate: Date())
+        
+        
+        var counter = [Tag: Int]()
+        for a in activitiesLastSevenDays {
+            let tags = a.tags?.allObjects as! [Tag]
+            for tag in tags {
+                let currentCount = counter[tag] ?? 0
+                counter[tag] = currentCount + 1
+            }
+        }
+        var tagTouples = [TagCount]()
+        
+        for (tag, count) in counter {
+            tagTouples.append(TagCount(tag: tag, count: count, percentage: Double(count)/Double(activitiesLastSevenDays.count)))
+            //tagTouples.append((tag, count))
+        }
+        tagTouples.sort { (touple1, touple2) -> Bool in
+            return touple1.count - touple2.count > 0
+        }
+        
+        var toReturn = tagTouples[..<min(tagTouples.count, 4)]
+        
+       // tags =  Array(toReturn)
+
+    }
+    
+
     
     override init() {
         super.init()
         fetchActivities()
+        getTags()
+        
     }
     
-    private func fetchActivities() {
+    public func fetchActivities() {
         do {
             try fetchedResultsController.performFetch()
             dump(fetchedResultsController.sections)
@@ -53,26 +131,12 @@ class ActivityStore : NSObject {
         guard self.persistenceManager.managedObjectContext.hasChanges else { return }
         do {
             try self.persistenceManager.managedObjectContext.save()
-            print("saved successfully")
         } catch { fatalError() }
     }
     
-//    func saveContext () {
-//            let context = self.persistenceManager.managedObjectContext
-//            if context.hasChanges {
-//                do {
-//                    try context.save()
-//                } catch {
-//                    // Replace this implementation with code to handle the error appropriately.
-//                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//                    let nserror = error as NSError
-//                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//                }
-//            }
-//        }
     
-    public func create(activity_date : Date, title: String?, notes: String?, image: Data?, created_by: User, image_name: String?, participants : NSSet?) {
-        Activity.create(activity_date: activity_date, title: title, notes: notes, image: image, created_by: created_by, image_name: image_name, participants: participants, in: self.persistenceManager.managedObjectContext)
+    public func create(activity_date : Date, title: String?, notes: String?, image: Data?, created_by: User, image_name: String?, participants : NSSet?, tags: NSSet?) {
+        Activity.create(activity_date: activity_date, title: title, notes: notes, image: image, created_by: created_by, image_name: image_name, participants: participants, tags: tags, in: self.persistenceManager.managedObjectContext)
         saveChanges()
     }
     
@@ -85,11 +149,8 @@ class ActivityStore : NSObject {
 
 extension ActivityStore: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        //willChange.send(self)
+        //getTags()
     }
-//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        willChange.send(self)
-//        //didChange.send(self)
-//        // this seems like a waste. I think we need to find a way to make the main env obj the delegate. But probably not worth worrying about now.
-//    }
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    }
 }

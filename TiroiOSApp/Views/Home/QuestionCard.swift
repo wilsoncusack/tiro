@@ -32,9 +32,13 @@ struct QuestionCard: View {
                 Text(learner.name)
                     .bold()
                 Spacer()
+                if(answer == nil){
+                    Text("Not Answered")
+                        .foregroundColor(.orange)
+                } else {
                     Text("Answered")
-                        //b.bold()
-                        .foregroundColor(answer != nil ? .green : .orange)
+                    .foregroundColor(.green)
+                }
 
             }
         }.frame(width: 235, height: 80)

@@ -37,7 +37,6 @@ extension User {
         user.first_name = first_name
         user.last_name = last_name
         user.has_finished_setup = false
-        // return user
     }
 }
 

@@ -22,7 +22,7 @@ struct QuickNote : View {
                 .lineLimit(nil)
                 .padding(.bottom, 15)
            Spacer()
-            NavigationLink(destination: UserDetails().environmentObject(mainEnv)){
+            NavigationLink(destination: UserDetails()){
                 Text("Next")
                     .foregroundColor(.white)
                     .padding()
@@ -36,9 +36,9 @@ struct QuickNote : View {
 }
 
 #if DEBUG
-struct QuickNote_Previews : PreviewProvider {
-    static var previews: some View {
-        QuickNote().environmentObject(MainEnvObj())
-    }
-}
+//struct QuickNote_Previews : PreviewProvider {
+//    static var previews: some View {
+//        QuickNote(createUser: {}).environmentObject(MainEnvObj())
+//    }
+//}
 #endif

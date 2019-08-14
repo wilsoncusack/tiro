@@ -14,17 +14,26 @@ public class Tag: NSManagedObject {
 
 }
 
-extension Tag {
+extension Tag: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Tag> {
         return NSFetchRequest<Tag>(entityName: "Tag")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var name: String?
-    @NSManaged public var tag_type: TagTypes?
+    @NSManaged public var id: UUID
+    @NSManaged public var name: String
+    @NSManaged public var tag_type: TagType
     @NSManaged public var activities: NSSet?
 
+}
+
+extension Tag {
+    static func create(name: String, tag_type: TagType, in context: NSManagedObjectContext){
+        let tag = Tag(context: context)
+        tag.id = UUID()
+        tag.name = name
+        tag.tag_type = tag_type
+    }
 }
 
 // MARK: Generated accessors for activities

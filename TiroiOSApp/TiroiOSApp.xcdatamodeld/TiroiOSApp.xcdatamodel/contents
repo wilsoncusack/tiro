@@ -13,7 +13,6 @@
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="activities" inverseEntity="Tag"/>
     </entity>
     <entity name="Learner" representedClassName=".Learner" syncable="YES">
-        <attribute name="attribute" optional="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="profile_image_name" optional="YES" attributeType="String"/>
@@ -35,7 +34,7 @@
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="tags" inverseEntity="Activity"/>
         <relationship name="tag_type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag_Type" inverseName="instances" inverseEntity="Tag_Type"/>
     </entity>
-    <entity name="Tag_Type" representedClassName=".TagTypes" syncable="YES">
+    <entity name="Tag_Type" representedClassName=".TagType" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="instances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="tag_type" inverseEntity="Tag"/>
@@ -51,7 +50,7 @@
     </entity>
     <elements>
         <element name="Activity" positionX="-23.80859375" positionY="-10.0078125" width="128" height="193"/>
-        <element name="Learner" positionX="-122.55859375" positionY="-213.75" width="128" height="148"/>
+        <element name="Learner" positionX="-122.55859375" positionY="-213.75" width="128" height="133"/>
         <element name="Question" positionX="-359.09375" positionY="19.4765625" width="128" height="133"/>
         <element name="User" positionX="-409.171875" positionY="-149.1015625" width="128" height="148"/>
         <element name="Tag_Type" positionX="267.53125" positionY="89.87890625" width="128" height="88"/>

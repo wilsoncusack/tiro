@@ -24,7 +24,7 @@ struct Landing : View {
                     .font(.largeTitle)
                     .lineLimit(nil)
                 Spacer()
-                NavigationLink(destination: QuickNote().environmentObject(mainEnv)){
+                NavigationLink(destination: QuickNote()){
                     Text("Next")
                         .foregroundColor(.white)
                         .padding()
@@ -36,13 +36,14 @@ struct Landing : View {
                 }.padding(.bottom, 15)
             }.frame(width: UIScreen.main.bounds.width * 0.95)
         }
+        
     }
 }
 
 #if DEBUG
-struct Landing_Previews : PreviewProvider {
-    static var previews: some View {
-        Landing().environmentObject(MainEnvObj())
-    }
-}
+//struct Landing_Previews : PreviewProvider {
+//    static var previews: some View {
+//        Landing(createUser: {}).environmentObject(MainEnvObj())
+//    }
+//}
 #endif

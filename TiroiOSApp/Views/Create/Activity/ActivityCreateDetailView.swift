@@ -31,6 +31,7 @@ struct ActivityEditableForm : View {
     
     @State var image : UIImage? = nil
     @ObservedObject var learnerSelectionManger : MySelectionManager
+    @ObservedObject var tagSelectionManager : MySelectionManager
     var done : () -> Void
     
     @State var presentImagePicker : Bool = false
@@ -39,6 +40,9 @@ struct ActivityEditableForm : View {
     var participants : [Learner] {
         learnerSelectionManger.selectedAsArray as! [Learner]
     }
+    
+    
+    
     
     
     static let dateFormatter: DateFormatter = {
@@ -63,12 +67,16 @@ struct ActivityEditableForm : View {
             activityBindable.title = "Activity on " + Self.dateFormatter.string(from: activityBindable.activityDate)
         }
         activityBindable.participants = participants
+        activityBindable.tags = tagSelectionManager.selectedAsArray as! [Tag]
         
         if activity != nil {
             mainEnv.saveActivityFromBindable(bindableActivity: activityBindable, activity: activity!)
         } else {
             mainEnv.createActivtyFromBindable(bindable: activityBindable)
         }
+        self.showModal = false
+       self.presentationMode.value.dismiss()
+       self.done()
         
         
     }
@@ -78,6 +86,10 @@ struct ActivityEditableForm : View {
             Section(header: Text("Title")){
                 TextField("Activity on " + Self.dateFormatter.string(from: activityBindable.activityDate), text: $activityBindable.title)
             }
+            Section{
+                TagSelect(selectionManager: tagSelectionManager)
+            }
+            Section{
             TextField("Notes",  text: $activityBindable.notes)
                 .lineLimit(nil)
             DatePicker("Date", selection: $activityBindable.activityDate)
@@ -94,6 +106,9 @@ struct ActivityEditableForm : View {
                     }
                 }
             }
+            
+            }
+            
             Section(header : Text("Pick Image")){
                 if(activityBindable.image != nil){
                     HStack{
@@ -103,9 +118,6 @@ struct ActivityEditableForm : View {
                         Button(action: {self.presentImagePicker = true}){
                                                Text("Change Photo")
                                            }
-//                        PresentationLink(destination: ImagePicker(image: $image), label: {
-//                            Text("Change Photo")
-//                        }).padding(.leading, 15)
                     }
                 } else if(image != nil) {
                     HStack{
@@ -116,18 +128,12 @@ struct ActivityEditableForm : View {
                         Button(action: {self.presentImagePicker = true}){
                                                Text("Change Photo")
                                            }
-//                        PresentationLink(destination: ImagePicker(image: $image), label: {
-//                            Text("Change Photo")
-//                        }).padding(.leading, 15)
                     }
                 }
                 else {
                     Button(action: {self.presentImagePicker = true}){
                         Text("Add Photo")
                     }
-//                    PresentationLink(destination: ImagePicker(image: $image), label: {
-//                        Text("Add Photo")
-//                    })
                 }
             }.sheet(isPresented: $presentImagePicker) {
                 ImagePicker(showModal: self.$presentImagePicker, image: self.$image)
@@ -136,20 +142,10 @@ struct ActivityEditableForm : View {
             
         }
         .navigationBarItems(
-//            leading:
-//            Button(action: {
-//                self.showModal = false
-//            }){
-//                Text("Cancel")
-//            }
-//            ,
             trailing:
-            
             Button(action: {
                 self.save()
-                self.showModal = false
-                self.presentationMode.value.dismiss()
-                self.done()
+               
             }){
                 Text("Save")
             }
@@ -168,7 +164,7 @@ struct ActivityCreateDetailView : View {
         if activity != nil {
             return mainEnv.createBindablefromActivity(activity: activity!)
         } else {
-            return ActivityBindable(title: "", notes: "", activityDate: Date(), image: nil, participants: [])
+            return ActivityBindable(title: "", notes: "", activityDate: Date(), image: nil, participants: [], tags: [])
         }
     }
     
@@ -180,13 +176,17 @@ struct ActivityCreateDetailView : View {
         }
     }
     
-    
-    
-    
-    
+    var tags : [Tag] {
+        if activity == nil{
+            return []
+        } else {
+           return activity!.tags!.allObjects as! [Tag]
+        }
+    }
+
     var body: some View {
         
-        ActivityEditableForm(showModal: $showModal, activity: activity, activityBindable: activityBindable, learnerSelectionManger: MySelectionManager(selected: Set(participants)), done: done)
+        ActivityEditableForm(showModal: $showModal, activity: activity, activityBindable: activityBindable, learnerSelectionManger: MySelectionManager(selected: Set(participants)), tagSelectionManager: MySelectionManager(selected: Set(tags)), done: done)
             .navigationBarTitle("\(activity != nil ? "Edit" : "Create") Activity", displayMode: .inline)
         
         

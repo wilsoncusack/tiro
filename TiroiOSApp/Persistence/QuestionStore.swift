@@ -50,7 +50,7 @@ class QuestionStore : NSObject {
         }
     }
     
-    private func saveChanges() {
+    public func saveChanges() {
         guard self.persistenceManager.managedObjectContext.hasChanges else { return }
         do {
             try self.persistenceManager.managedObjectContext.save()
@@ -62,13 +62,17 @@ class QuestionStore : NSObject {
         saveChanges()
     }
     
+    public func delete(question : Question){
+        self.persistenceManager.managedObjectContext.delete(question)
+        saveChanges()
+    }
     
     
     
 }
 
 extension QuestionStore: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         //didChange.send(self)
     }
 }

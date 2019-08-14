@@ -17,27 +17,15 @@ class ActivityBindable : ObservableObject {
     @Published var image : Data?
     @Published var participants : [Learner]
     @Published var tags : [Tag]
+
     
-//    var participantSet : Set<Learner> {
-//        willSet{
-//           willChange.send()
-//       }
-//    }
-//
-//    var participantSelectionManger: MySelectionManager {
-//        willSet{
-//                   willChange.send()
-//               }
-//    }
-    
-    init(title: String, notes : String?, activityDate : Date, image : Data?, participants: [Learner]){
+    init(title: String, notes : String?, activityDate : Date, image : Data?, participants: [Learner], tags: [Tag]){
         self.title = title
         self.notes = notes ?? ""
         self.activityDate = activityDate
         self.image = image
         self.participants = participants
-//        self.participantSet = Set(participants)
-//        self.participantSelectionManger = MySelectionManager(selected: participantSet)
+        self.tags = tags
     }
     
 }

@@ -28,6 +28,7 @@ extension Question {
     @NSManaged public var created_by: User
     
     static func create(question_text: String, asker : Learner, answer_text : String?, created_by : User, in context: NSManagedObjectContext) {
+    
         let newQuestion = Question(context: context)
         newQuestion.date_created = Date()
         newQuestion.id = UUID()

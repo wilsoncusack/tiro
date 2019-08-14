@@ -39,7 +39,10 @@ struct TabbedMain : View {
                 })
                 .tag(1)
             
-            Text("hey")
+            Text("""
+                ⚠️Under Construction⚠️
+                For now, please text me at 347-610-9067 with issues, ideas, and encouragement ❤️
+                """).multilineTextAlignment(.center)
                 
                 .tabItem({
                     selection == 2 ?

@@ -29,18 +29,6 @@ struct ActivitiesHorizontalList : View {
                     .font(.system(size: 22))
                     .bold()
                     .padding(.leading, 15)
-                Spacer()
-                Button(action: {
-                    self.showModal = true
-                    self.selectedActivity = nil
-                    self.modalKind = "activityCreate"
-                    
-                }){
-                    Image(systemName: "plus.circle")
-                        .imageScale(.large)
-                        .foregroundColor(.black)
-                        .padding(.trailing, 15)
-                }
                 
             }
             ScrollView(.horizontal, showsIndicators: false) {
@@ -53,7 +41,7 @@ struct ActivitiesHorizontalList : View {
                                 self.modalKind = "activity"
                             }
                     }
-                }.frame(height:230).padding(.leading, 15)
+                }.frame(height:230).padding(.leading, 15).padding(.trailing, 15)
             }.padding(.bottom,20)
         }
     }

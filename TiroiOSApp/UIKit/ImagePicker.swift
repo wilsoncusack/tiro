@@ -43,21 +43,6 @@ struct ImagePickerViewController: UIViewControllerRepresentable {
             let imagePicked = info[.editedImage] as! UIImage
             parent.image = imagePicked
             parent.showModal = false
-//            let imageURL = info[.imageURL] as! NSURL
-//            let imageName = imageURL.lastPathComponent!
-//            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first as! String
-////            let localPath = documentDirectory.appendingPathComponent(imageName)
-//            print(imageName)
-//            print(documentDirectory)
-//            print(imageURL.absoluteString)
-
-//            let image = info[.originalImage] as! UIImage
-//            let data = image.pngData()
-//            data.writeToFile(localPath, atomically: true)
-//
-//            let imageData = NSData(contentsOfFile: localPath)!
-//            let photoURL = NSURL(fileURLWithPath: localPath)
-//            let imageWithData = UIImage(data: imageData)!
             
             picker.dismiss(animated: true, completion: nil)
         }

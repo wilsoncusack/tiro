@@ -10,24 +10,32 @@
 import Foundation
 import CoreData
 
-public class TagTypes: NSManagedObject {
+public class TagType: NSManagedObject {
 
 }
 
-extension TagTypes {
+extension TagType: Identifiable  {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<TagTypes> {
-        return NSFetchRequest<TagTypes>(entityName: "Tag_Type")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<TagType> {
+        return NSFetchRequest<TagType>(entityName: "Tag_Type")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var name: String?
+    @NSManaged public var id: UUID
+    @NSManaged public var name: String
     @NSManaged public var instances: NSSet?
 
 }
 
+extension TagType {
+    static func create(name: String, in context: NSManagedObjectContext){
+        let tagType = TagType(context: context)
+        tagType.id = UUID()
+        tagType.name = name
+    }
+}
+
 // MARK: Generated accessors for instances
-extension TagTypes {
+extension TagType {
 
     @objc(addInstancesObject:)
     @NSManaged public func addToInstances(_ value: Tag)

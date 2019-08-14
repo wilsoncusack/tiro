@@ -29,7 +29,7 @@ struct CreateMain : View {
                     )
                 }
                 NavigationLink(
-                    destination: QuestionCreateDetailView()){
+                    destination: QuestionCreateDetailView(showModal: $dummyShowModal, done: navigateHome)){
                     CreationRowView(title : "Question", description: "Record a question to answer later", image: Image(systemName: "questionmark.circle"))
                 }
 

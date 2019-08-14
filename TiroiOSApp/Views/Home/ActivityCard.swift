@@ -57,7 +57,7 @@ struct ActivityCard : View {
             }
             Rectangle()
                 .frame(width: 210, height: 90)
-                .opacity(0.9)
+                .opacity(0.95)
 //                .background(
 //                    LinearGradient(gradient:
 //                        Gradient(colors: [.white, .black]), startPoint: .center, endPoint: .bottom))

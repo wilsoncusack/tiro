@@ -11,7 +11,6 @@ import SwiftUI
 
 class UserStore : NSObject {
     
-    //let context = AppDelegate.viewContext
     
     private let persistenceManager = PersistenceManager()
     
@@ -35,14 +34,13 @@ class UserStore : NSObject {
         users.count > 0 ? users[0] : nil
     }
     
-    //let didChange = PassthroughSubject<UserStore, Never>()
     
     override init() {
         super.init()
         fetchUsers()
     }
     
-    private func fetchUsers() {
+    public func fetchUsers() {
         do {
             try fetchedResultsController.performFetch()
             dump(fetchedResultsController.sections)
@@ -61,6 +59,7 @@ class UserStore : NSObject {
     public func create(first_name: String, last_name : String) {
         User.create(first_name: first_name, last_name: last_name, in: persistenceManager.managedObjectContext)
         saveChanges()
+        
     }
     
     public func delete(){
@@ -73,8 +72,6 @@ class UserStore : NSObject {
 }
 
 extension UserStore: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        //didChange.send(self)
-        // this seems like a waste. I think we need to find a way to make the main env obj the delegate. But probably not worth worrying about now. 
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     }
 }

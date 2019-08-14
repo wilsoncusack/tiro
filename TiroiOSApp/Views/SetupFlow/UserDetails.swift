@@ -13,6 +13,7 @@ struct UserDetails : View {
     
     @State var first_name = ""
     @State var last_name = ""
+    
     var body: some View {
         
         
@@ -36,16 +37,18 @@ struct UserDetails : View {
                     .cornerRadius(8)
                     .padding(.bottom, 15)
             } else {
-                NavigationLink(destination: AddLearners().environmentObject(mainEnv)){
+               
+                
+                Button(action: {
+                    self.mainEnv.createUser(first_name: self.first_name, last_name: self.last_name)
+                    self.mainEnv.setupShowUserCreation = false
+                }){
                     Text("Next")
                         .foregroundColor(.white)
                         .padding()
                         .frame(width: UIScreen.main.bounds.width * 0.95)
                         .background(Color.blue)
                         .cornerRadius(8)
-                        .onTapGesture {
-                            self.mainEnv.createUser(first_name: self.first_name, last_name: self.last_name)
-                    }
                 }.padding(.bottom, 15)
             }
         }.frame(width: UIScreen.main.bounds.width * 0.8)
@@ -56,9 +59,9 @@ struct UserDetails : View {
 }
 
 #if DEBUG
-struct UserDetails_Previews : PreviewProvider {
-    static var previews: some View {
-        UserDetails().environmentObject(MainEnvObj())
-    }
-}
+//struct UserDetails_Previews : PreviewProvider {
+//    static var previews: some View {
+//        UserDetails().environmentObject(MainEnvObj())
+//    }
+//}
 #endif
