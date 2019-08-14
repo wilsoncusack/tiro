@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F70D46AB22DE806700D93E79 /* ActivityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70D46AA22DE806700D93E79 /* ActivityDetailView.swift */; };
+		F70D46AE22DEC75900D93E79 /* CreationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70D46AD22DEC75900D93E79 /* CreationRowView.swift */; };
+		F70D46B022DEC79200D93E79 /* QuestionCreateDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70D46AF22DEC79200D93E79 /* QuestionCreateDetailView.swift */; };
+		F70D46B222DEC7AB00D93E79 /* ActivityCreateDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70D46B122DEC7AB00D93E79 /* ActivityCreateDetailView.swift */; };
+		F70DDB6022E40EE40017D85B /* headerPhoto.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F70DDB5F22E40EE40017D85B /* headerPhoto.jpg */; };
+		F70DDB6622E57EB30017D85B /* Activity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70DDB6522E57EB30017D85B /* Activity+CoreDataProperties.swift */; };
+		F711176322EB659800224F45 /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F711176222EB659800224F45 /* AppIcon.png */; };
+		F711176622EB69AA00224F45 /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F711176522EB69A900224F45 /* AppIcon.png */; };
 		F775134622DA42D700FE5334 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775134522DA42D700FE5334 /* AppDelegate.swift */; };
 		F775134822DA42D700FE5334 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775134722DA42D700FE5334 /* SceneDelegate.swift */; };
 		F775134B22DA42D700FE5334 /* TiroiOSApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F775134922DA42D700FE5334 /* TiroiOSApp.xcdatamodeld */; };
@@ -16,6 +24,47 @@
 		F775135522DA42D900FE5334 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F775135322DA42D900FE5334 /* LaunchScreen.storyboard */; };
 		F775136022DA42DA00FE5334 /* TiroiOSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775135F22DA42DA00FE5334 /* TiroiOSAppTests.swift */; };
 		F775136B22DA42DA00FE5334 /* TiroiOSAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775136A22DA42DA00FE5334 /* TiroiOSAppUITests.swift */; };
+		F775137B22DA430A00FE5334 /* DocumentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775137A22DA430A00FE5334 /* DocumentTest.swift */; };
+		F775138B22DAA16D00FE5334 /* Question+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775138322DAA16D00FE5334 /* Question+CoreDataProperties.swift */; };
+		F775139A22DAA54700FE5334 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775139922DAA54700FE5334 /* PersistenceManager.swift */; };
+		F775139C22DAA59700FE5334 /* QuestionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775139B22DAA59700FE5334 /* QuestionStore.swift */; };
+		F775139F22DAA9BD00FE5334 /* DemoData1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775139E22DAA9BD00FE5334 /* DemoData1.swift */; };
+		F77513A722DAAAF000FE5334 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513A522DAAAF000FE5334 /* User+CoreDataProperties.swift */; };
+		F77513A922DAB02100FE5334 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513A822DAB02100FE5334 /* Home.swift */; };
+		F77513AB22DBDCC900FE5334 /* MainEnvObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513AA22DBDCC900FE5334 /* MainEnvObj.swift */; };
+		F77513AD22DBF9B500FE5334 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513AC22DBF9B500FE5334 /* Main.swift */; };
+		F77513B322DC192600FE5334 /* CreateMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513B222DC192600FE5334 /* CreateMain.swift */; };
+		F77513B622DC19C400FE5334 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513B522DC19C400FE5334 /* UserDetails.swift */; };
+		F77513B822DC1BFF00FE5334 /* Landing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513B722DC1BFF00FE5334 /* Landing.swift */; };
+		F77513BC22DC278900FE5334 /* TabbedMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513BB22DC278900FE5334 /* TabbedMain.swift */; };
+		F77513BE22DC29E700FE5334 /* QuickNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513BD22DC29E700FE5334 /* QuickNote.swift */; };
+		F77513C022DC310C00FE5334 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513BF22DC310C00FE5334 /* UserStore.swift */; };
+		F77513C222DCD24C00FE5334 /* AddLearners.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513C122DCD24C00FE5334 /* AddLearners.swift */; };
+		F77513C422DCE08300FE5334 /* LearnerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513C322DCE08300FE5334 /* LearnerStore.swift */; };
+		F77513C722DCE63300FE5334 /* LearnerCreateModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77513C622DCE63300FE5334 /* LearnerCreateModal.swift */; };
+		F7802F4922DD693E0012355F /* red-oragami.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F7802F4522DD693E0012355F /* red-oragami.jpg */; };
+		F7802F4A22DD693E0012355F /* dog.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F7802F4622DD693E0012355F /* dog.jpg */; };
+		F7802F4C22DD693E0012355F /* multi-oragami.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F7802F4822DD693E0012355F /* multi-oragami.jpg */; };
+		F7802F4E22DD70430012355F /* rabbit.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F7802F4D22DD70430012355F /* rabbit.jpg */; };
+		F785AC7A22DECDF800992812 /* LearnerSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F785AC7922DECDF800992812 /* LearnerSelect.swift */; };
+		F785AC7D22E0EA8400992812 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F785AC7C22E0EA8400992812 /* ImagePicker.swift */; };
+		F7891BF022E58421000265C4 /* DisplayUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7891BEF22E58421000265C4 /* DisplayUIImage.swift */; };
+		F7891BF422E924F8000265C4 /* ActivityBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7891BF322E924F8000265C4 /* ActivityBindable.swift */; };
+		F799710E22EF6E99009C3F54 /* QuestionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F799710D22EF6E99009C3F54 /* QuestionCard.swift */; };
+		F79CD3CB22DE2FB300C3D998 /* ActivitiesHorizontalList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79CD3CA22DE2FB300C3D998 /* ActivitiesHorizontalList.swift */; };
+		F79CD3CD22DE2FC600C3D998 /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79CD3CC22DE2FC600C3D998 /* ActivityCard.swift */; };
+		F79CD3D122DE3E8400C3D998 /* ActivityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79CD3D022DE3E8400C3D998 /* ActivityStore.swift */; };
+		F7C9AFC122EB862300C47199 /* Learner+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C9AFC022EB862300C47199 /* Learner+CoreDataProperties.swift */; };
+		F7CA861722F1435000536797 /* StatsThisWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CA861622F1435000536797 /* StatsThisWeek.swift */; };
+		F7CA861922F1EDE100536797 /* QuestionBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CA861822F1EDE100536797 /* QuestionBindable.swift */; };
+		F7CA861D22F1F9E500536797 /* QuestionHorizontalList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CA861C22F1F9E500536797 /* QuestionHorizontalList.swift */; };
+		F7CA861F22F1FC1300536797 /* QuestionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CA861E22F1FC1300536797 /* QuestionDetailView.swift */; };
+		F7DF12B222F128C200E9B01B /* TagTypes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DF12AE22F128C200E9B01B /* TagTypes+CoreDataProperties.swift */; };
+		F7DF12B422F128C200E9B01B /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DF12B022F128C200E9B01B /* Tag+CoreDataProperties.swift */; };
+		F7DF12B622F1327B00E9B01B /* TagSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DF12B522F1327B00E9B01B /* TagSelect.swift */; };
+		F7DF12B822F132D900E9B01B /* TagStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DF12B722F132D900E9B01B /* TagStore.swift */; };
+		F7DF12BA22F132E500E9B01B /* TagTypeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DF12B922F132E500E9B01B /* TagTypeStore.swift */; };
+		F7E2489322DD7A7B008B925C /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E2489222DD7A7B008B925C /* ProfileImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +85,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F70D46AA22DE806700D93E79 /* ActivityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailView.swift; sourceTree = "<group>"; };
+		F70D46AD22DEC75900D93E79 /* CreationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationRowView.swift; sourceTree = "<group>"; };
+		F70D46AF22DEC79200D93E79 /* QuestionCreateDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCreateDetailView.swift; sourceTree = "<group>"; };
+		F70D46B122DEC7AB00D93E79 /* ActivityCreateDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCreateDetailView.swift; sourceTree = "<group>"; };
+		F70DDB5F22E40EE40017D85B /* headerPhoto.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = headerPhoto.jpg; sourceTree = "<group>"; };
+		F70DDB6522E57EB30017D85B /* Activity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Activity+CoreDataProperties.swift"; path = "../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Models/Activity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F711176222EB659800224F45 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AppIcon.png; path = ../../../../../Downloads/AppIcon.png; sourceTree = "<group>"; };
+		F711176522EB69A900224F45 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AppIcon.png; path = ../../../../Downloads/AppIcon.png; sourceTree = "<group>"; };
 		F775134222DA42D700FE5334 /* TiroiOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiroiOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F775134522DA42D700FE5334 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F775134722DA42D700FE5334 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +108,48 @@
 		F775136622DA42DA00FE5334 /* TiroiOSAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TiroiOSAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F775136A22DA42DA00FE5334 /* TiroiOSAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiroiOSAppUITests.swift; sourceTree = "<group>"; };
 		F775136C22DA42DA00FE5334 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F775137A22DA430A00FE5334 /* DocumentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTest.swift; sourceTree = "<group>"; };
+		F775138322DAA16D00FE5334 /* Question+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Question+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F775139922DAA54700FE5334 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		F775139B22DAA59700FE5334 /* QuestionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionStore.swift; sourceTree = "<group>"; };
+		F775139E22DAA9BD00FE5334 /* DemoData1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData1.swift; sourceTree = "<group>"; };
+		F77513A522DAAAF000FE5334 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F77513A822DAB02100FE5334 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		F77513AA22DBDCC900FE5334 /* MainEnvObj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEnvObj.swift; sourceTree = "<group>"; };
+		F77513AC22DBF9B500FE5334 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		F77513B222DC192600FE5334 /* CreateMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMain.swift; sourceTree = "<group>"; };
+		F77513B522DC19C400FE5334 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
+		F77513B722DC1BFF00FE5334 /* Landing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landing.swift; sourceTree = "<group>"; };
+		F77513BB22DC278900FE5334 /* TabbedMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedMain.swift; sourceTree = "<group>"; };
+		F77513BD22DC29E700FE5334 /* QuickNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickNote.swift; sourceTree = "<group>"; };
+		F77513BF22DC310C00FE5334 /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
+		F77513C122DCD24C00FE5334 /* AddLearners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLearners.swift; sourceTree = "<group>"; };
+		F77513C322DCE08300FE5334 /* LearnerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnerStore.swift; sourceTree = "<group>"; };
+		F77513C622DCE63300FE5334 /* LearnerCreateModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnerCreateModal.swift; sourceTree = "<group>"; };
+		F7802F4522DD693E0012355F /* red-oragami.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "red-oragami.jpg"; sourceTree = "<group>"; };
+		F7802F4622DD693E0012355F /* dog.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dog.jpg; sourceTree = "<group>"; };
+		F7802F4822DD693E0012355F /* multi-oragami.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "multi-oragami.jpg"; sourceTree = "<group>"; };
+		F7802F4D22DD70430012355F /* rabbit.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rabbit.jpg; sourceTree = "<group>"; };
+		F785AC7922DECDF800992812 /* LearnerSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnerSelect.swift; sourceTree = "<group>"; };
+		F785AC7C22E0EA8400992812 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		F7891BEF22E58421000265C4 /* DisplayUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayUIImage.swift; path = "../../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Views/Supporting Views/DisplayUIImage.swift"; sourceTree = "<group>"; };
+		F7891BF322E924F8000265C4 /* ActivityBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ActivityBindable.swift; path = ../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Models/ActivityBindable.swift; sourceTree = "<group>"; };
+		F799710D22EF6E99009C3F54 /* QuestionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuestionCard.swift; path = ../../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Views/Home/QuestionCard.swift; sourceTree = "<group>"; };
+		F79CD3CA22DE2FB300C3D998 /* ActivitiesHorizontalList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesHorizontalList.swift; sourceTree = "<group>"; };
+		F79CD3CC22DE2FC600C3D998 /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
+		F79CD3D022DE3E8400C3D998 /* ActivityStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStore.swift; sourceTree = "<group>"; };
+		F7A455B022EAA46300E6CC22 /* TiroiOSApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TiroiOSApp.entitlements; sourceTree = "<group>"; };
+		F7C9AFC022EB862300C47199 /* Learner+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Learner+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F7CA861622F1435000536797 /* StatsThisWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StatsThisWeek.swift; path = ../../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Views/Home/StatsThisWeek.swift; sourceTree = "<group>"; };
+		F7CA861822F1EDE100536797 /* QuestionBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuestionBindable.swift; path = ../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Models/QuestionBindable.swift; sourceTree = "<group>"; };
+		F7CA861C22F1F9E500536797 /* QuestionHorizontalList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuestionHorizontalList.swift; path = ../../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Views/Home/QuestionHorizontalList.swift; sourceTree = "<group>"; };
+		F7CA861E22F1FC1300536797 /* QuestionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuestionDetailView.swift; path = ../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Views/QuestionDetailView.swift; sourceTree = "<group>"; };
+		F7DF12AE22F128C200E9B01B /* TagTypes+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TagTypes+CoreDataProperties.swift"; path = "../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Models/TagTypes+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F7DF12B022F128C200E9B01B /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Tag+CoreDataProperties.swift"; path = "../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Models/Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F7DF12B522F1327B00E9B01B /* TagSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TagSelect.swift; path = ../../../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Views/Create/Activity/TagSelect.swift; sourceTree = "<group>"; };
+		F7DF12B722F132D900E9B01B /* TagStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TagStore.swift; path = ../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Persistence/TagStore.swift; sourceTree = "<group>"; };
+		F7DF12B922F132E500E9B01B /* TagTypeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TagTypeStore.swift; path = ../../../../../../../System/Volumes/Data/Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Persistence/TagTypeStore.swift; sourceTree = "<group>"; };
+		F7E2489222DD7A7B008B925C /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +177,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F70D46A922DE805300D93E79 /* ActivityDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				F70D46AA22DE806700D93E79 /* ActivityDetailView.swift */,
+			);
+			path = ActivityDetailView;
+			sourceTree = "<group>";
+		};
+		F70D46AC22DEC71800D93E79 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				F70D46B122DEC7AB00D93E79 /* ActivityCreateDetailView.swift */,
+				F785AC7922DECDF800992812 /* LearnerSelect.swift */,
+				F7DF12B522F1327B00E9B01B /* TagSelect.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
 		F775133922DA42D700FE5334 = {
 			isa = PBXGroup;
 			children = (
+				F7DF12AE22F128C200E9B01B /* TagTypes+CoreDataProperties.swift */,
+				F7DF12B022F128C200E9B01B /* Tag+CoreDataProperties.swift */,
 				F775134422DA42D700FE5334 /* TiroiOSApp */,
 				F775135E22DA42D900FE5334 /* TiroiOSAppTests */,
 				F775136922DA42DA00FE5334 /* TiroiOSAppUITests */,
@@ -101,12 +220,20 @@
 		F775134422DA42D700FE5334 /* TiroiOSApp */ = {
 			isa = PBXGroup;
 			children = (
+				F7A455B022EAA46300E6CC22 /* TiroiOSApp.entitlements */,
+				F785AC7B22E0EA6900992812 /* UIKit */,
+				F77513C822DCFD1900FE5334 /* Resources */,
+				F775139D22DAA9B100FE5334 /* Data */,
+				F775139822DAA48B00FE5334 /* Persistence */,
+				F775137922DA42F600FE5334 /* Views */,
+				F775137822DA42F000FE5334 /* Models */,
 				F775134522DA42D700FE5334 /* AppDelegate.swift */,
 				F775134722DA42D700FE5334 /* SceneDelegate.swift */,
 				F775134C22DA42D700FE5334 /* ContentView.swift */,
 				F775134E22DA42D900FE5334 /* Assets.xcassets */,
 				F775135322DA42D900FE5334 /* LaunchScreen.storyboard */,
 				F775135622DA42D900FE5334 /* Info.plist */,
+				F711176522EB69A900224F45 /* AppIcon.png */,
 				F775134922DA42D700FE5334 /* TiroiOSApp.xcdatamodeld */,
 				F775135022DA42D900FE5334 /* Preview Content */,
 			);
@@ -137,6 +264,140 @@
 				F775136C22DA42DA00FE5334 /* Info.plist */,
 			);
 			path = TiroiOSAppUITests;
+			sourceTree = "<group>";
+		};
+		F775137822DA42F000FE5334 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F7C9AFC022EB862300C47199 /* Learner+CoreDataProperties.swift */,
+				F77513A522DAAAF000FE5334 /* User+CoreDataProperties.swift */,
+				F775138322DAA16D00FE5334 /* Question+CoreDataProperties.swift */,
+				F775137A22DA430A00FE5334 /* DocumentTest.swift */,
+				F70DDB6522E57EB30017D85B /* Activity+CoreDataProperties.swift */,
+				F7891BF322E924F8000265C4 /* ActivityBindable.swift */,
+				F7CA861822F1EDE100536797 /* QuestionBindable.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F775137922DA42F600FE5334 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F70D46A922DE805300D93E79 /* ActivityDetailView */,
+				F79CD3C922DE2F1F00C3D998 /* Home */,
+				F7E2489122DD7A6A008B925C /* Supporting Views */,
+				F77513B122DC191700FE5334 /* Create */,
+				F77513AE22DBFFA900FE5334 /* SetupFlow */,
+				F77513AC22DBF9B500FE5334 /* Main.swift */,
+				F77513BB22DC278900FE5334 /* TabbedMain.swift */,
+				F7CA861E22F1FC1300536797 /* QuestionDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F775139822DAA48B00FE5334 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				F775139922DAA54700FE5334 /* PersistenceManager.swift */,
+				F775139B22DAA59700FE5334 /* QuestionStore.swift */,
+				F77513AA22DBDCC900FE5334 /* MainEnvObj.swift */,
+				F77513BF22DC310C00FE5334 /* UserStore.swift */,
+				F77513C322DCE08300FE5334 /* LearnerStore.swift */,
+				F79CD3D022DE3E8400C3D998 /* ActivityStore.swift */,
+				F7DF12B722F132D900E9B01B /* TagStore.swift */,
+				F7DF12B922F132E500E9B01B /* TagTypeStore.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		F775139D22DAA9B100FE5334 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F775139E22DAA9BD00FE5334 /* DemoData1.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F77513AE22DBFFA900FE5334 /* SetupFlow */ = {
+			isa = PBXGroup;
+			children = (
+				F77513B522DC19C400FE5334 /* UserDetails.swift */,
+				F77513B722DC1BFF00FE5334 /* Landing.swift */,
+				F77513BD22DC29E700FE5334 /* QuickNote.swift */,
+				F77513C122DCD24C00FE5334 /* AddLearners.swift */,
+			);
+			path = SetupFlow;
+			sourceTree = "<group>";
+		};
+		F77513B122DC191700FE5334 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				F70D46AC22DEC71800D93E79 /* Activity */,
+				F77513C522DCE61800FE5334 /* Learner */,
+				F77513B422DC194A00FE5334 /* Question */,
+				F77513B222DC192600FE5334 /* CreateMain.swift */,
+				F70D46AD22DEC75900D93E79 /* CreationRowView.swift */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
+		F77513B422DC194A00FE5334 /* Question */ = {
+			isa = PBXGroup;
+			children = (
+				F70D46AF22DEC79200D93E79 /* QuestionCreateDetailView.swift */,
+			);
+			path = Question;
+			sourceTree = "<group>";
+		};
+		F77513C522DCE61800FE5334 /* Learner */ = {
+			isa = PBXGroup;
+			children = (
+				F77513C622DCE63300FE5334 /* LearnerCreateModal.swift */,
+			);
+			path = Learner;
+			sourceTree = "<group>";
+		};
+		F77513C822DCFD1900FE5334 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F711176222EB659800224F45 /* AppIcon.png */,
+				F70DDB5F22E40EE40017D85B /* headerPhoto.jpg */,
+				F7802F4622DD693E0012355F /* dog.jpg */,
+				F7802F4822DD693E0012355F /* multi-oragami.jpg */,
+				F7802F4D22DD70430012355F /* rabbit.jpg */,
+				F7802F4522DD693E0012355F /* red-oragami.jpg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F785AC7B22E0EA6900992812 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				F785AC7C22E0EA8400992812 /* ImagePicker.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		F79CD3C922DE2F1F00C3D998 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F77513A822DAB02100FE5334 /* Home.swift */,
+				F79CD3CA22DE2FB300C3D998 /* ActivitiesHorizontalList.swift */,
+				F79CD3CC22DE2FC600C3D998 /* ActivityCard.swift */,
+				F799710D22EF6E99009C3F54 /* QuestionCard.swift */,
+				F7CA861622F1435000536797 /* StatsThisWeek.swift */,
+				F7CA861C22F1F9E500536797 /* QuestionHorizontalList.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		F7E2489122DD7A6A008B925C /* Supporting Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7E2489222DD7A7B008B925C /* ProfileImage.swift */,
+				F7891BEF22E58421000265C4 /* DisplayUIImage.swift */,
+			);
+			path = "Supporting Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,8 +504,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F711176622EB69AA00224F45 /* AppIcon.png in Resources */,
 				F775135522DA42D900FE5334 /* LaunchScreen.storyboard in Resources */,
+				F70DDB6022E40EE40017D85B /* headerPhoto.jpg in Resources */,
+				F711176322EB659800224F45 /* AppIcon.png in Resources */,
+				F7802F4C22DD693E0012355F /* multi-oragami.jpg in Resources */,
+				F7802F4A22DD693E0012355F /* dog.jpg in Resources */,
 				F775135222DA42D900FE5334 /* Preview Assets.xcassets in Resources */,
+				F7802F4E22DD70430012355F /* rabbit.jpg in Resources */,
+				F7802F4922DD693E0012355F /* red-oragami.jpg in Resources */,
 				F775134F22DA42D900FE5334 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,10 +538,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F77513AD22DBF9B500FE5334 /* Main.swift in Sources */,
+				F7CA861722F1435000536797 /* StatsThisWeek.swift in Sources */,
+				F77513B322DC192600FE5334 /* CreateMain.swift in Sources */,
+				F799710E22EF6E99009C3F54 /* QuestionCard.swift in Sources */,
+				F7E2489322DD7A7B008B925C /* ProfileImage.swift in Sources */,
+				F785AC7A22DECDF800992812 /* LearnerSelect.swift in Sources */,
+				F77513C422DCE08300FE5334 /* LearnerStore.swift in Sources */,
+				F70D46B222DEC7AB00D93E79 /* ActivityCreateDetailView.swift in Sources */,
 				F775134B22DA42D700FE5334 /* TiroiOSApp.xcdatamodeld in Sources */,
+				F7CA861F22F1FC1300536797 /* QuestionDetailView.swift in Sources */,
+				F775139A22DAA54700FE5334 /* PersistenceManager.swift in Sources */,
+				F7CA861922F1EDE100536797 /* QuestionBindable.swift in Sources */,
+				F77513B822DC1BFF00FE5334 /* Landing.swift in Sources */,
+				F70DDB6622E57EB30017D85B /* Activity+CoreDataProperties.swift in Sources */,
 				F775134622DA42D700FE5334 /* AppDelegate.swift in Sources */,
+				F7891BF422E924F8000265C4 /* ActivityBindable.swift in Sources */,
+				F7C9AFC122EB862300C47199 /* Learner+CoreDataProperties.swift in Sources */,
+				F77513C722DCE63300FE5334 /* LearnerCreateModal.swift in Sources */,
 				F775134D22DA42D700FE5334 /* ContentView.swift in Sources */,
+				F7DF12B222F128C200E9B01B /* TagTypes+CoreDataProperties.swift in Sources */,
+				F79CD3CD22DE2FC600C3D998 /* ActivityCard.swift in Sources */,
+				F775139C22DAA59700FE5334 /* QuestionStore.swift in Sources */,
+				F7891BF022E58421000265C4 /* DisplayUIImage.swift in Sources */,
+				F7DF12B822F132D900E9B01B /* TagStore.swift in Sources */,
+				F7DF12BA22F132E500E9B01B /* TagTypeStore.swift in Sources */,
+				F77513A922DAB02100FE5334 /* Home.swift in Sources */,
 				F775134822DA42D700FE5334 /* SceneDelegate.swift in Sources */,
+				F77513C222DCD24C00FE5334 /* AddLearners.swift in Sources */,
+				F77513C022DC310C00FE5334 /* UserStore.swift in Sources */,
+				F785AC7D22E0EA8400992812 /* ImagePicker.swift in Sources */,
+				F7CA861D22F1F9E500536797 /* QuestionHorizontalList.swift in Sources */,
+				F77513B622DC19C400FE5334 /* UserDetails.swift in Sources */,
+				F70D46B022DEC79200D93E79 /* QuestionCreateDetailView.swift in Sources */,
+				F77513BC22DC278900FE5334 /* TabbedMain.swift in Sources */,
+				F775137B22DA430A00FE5334 /* DocumentTest.swift in Sources */,
+				F7DF12B622F1327B00E9B01B /* TagSelect.swift in Sources */,
+				F7DF12B422F128C200E9B01B /* Tag+CoreDataProperties.swift in Sources */,
+				F79CD3CB22DE2FB300C3D998 /* ActivitiesHorizontalList.swift in Sources */,
+				F70D46AE22DEC75900D93E79 /* CreationRowView.swift in Sources */,
+				F77513A722DAAAF000FE5334 /* User+CoreDataProperties.swift in Sources */,
+				F775139F22DAA9BD00FE5334 /* DemoData1.swift in Sources */,
+				F79CD3D122DE3E8400C3D998 /* ActivityStore.swift in Sources */,
+				F77513AB22DBDCC900FE5334 /* MainEnvObj.swift in Sources */,
+				F77513BE22DC29E700FE5334 /* QuickNote.swift in Sources */,
+				F70D46AB22DE806700D93E79 /* ActivityDetailView.swift in Sources */,
+				F775138B22DAA16D00FE5334 /* Question+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,7 +748,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TiroiOSApp/TiroiOSApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "TiroiOSApp/Preview\\ Content";
 				DEVELOPMENT_TEAM = 28J96X49L6;
 				ENABLE_PREVIEWS = YES;
@@ -447,10 +759,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.TiroiOSApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -458,7 +771,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TiroiOSApp/TiroiOSApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "TiroiOSApp/Preview\\ Content";
 				DEVELOPMENT_TEAM = 28J96X49L6;
 				ENABLE_PREVIEWS = YES;
@@ -467,10 +782,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.TiroiOSApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
