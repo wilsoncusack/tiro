@@ -30,7 +30,7 @@ struct QuestionEditableForm : View {
             mainEnv.createQuestionFromBindable(bindable: questionBindable)
         }
         self.showModal = false
-       self.presentationMode.value.dismiss()
+        self.presentationMode.wrappedValue.dismiss()
        self.done()
         
         

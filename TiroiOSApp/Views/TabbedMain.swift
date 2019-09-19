@@ -19,9 +19,9 @@ struct TabbedMain : View {
                 .tabItem({
                     selection == 0 ?
                         Image(systemName: "house.fill")
-                            .imageScale(.large) :
+                            .imageScale(.medium) :
                         Image(systemName: "house")
-                            .imageScale(.large)
+                            .imageScale(.medium)
                     Text("Home")
                 })
                 .tag(0)
@@ -32,9 +32,9 @@ struct TabbedMain : View {
                 .tabItem({
                     selection == 1 ?
                         Image(systemName: "plus.square.fill")
-                            .imageScale(.large) :
+                            .imageScale(.medium) :
                         Image(systemName: "plus.square")
-                            .imageScale(.large)
+                            .imageScale(.medium)
                     Text("New")
                 })
                 .tag(1)
@@ -47,9 +47,9 @@ struct TabbedMain : View {
                 .tabItem({
                     selection == 2 ?
                         Image(systemName: "questionmark.diamond.fill")
-                            .imageScale(.large) :
+                            .imageScale(.medium) :
                         Image(systemName: "questionmark.diamond")
-                            .imageScale(.large)
+                            .imageScale(.medium)
                     Text("Feedback")
                 })
                 .tag(2)

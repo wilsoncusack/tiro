@@ -74,7 +74,7 @@ class ActivityStore : NSObject {
         tagTouples.sort { (touple1, touple2) -> Bool in
             return touple1.count - touple2.count > 0
         }
-        var toReturn = tagTouples[..<min(tagTouples.count, 4)]
+        let toReturn = tagTouples[..<min(tagTouples.count, 4)]
         return Array(toReturn)
 
     }
@@ -103,7 +103,7 @@ class ActivityStore : NSObject {
             return touple1.count - touple2.count > 0
         }
         
-        var toReturn = tagTouples[..<min(tagTouples.count, 4)]
+        let toReturn = tagTouples[..<min(tagTouples.count, 4)]
         
        // tags =  Array(toReturn)
 

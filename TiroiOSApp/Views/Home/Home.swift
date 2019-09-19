@@ -100,32 +100,32 @@ struct Home : View {
                 //QuestionCard(question: "Why don't cockroaches like cucumbers?", answer: nil, learner: mainEnv.learnerStore.learners[0] )
                     
                 
-                Button(action: {
-                   
-                    
-                    for tag in self.mainEnv.tagStore.tags{
-                       self.mainEnv.tagStore.delete(tag: tag)
-                   }
-                   for tagType in self.mainEnv.tagTypeStore.tagTypes{
-                       self.mainEnv.tagTypeStore.delete(tagType: tagType)
-                   }
-                    for learner in  self.mainEnv.learnerStore.learners{
-                        self.mainEnv.deleteLearner(learner: learner)
-                    }
-                    for activity in self.mainEnv.activityStore.activities{
-                        self.mainEnv.deleteActivity(activity: activity)
-                    }
-                    for question in self.mainEnv.questionStore.questions{
-                        self.mainEnv.questionStore.delete(question: question)
-                    }
-                   
-                    
-                     self.mainEnv.deleteUser()
-                    
-                    
-                }){
-                        Text("Reset")
-                }
+//                Button(action: {
+//
+//
+//                    for tag in self.mainEnv.tagStore.tags{
+//                       self.mainEnv.tagStore.delete(tag: tag)
+//                   }
+//                   for tagType in self.mainEnv.tagTypeStore.tagTypes{
+//                       self.mainEnv.tagTypeStore.delete(tagType: tagType)
+//                   }
+//                    for learner in  self.mainEnv.learnerStore.learners{
+//                        self.mainEnv.deleteLearner(learner: learner)
+//                    }
+//                    for activity in self.mainEnv.activityStore.activities{
+//                        self.mainEnv.deleteActivity(activity: activity)
+//                    }
+//                    for question in self.mainEnv.questionStore.questions{
+//                        self.mainEnv.questionStore.delete(question: question)
+//                    }
+//
+//
+//                     self.mainEnv.deleteUser()
+//
+//
+//                }){
+//                        Text("Reset")
+//                }
                 
            
                 }
@@ -133,6 +133,7 @@ struct Home : View {
                
             }//.edgesIgnoringSafeArea(.top)
             .background(Color.init(red: 0.92, green: 0.92, blue: 0.95))
+                
 
             .sheet(isPresented: $showModal, content: {
                 PopoverContainer(modalKind: self.$modalKind, activity: self.$selectedActivity, question: self.$selectedQuestion, showModal: self.$showModal).environmentObject(self.mainEnv)

@@ -75,7 +75,7 @@ struct ActivityEditableForm : View {
             mainEnv.createActivtyFromBindable(bindable: activityBindable)
         }
         self.showModal = false
-       self.presentationMode.value.dismiss()
+        self.presentationMode.wrappedValue.dismiss()
        self.done()
         
         
