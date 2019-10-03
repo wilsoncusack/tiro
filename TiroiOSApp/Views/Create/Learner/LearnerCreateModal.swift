@@ -13,73 +13,89 @@ struct LearnerCreateModal : View {
     @Binding var showModal : Bool
     @State var name = ""
     @State var selectedIcon : String = ""
-//    var icons : [icon] {
-//
-//    }
+     @State var image : UIImage? = nil
+    @State var presentImagePicker : Bool = false
     
-//    func profileImageMaker(icon: Icon) -> some View {
-//        if(icon.image == self.selectedIcon){
-//           return ProfileImage(imageName: icon.image, size : 100) .overlay(Circle().stroke(Color.black, lineWidth: 4))
-//            .tapAction {
-//                    self.selectedIcon = ""
-//            }
-//        } else {
-//          return ProfileImage(imageName: icon.image, size : 100)
-//            .overlay(Circle().stroke(Color.black, lineWidth: 0))
-//            .tapAction {
-//                self.selectedIcon = icon.image
-//
-//            }
-//        }
-//    }
-//    
     var body: some View {
         NavigationView{
             VStack(alignment: .leading) {
                 Form{
                     TextField("Learner name", text: $name)
                         .padding(.leading, 15)
-                    Section(header: Text("Profile Image")){
+                    Section(header: Text("Choose a profile image")){
                         ScrollView(.horizontal,showsIndicators: false) {
                             HStack(alignment: .top){
-
+                                
                                 ForEach(mainEnv.icons){icon in
-                                   // self.profileImageMaker(icon: icon)
-                                    ProfileImage(imageName: icon.image, size : 100)
+                                    // self.profileImageMaker(icon: icon)
+                                    Image(icon.image)
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(Circle())
                                         .overlay(Circle().stroke(Color.black, lineWidth: icon.image == self.selectedIcon ? 4 : 0))
                                         .onTapGesture {
                                             self.selectedIcon = icon.image
-//                                            icon.image == self.selectedIcon ? self.selectedIcon = "" : self.selectedIcon =
-                                        }
+                                            //                                            icon.image == self.selectedIcon ? self.selectedIcon = "" : self.selectedIcon =
+                                    }
                                 }
-
+                                
                             }.frame(height: 108)
                                 .padding(.leading, 15)
                                 .padding(.trailing, 15)
                         }
                     }
-                }
-            }
-            .navigationBarTitle("Create Learner", displayMode: .inline)
-                .navigationBarItems(leading:
-                    Button(action : {self.showModal.toggle()}){
-                        Text("Cancel")
-                    }
-                    ,trailing:
-                    Button(action : {
-                        if(self.name != "" && self.selectedIcon != ""){
-                            self.mainEnv.createLearner(name: self.name, profile_image_name: self.selectedIcon)
-                            self.showModal = false
-                            self.name = ""
-                            self.selectedIcon = ""
+                    Section(header: Text("Or add your own")){
+                        if(image != nil) {
+                        HStack{
+                            DisplayUIImage(uiImageData: image!.jpegData(compressionQuality: 1)!)
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                            Button(action: {
+                                self.presentImagePicker = true
+                                self.image = nil
+                            }){
+                                Text("Add Photo")
+                            }
                         }
                         
-                    }){
-                        Text("Save")
-                    }.foregroundColor(self.name == "" || self.selectedIcon == "" ? .gray : .blue)
+                    } else {
+                        
+                        Button(action: {
+                            self.presentImagePicker = true
+                            self.image = nil
+                        }){
+                            Text("Add Photo")
+                        }
+                    }
+                        }.sheet(isPresented: $presentImagePicker) {
+                            ImagePicker(showModal: self.$presentImagePicker, image: self.$image)
+                        }
+                    }
+                }
+            
+    
+            .navigationBarTitle("Create Learner", displayMode: .inline)
+            .navigationBarItems(leading:
+                Button(action : {self.showModal.toggle()}){
+                    Text("Cancel")
+                }
+                ,trailing:
+                Button(action : {
+                    if(self.name != "" && (self.selectedIcon != "" || self.image != nil)){
+                        self.mainEnv.createLearner(name: self.name, profile_image_name: self.selectedIcon, image: self.image?.jpegData(compressionQuality: 1))
+                        self.showModal = false
+                        self.name = ""
+                        self.selectedIcon = ""
+                    }
+                    
+                }){
+                    Text("Save")
+                }.foregroundColor(self.name == "" || (self.selectedIcon == "" && self.image == nil) ? .gray : .blue)
             )
         }
-    }
+        }
+
+    
 }
 
 #if DEBUG

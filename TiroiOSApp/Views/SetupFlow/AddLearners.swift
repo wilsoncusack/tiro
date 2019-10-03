@@ -14,6 +14,7 @@ struct AddLearners : View {
     @State var showModal = false
     
     var body: some View {
+        NavigationView{
         VStack {
             Text("Great! Now let's add your learners")
                 .padding(.top, 20)
@@ -35,7 +36,7 @@ struct AddLearners : View {
                 
                 ForEach(mainEnv.learnerStore.learners){learner in
                     HStack {
-                        ProfileImage(imageName: learner.profile_image_name!, size : 50)
+                        ProfileImage(learner: learner, size : 50)
                         Text(learner.name)
                             .font(.title)
                     }.padding(.leading, 15)
@@ -59,7 +60,7 @@ struct AddLearners : View {
         }
         .navigationBarTitle("Add Learners", displayMode: .inline)
             .sheet(isPresented: $showModal, content: {LearnerCreateModal(showModal: self.$showModal).environmentObject(self.mainEnv)})
-        
+        }
     }
 }
 

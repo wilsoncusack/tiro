@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A573a" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Activity" representedClassName=".Activity" syncable="YES">
+        <attribute name="activity_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="image_name" optional="YES" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="created_by" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="activities" inverseEntity="User"/>
+        <relationship name="participants" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Learner" inverseName="activities" inverseEntity="Learner"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Tag" inverseName="activities" inverseEntity="Tag"/>
+    </entity>
+    <entity name="Learner" representedClassName=".Learner" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="profile_image_name" optional="YES" attributeType="String"/>
+        <relationship name="activities" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Activity" inverseName="participants" inverseEntity="Activity"/>
+        <relationship name="created_by" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="learners" inverseEntity="User"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Question" inverseName="asker" inverseEntity="Question"/>
+    </entity>
+    <entity name="Question" representedClassName=".Question" syncable="YES">
+        <attribute name="answer_text" optional="YES" attributeType="String"/>
+        <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="question_text" optional="YES" attributeType="String"/>
+        <relationship name="asker" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Learner" inverseName="questions" inverseEntity="Learner"/>
+        <relationship name="created_by" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="User" inverseName="questions" inverseEntity="User"/>
+    </entity>
+    <entity name="Tag" representedClassName=".Tag" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="activities" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Activity" inverseName="tags" inverseEntity="Activity"/>
+        <relationship name="tag_type" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Tag_Type" inverseName="instances" inverseEntity="Tag_Type"/>
+    </entity>
+    <entity name="Tag_Type" representedClassName=".TagType" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="instances" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Tag" inverseName="tag_type" inverseEntity="Tag"/>
+    </entity>
+    <entity name="User" representedClassName=".User" syncable="YES">
+        <attribute name="first_name" optional="YES" attributeType="String"/>
+        <attribute name="has_finished_setup" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="last_name" optional="YES" attributeType="String"/>
+        <relationship name="activities" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Activity" inverseName="created_by" inverseEntity="Activity"/>
+        <relationship name="learners" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Learner" inverseName="created_by" inverseEntity="Learner"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Question" inverseName="created_by" inverseEntity="Question"/>
+    </entity>
+    <elements>
+        <element name="Activity" positionX="-112.74609375" positionY="291.52734375" width="128" height="193"/>
+        <element name="Learner" positionX="305.015625" positionY="5.42578125" width="128" height="148"/>
+        <element name="Question" positionX="96.59765625" positionY="-152.6484375" width="128" height="133"/>
+        <element name="Tag" positionX="-57.07421875" positionY="-119.671875" width="128" height="103"/>
+        <element name="Tag_Type" positionX="82.578125" positionY="175.765625" width="128" height="88"/>
+        <element name="User" positionX="-285.296875" positionY="-8.46875" width="128" height="148"/>
+    </elements>
+</model>

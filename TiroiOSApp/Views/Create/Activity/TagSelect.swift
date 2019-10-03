@@ -40,8 +40,13 @@ struct TagSelectList : View {
     var selectableItems : [Tag]
     @ObservedObject var selectionManager : MySelectionManager
     var body: some View {
+        Form{
+            Text("Select one or many")
+                .italic()
+                .foregroundColor(.secondary)
         List(selectableItems){tag in
             TagSelectRow(selectionManager: self.selectionManager, selectableItem: tag)
+            }
        }
     }
 }

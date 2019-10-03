@@ -15,7 +15,7 @@ class LearnerStore : NSObject {
     private let persistenceManager = PersistenceManager()
     
     private lazy var fetchedResultsController: NSFetchedResultsController<Learner> = {
-        let fetchRequest: NSFetchRequest<Learner> = Learner.fetchRequest()
+        let fetchRequest: NSFetchRequest<Learner> = Learner.aFetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: false)]
         
         let fetchedResultsController = NSFetchedResultsController(
@@ -54,8 +54,8 @@ class LearnerStore : NSObject {
         } catch { fatalError() }
     }
     
-    public func create(name: String, created_by : User, profile_image_name : String?) {
-        Learner.create(name: name, created_by: created_by, profile_image_name : profile_image_name, in: self.persistenceManager.managedObjectContext)
+    public func create(name: String, created_by : User, profile_image_name : String?, image: Data?) {
+        Learner.create(name: name, created_by: created_by, profile_image_name : profile_image_name, image: image, in: self.persistenceManager.managedObjectContext)
         saveChanges()
     }
     
@@ -68,6 +68,7 @@ class LearnerStore : NSObject {
 
 extension LearnerStore: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("\n\nwill change\n\n")
         //didChange.send(self)
         // this seems like a waste. I think we need to find a way to make the main env obj the delegate. But probably not worth worrying about now.
     }

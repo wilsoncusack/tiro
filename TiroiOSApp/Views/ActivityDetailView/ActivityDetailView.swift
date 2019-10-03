@@ -115,7 +115,7 @@ struct ActivityDetailView : View {
                 }
             }
         }.edgesIgnoringSafeArea(.top)
-            .navigationBarItems(trailing:
+            .navigationBarItems( trailing:
                 Button(action : {self.showModal.toggle()}){
                                                Image(systemName: "xmark.circle.fill")
                                                    .resizable()

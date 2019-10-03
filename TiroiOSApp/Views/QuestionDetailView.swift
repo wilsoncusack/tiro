@@ -32,7 +32,7 @@ struct QuestionDetailView: View {
 //                    .foregroundColor(.white)
                 Spacer()
                 HStack{
-                    ProfileImage(imageName: question.asker.profile_image_name!, size: 50)
+                    ProfileImage(learner: question.asker, size: 50)
                     Text(question.asker.name)
                         .fontWeight(.bold)
 //                        .foregroundColor(.white)

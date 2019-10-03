@@ -14,6 +14,8 @@ struct ContentView : View {
  
     var body: some View {
             Main()//.environmentObject(mainEnvObj)
+//            .background(Color.init(red: 0.92, green: 0.92, blue: 0.95))
+            
     }
 }
 

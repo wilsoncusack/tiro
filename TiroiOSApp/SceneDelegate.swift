@@ -12,6 +12,7 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var mainEnv = MainEnvObj()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -22,7 +23,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: ContentView().environmentObject(MainEnvObj()))
+            
+            //let managedObjectContext = AppDelegate.shared.persistentContainer.viewContext
+            let persistenceManager = PersistenceManager()
+            let managedObjectContext = persistenceManager.managedObjectContext
+            window.rootViewController = UIHostingController(rootView: ContentView().environmentObject(mainEnv).environment(\.managedObjectContext, managedObjectContext))
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -38,6 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        print("scene did become active")
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -48,6 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        print("scene will enter foreground")
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -56,6 +63,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
+        print("scene did enter background")
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 

@@ -55,6 +55,12 @@ class MainEnvObj : ObservableObject {
             tagStore.create(name: "science", tag_type: tagTypeStore.tagTypes[0])
             tagStore.create(name: "reading", tag_type: tagTypeStore.tagTypes[0])
             tagStore.create(name: "writing", tag_type: tagTypeStore.tagTypes[0])
+            tagStore.create(name: "history", tag_type: tagTypeStore.tagTypes[0])
+            tagStore.create(name: "foreign language", tag_type: tagTypeStore.tagTypes[0])
+        }
+        if((tagStore.tags.filter {$0.name == "history"}).count == 0){
+           tagStore.create(name: "history", tag_type: tagTypeStore.tagTypes[0])
+            tagStore.create(name: "foreign language", tag_type: tagTypeStore.tagTypes[0])
         }
         if(userStore.user != nil){
             self.setupShowUserCreation = false
@@ -88,8 +94,8 @@ class MainEnvObj : ObservableObject {
         self.userStore.user?.has_finished_setup = true
     }
     
-    public func createLearner(name : String, profile_image_name : String?){
-        self.learnerStore.create(name: name, created_by: userStore.user!, profile_image_name : profile_image_name)
+    public func createLearner(name : String, profile_image_name : String?, image: Data?){
+        self.learnerStore.create(name: name, created_by: userStore.user!, profile_image_name : profile_image_name, image: image)
     }
     
     public func deleteLearner(learner : Learner) {
@@ -127,6 +133,7 @@ class MainEnvObj : ObservableObject {
         activity.tags = NSSet(array: bindableActivity.tags)
             activity.image = bindableActivity.image
         activityStore.saveChanges()
+        activity.objectWillChange.send()
     }
         
     func createActivtyFromBindable(bindable : ActivityBindable) {

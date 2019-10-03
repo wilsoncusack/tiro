@@ -14,13 +14,13 @@ struct ActivitiesHorizontalList : View {
     @Binding var modalKind: String
     @Binding var selectedActivity: Activity?
     
-    func activityCardBuilder(activity : Activity) -> ActivityCard {
-        var participants : [Learner] = []
-        if(activity.participants != nil) {
-            participants = activity.participants!.allObjects as! [Learner]
-        }
-        return ActivityCard(title : activity.title, activity_date: activity.activity_date, image: activity.image, participants: participants)
-    }
+//    func activityCardBuilder(activity : Activity) -> ActivityCard {
+//        var participants : [Learner] = []
+//        if(activity.participants != nil) {
+//            participants = activity.participants!.allObjects as! [Learner]
+//        }
+//        return ActivityCard(title : activity.title, activity_date: activity.activity_date, image: activity.image, participants: participants)
+//    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -34,12 +34,18 @@ struct ActivitiesHorizontalList : View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10){
                     ForEach(mainEnv.activityStore.activities){ activity in
-                        self.activityCardBuilder(activity: activity)
-                            .onTapGesture{
-                                self.selectedActivity = activity
-                                self.showModal = true
-                                self.modalKind = "activity"
-                            }
+//                        self.activityCardBuilder(activity: activity)
+//                            .onTapGesture{
+//                                self.selectedActivity = activity
+//                                self.showModal = true
+//                                self.modalKind = "activity"
+//                            }
+                        ActivityCard(activity: activity)
+                        .onTapGesture{
+                            self.selectedActivity = activity
+                            self.showModal = true
+                            self.modalKind = "activity"
+                        }
                     }
                 }.frame(height:230).padding(.leading, 15).padding(.trailing, 15)
             }.padding(.bottom,20)

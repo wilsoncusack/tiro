@@ -9,20 +9,29 @@
 import SwiftUI
 
 struct ProfileImage : View {
-    var imageName : String
+    @ObservedObject var learner: Learner
     var size : CGFloat
     var body: some View {
-        Image(imageName)
+        Group{
+        if(learner.image != nil){
+            DisplayUIImage(uiImageData: learner.image!)
+                .frame(width: size, height: size)
+                .clipShape(Circle())
+        } else {
+            
+        Image(learner.profile_image_name!)
             .resizable()
             .frame(width: size, height: size)
             .clipShape(Circle())
+        }
+        }
     }
 }
 
 #if DEBUG
-struct ProfileImage_Previews : PreviewProvider {
-    static var previews: some View {
-        ProfileImage(imageName : "rabbit", size: 100)
-    }
-}
+//struct ProfileImage_Previews : PreviewProvider {
+//    static var previews: some View {
+//        ProfileImage(imageName : "rabbit", size: 100)
+//    }
+//}
 #endif

@@ -36,17 +36,18 @@ struct Main : View {
     var body: some View {
         VStack{
             if(!mainEnv.setupShowUserCreation && !mainEnv.setupShowLearnerCreation) {
-                TabbedMain()
+                TabbedMain().edgesIgnoringSafeArea(.top)
             } else if(mainEnv.setupShowUserCreation){
-                Landing()
+                Landing()//.padding()
             }
             else {
-               AddLearners()
+                AddLearners()//.padding()
             }
         }
         //.padding(.top, 30)
 //        .background(Color.init(red: 0.92, green: 0.92, blue: 0.95))
-//            .edgesIgnoringSafeArea(.all)
+//            .edgesIgnoringSafeArea(.top)
+//            .offset(y: -50)
     }
     
 }

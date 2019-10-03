@@ -9,14 +9,49 @@
 import SwiftUI
 import UIKit
 import Combine
+//import BSImagePicker
+//import Photosu
+//import DKImagePickerController
+//
+class Multi: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+       
+    }
+
+}
+
+struct MultiPicker: UIViewControllerRepresentable {
+    func makeUIViewController(context: UIViewControllerRepresentableContext<MultiPicker>) -> Multi {
+        return Multi()
+    }
+
+    func updateUIViewController(_ uiViewController: Multi, context: UIViewControllerRepresentableContext<MultiPicker>) {
+        print("update")
+    }
+
+    typealias UIViewControllerType = Multi
+
+
+
+
+}
 
 struct ImagePicker : View {
     @Binding var showModal: Bool
     @Binding var image: UIImage?
+  
     
     
     var body: some View {
+//        MultiPicker()
+        VStack{
+        if(image == nil){
         ImagePickerViewController(showModal: $showModal, image: $image)
+        } else {
+            Image(uiImage: image!)
+        }
+        }
     }
 }
 
@@ -86,29 +121,6 @@ struct ActivityEditableForm : View {
             Section(header: Text("Title")){
                 TextField("Activity on " + Self.dateFormatter.string(from: activityBindable.activityDate), text: $activityBindable.title)
             }
-            Section{
-                TagSelect(selectionManager: tagSelectionManager)
-            }
-            Section{
-            TextField("Notes",  text: $activityBindable.notes)
-                .lineLimit(nil)
-            DatePicker("Date", selection: $activityBindable.activityDate)
-            NavigationLink(destination: LearnerSelect(selectionManager: learnerSelectionManger)){
-                HStack{
-                    Text("Add Learners")
-                    if(!participants.isEmpty){
-                        Spacer()
-                        
-                        ForEach(participants){learner in
-                            Text(learner.name)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                }
-            }
-            
-            }
-            
             Section(header : Text("Pick Image")){
                 if(activityBindable.image != nil){
                     HStack{
@@ -138,6 +150,34 @@ struct ActivityEditableForm : View {
             }.sheet(isPresented: $presentImagePicker) {
                 ImagePicker(showModal: self.$presentImagePicker, image: self.$image)
             }
+            
+            Section{
+                TagSelect(selectionManager: tagSelectionManager)
+                NavigationLink(destination: LearnerSelect(selectionManager: learnerSelectionManger)){
+                               HStack{
+                                   Text("Learners")
+                                   if(!participants.isEmpty){
+                                       Spacer()
+                                       
+                                       ForEach(participants){learner in
+                                           Text(learner.name)
+                                               .foregroundColor(.secondary)
+                                       }
+                                   }
+                               }
+                           }
+            }
+            Section{
+           
+            DatePicker("Date", selection: $activityBindable.activityDate)
+                
+                TextField("Notes",  text: $activityBindable.notes)
+                               .lineLimit(nil)
+           
+            
+            }
+            
+            
             
             
         }

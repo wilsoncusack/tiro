@@ -24,6 +24,7 @@ struct ImagePickerViewController: UIViewControllerRepresentable {
         imagePicker.allowsEditing = true
         
         imagePicker.delegate = context.coordinator
+        
         return imagePicker
     }
 
@@ -38,13 +39,28 @@ struct ImagePickerViewController: UIViewControllerRepresentable {
         init(_ parent: ImagePickerViewController) {
             self.parent = parent
         }
-
+        
+        
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             let imagePicked = info[.editedImage] as! UIImage
             parent.image = imagePicked
             parent.showModal = false
-            
+
+
             picker.dismiss(animated: true, completion: nil)
         }
     }
 }
+
+//extension ImagePickerViewController: RSKImageCropViewControllerDelegate {
+//
+//    func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
+//        _ = self.navigationController?.popViewController(animated: true)
+//    }
+//
+//    func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
+//        self.avatarImageView.image = croppedImage
+//        _ = self.navigationController?.popViewController(animated: true)
+//    }
+//
+//}
