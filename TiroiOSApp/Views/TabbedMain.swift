@@ -10,12 +10,13 @@ import SwiftUI
 
 struct TabbedMain : View {
     @State private var selection = 0
-    @EnvironmentObject var mainEnvObj : MainEnvObj
+    //@EnvironmentObject var mainEnvObj : MainEnvObj
+    @ObservedObject var store: Store<AppState, AppAction>
     
     var body: some View {
         TabView(selection: $selection){
             //Home()//.environmentObject(mainEnvObj)
-            Home()
+            Home(store: store)
                 .tabItem({
                     selection == 0 ?
                         Image(systemName: "house.fill")
@@ -27,7 +28,7 @@ struct TabbedMain : View {
                 .tag(0)
             
             //CreateMain().environmentObject(mainEnvObj)
-           CreateMain(tabSelection: $selection)
+            CreateMain(store: store, tabSelection: $selection)
                 //Text("hey")
                 .tabItem({
                     selection == 1 ?
@@ -58,10 +59,4 @@ struct TabbedMain : View {
     }
 }
 
-#if DEBUG
-struct TabbedMain_Previews : PreviewProvider {
-    static var previews: some View {
-        TabbedMain().environmentObject(MainEnvObj())
-    }
-}
-#endif
+

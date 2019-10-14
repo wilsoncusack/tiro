@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="19A558d" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A573a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Activity" representedClassName=".Activity" syncable="YES">
         <attribute name="activity_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -11,6 +11,9 @@
         <relationship name="created_by" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="activities" inverseEntity="User"/>
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Learner" inverseName="activities" inverseEntity="Learner"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="activities" inverseEntity="Tag"/>
+    </entity>
+    <entity name="AnonymousProfile" representedClassName=".AnonymousProfile" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <entity name="Learner" representedClassName=".Learner" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -56,5 +59,6 @@
         <element name="Tag" positionX="178.484375" positionY="-103.5546875" width="128" height="103"/>
         <element name="Tag_Type" positionX="267.53125" positionY="89.87890625" width="128" height="88"/>
         <element name="User" positionX="-409.171875" positionY="-149.1015625" width="128" height="148"/>
+        <element name="AnonymousProfile" positionX="-207" positionY="-63" width="128" height="58"/>
     </elements>
 </model>

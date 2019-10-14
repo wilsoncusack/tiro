@@ -6,13 +6,14 @@
 //  Copyright © 2019 Wilson Cusack. All rights reserved.
 //
 
+
 import UIKit
 import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var mainEnv = MainEnvObj()
+    var appState = AppState()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -25,9 +26,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             
             //let managedObjectContext = AppDelegate.shared.persistentContainer.viewContext
-            let persistenceManager = PersistenceManager()
-            let managedObjectContext = persistenceManager.managedObjectContext
-            window.rootViewController = UIHostingController(rootView: ContentView().environmentObject(mainEnv).environment(\.managedObjectContext, managedObjectContext))
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            //let store<AppState, AppAction> =
+            //self.appState = AppState()
+            window.rootViewController = UIHostingController(rootView: ContentView(
+            store: Store(
+                initialValue: self.appState,
+                reducer: with(
+                  appReducer,
+                  //compose(
+                    logging
+                  //)
+                )
+              )
+            ).environment(\.managedObjectContext, context))
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -38,11 +50,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
+        
+        if(appState.reportingProfile != nil){
+             logSingle(log: Log(action: "endSession", anonID: appState.reportingProfile!.id))
+        // appState.sessionLog.append(Log(action: "endSession", anonID: appState.reportingProfile!.id))
+             //networkLog(sessionLog: self.appState.sessionLog)
+             //self.appState.sessionLog = [Log]()
+         }
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        if(appState.reportingProfile != nil){
+            logSingle(log: Log(action: "startSession", anonID: appState.reportingProfile!.id))
+            //appState.sessionLog.append(Log(action: "startSession", anonID: appState.reportingProfile!.id))
+        }
         print("scene did become active")
     }
 
@@ -63,6 +86,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
+        if(appState.reportingProfile != nil){
+            logSingle(log: Log(action: "endSession", anonID: appState.reportingProfile!.id))
+       // appState.sessionLog.append(Log(action: "endSession", anonID: appState.reportingProfile!.id))
+            //networkLog(sessionLog: self.appState.sessionLog)
+            //self.appState.sessionLog = [Log]()
+        }
+        
         print("scene did enter background")
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }

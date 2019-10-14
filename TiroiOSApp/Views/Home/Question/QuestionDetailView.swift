@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct QuestionDetailView: View {
+    @ObservedObject var store: Store<QuestionState, QuestionAction>
     @ObservedObject var question : Question
     
     var body: some View {
@@ -49,7 +50,7 @@ struct QuestionDetailView: View {
         .navigationBarTitle("Question", displayMode: .large)
             .navigationBarItems(trailing:
 //        NavigationLink(destination: QuestionCreateDetailView(question: question, done: {}))
-                NavigationLink(destination: QuestionCreateDetailView(store: , question: question, done: {}))
+                NavigationLink(destination: QuestionCreateDetailView(store: store, question: question, done: {}))
         {
         Text("Edit")
             })

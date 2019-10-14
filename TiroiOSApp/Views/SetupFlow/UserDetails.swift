@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct UserDetails : View {
-    @EnvironmentObject var mainEnv : MainEnvObj
+    @ObservedObject var store: Store<AppState, AppAction>
     
     @State var first_name = ""
     @State var last_name = ""
@@ -40,8 +40,9 @@ struct UserDetails : View {
                
                 
                 Button(action: {
-                    self.mainEnv.createUser(first_name: self.first_name, last_name: self.last_name)
-                    self.mainEnv.setupShowUserCreation = false
+                    self.store.send(.user(.create(firstName: self.first_name, lastName: self.last_name)))
+//                    self.mainEnv.createUser(first_name: self.first_name, last_name: self.last_name)
+//                    self.mainEnv.setupShowUserCreation = false
                 }){
                     Text("Next")
                         .foregroundColor(.white)

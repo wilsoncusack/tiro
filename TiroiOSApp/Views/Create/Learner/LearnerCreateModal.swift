@@ -9,12 +9,14 @@
 import SwiftUI
 
 struct LearnerCreateModal : View {
-    @EnvironmentObject var mainEnv : MainEnvObj
+    //@EnvironmentObject var mainEnv : MainEnvObj
+    @ObservedObject var store: Store<LearnerState, LearnerAction>
     @Binding var showModal : Bool
     @State var name = ""
     @State var selectedIcon : String = ""
-     @State var image : UIImage? = nil
+     @State var image : Data? = nil
     @State var presentImagePicker : Bool = false
+    @State var throwAwayDate: Date = Date()
     
     var body: some View {
         NavigationView{
@@ -26,7 +28,7 @@ struct LearnerCreateModal : View {
                         ScrollView(.horizontal,showsIndicators: false) {
                             HStack(alignment: .top){
                                 
-                                ForEach(mainEnv.icons){icon in
+                                ForEach(systemProfileIcons){icon in
                                     // self.profileImageMaker(icon: icon)
                                     Image(icon.image)
                                         .resizable()
@@ -47,7 +49,7 @@ struct LearnerCreateModal : View {
                     Section(header: Text("Or add your own")){
                         if(image != nil) {
                         HStack{
-                            DisplayUIImage(uiImageData: image!.jpegData(compressionQuality: 1)!)
+                            DisplayUIImage(uiImageData: image!)
                             .frame(width: 100, height: 100)
                             .clipShape(Circle())
                             Button(action: {
@@ -68,7 +70,7 @@ struct LearnerCreateModal : View {
                         }
                     }
                         }.sheet(isPresented: $presentImagePicker) {
-                            ImagePicker(showModal: self.$presentImagePicker, image: self.$image)
+                            ImagePicker(showModal: self.$presentImagePicker, image: self.$image, imageDate: self.$throwAwayDate)
                         }
                     }
                 }
@@ -82,7 +84,7 @@ struct LearnerCreateModal : View {
                 ,trailing:
                 Button(action : {
                     if(self.name != "" && (self.selectedIcon != "" || self.image != nil)){
-                        self.mainEnv.createLearner(name: self.name, profile_image_name: self.selectedIcon, image: self.image?.jpegData(compressionQuality: 1))
+                        self.store.send(.create(name: self.name, imageString: self.selectedIcon, image: self.image))
                         self.showModal = false
                         self.name = ""
                         self.selectedIcon = ""
@@ -98,12 +100,4 @@ struct LearnerCreateModal : View {
     
 }
 
-#if DEBUG
-struct LearnerCreateModal_Previews : PreviewProvider {
-    @State static var showModal = false
-    static var previews: some View {
-        //        LearnerCreateModal(showModal: $showModal).environmentObject(MainEnvObj())
-        AddLearners().environmentObject(MainEnvObj())
-    }
-}
-#endif
+

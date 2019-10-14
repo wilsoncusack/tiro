@@ -9,11 +9,15 @@
 import SwiftUI
 
 struct LearnerDetail: View {
-    @EnvironmentObject var mainEnv : MainEnvObj
-    @Binding var showModal: Bool
+   // @Binding var showModal: Bool
+    @ObservedObject var store: Store<LearnerState, LearnerAction>
+    @State var name: String
+    @State var image: Data?
     @ObservedObject var learner: Learner
+    
     @State var presentImagePicker = false
-    @State var image : UIImage? = nil
+    @State var throwAwayDate : Date = Date()
+    @Environment(\.presentationMode) var presentationMode
     
     
     var body: some View {
@@ -22,7 +26,7 @@ struct LearnerDetail: View {
                 if(image == nil){
                     ProfileImage(learner: learner, size: 100)
                 } else {
-                    DisplayUIImage(uiImageData: image!.jpegData(compressionQuality: 1)!)
+                    DisplayUIImage(uiImageData: image!)
                     .frame(width: 100, height: 100)
                     .clipShape(Circle())
                 }
@@ -33,24 +37,30 @@ struct LearnerDetail: View {
                 }){
                     Text("Change Photo")
                 }
-                }.sheet(isPresented: $presentImagePicker) {
-                    ImagePicker(showModal: self.$presentImagePicker, image: self.$image)
-                }
-            .navigationBarTitle(Text(learner.name), displayMode: .inline)
-            .navigationBarItems(leading:
-                Button(action: {
-                    self.showModal = false
-                }){Text("Cancel")}
-                , trailing: Button(action: {
-                    if(self.image != nil){
-                        self.learner.objectWillChange.send()
-                        self.learner.image = self.image!.jpegData(compressionQuality: 1)
-                        self.mainEnv.learnerStore.saveChanges()
-                        
-                    }
-                    self.showModal = false
-                }){Text("Save")})
+                TextField("Name", text: $name)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 200)
+                Spacer()
+//                Button(action: {
+//                     self.presentationMode.wrappedValue.dismiss()
+//                    AppDelegate.shared.persistentContainer.viewContext.delete(self.learner)
+//                    AppDelegate.shared.saveContext()
+//                }){
+//                    Text("Delete")
+//                        .foregroundColor(.red)
+//                }.padding(.top, 40)
                 
+                }.sheet(isPresented: $presentImagePicker) {
+                    ImagePicker(showModal: self.$presentImagePicker, image: self.$image, imageDate: self.$throwAwayDate)
+                }
+        
+            .navigationBarTitle(Text(learner.name), displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                self.store.send(.edit(learner: self.learner, name: self.name, image: self.image))
+                        self.presentationMode.wrappedValue.dismiss()
+                   // self.showModal = false
+                }){Text("Save")})
+        .navigationBarHidden(false)
             
         }
    // }
