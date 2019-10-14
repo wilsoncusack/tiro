@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct Landing : View {
-     @EnvironmentObject var mainEnv : MainEnvObj
+    @ObservedObject var store: Store<AppState, AppAction>
     
     var body: some View {
         NavigationView{
@@ -24,7 +24,7 @@ struct Landing : View {
                     .font(.largeTitle)
                     .lineLimit(nil)
                 Spacer()
-                NavigationLink(destination: QuickNote()){
+                NavigationLink(destination: QuickNote(store: store)){
                     Text("Next")
                         .foregroundColor(.white)
                         .padding()

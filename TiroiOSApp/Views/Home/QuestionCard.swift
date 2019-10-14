@@ -8,59 +8,42 @@
 
 import SwiftUI
 
-struct TestModal: View {
-    var body: some View {
-        Text("hey")
-    }
-}
+//func questionStatusText(_ answer: String?) -> Text{
+//    if(answer == nil || answer!.isEmpty){
+//      return  Text("Not Answered")
+//            .foregroundColor(.orange)
+//    } else {
+//       return Text("Answered")
+//        .foregroundColor(.green)
+//    }
+//}
 
 struct QuestionCard: View {
-    var question: String
-    var answer: String?
-    var learner: Learner
-    //@State var showModal = false
+    @ObservedObject var question: Question
     
     var body: some View {
         VStack(alignment: .leading){
             VStack(alignment: .leading) {
-                Text(question)
-                    .frame(height: 45)
-                    .lineLimit(2)
+                Text(question.question_text)
+                    .frame(width: 235, height: 45)
+                    .lineLimit(1)
+                    
 
             }.padding(.bottom, 15)
             HStack{
-                Text(learner.name)
+                if(question.asker != nil){
+                Text(question.asker!.name)
                     .bold()
-                Spacer()
-                if(answer == nil){
-                    Text("Not Answered")
-                        .foregroundColor(.orange)
-                } else {
-                    Text("Answered")
-                    .foregroundColor(.green)
                 }
+                Spacer()
+                questionStatusText(question.answer_text)
 
             }
         }.frame(width: 235, height: 80)
-//            .onTapGesture {
-//                self.showModal = true
-//        }
         .padding()
-        
-            .background(Color.white)
+        .background(Color(red: 1, green: 0.9843137255, blue: 0.9411764706))
             .cornerRadius(8)
-//        .shadow(radius: 5)
-//            .sheet(isPresented: $showModal) {
-//                TestModal()
-//        }
+            .padding(.top, 8).padding(.bottom, 8)
     }
 }
 
-#if DEBUG
-struct QuestionCard_Previews: PreviewProvider {
-    static var mainEnv = MainEnvObj()
-    static var previews: some View {
-        QuestionCard(question: "Why don't cockroaches like cucumbers?", answer: nil, learner: mainEnv.learnerStore.learners[0] )
-    }
-}
-#endif

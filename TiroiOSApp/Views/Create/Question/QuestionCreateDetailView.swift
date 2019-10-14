@@ -12,79 +12,92 @@ import Combine
 
 
 struct QuestionEditableForm : View {
-    @EnvironmentObject var mainEnv : MainEnvObj
-    @Binding var showModal : Bool
-    var question : Question?
-    @ObservedObject var questionBindable : QuestionBindable
+    @ObservedObject var store: Store<QuestionState, QuestionAction>
+    
+   
+    var question: Question?
+    @State var questionText: String
+    @State var answerText: String
+    @State var asker: Learner?
     var done : () -> Void
+    
+    //var actions = {AppAction.question($0)}
+    
+    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
+       var learners: FetchedResults<Learner>
     @Environment(\.presentationMode) var presentationMode
-    @State var learnerSelection = 0
-    @State var answerText = ""
     
     func save() {
+        //QuestionAction.create(questionText: <#T##String#>, answerText: <#T##String?#>, asker: <#T##Learner#>)
+        if(question != nil){
         
-        questionBindable.asker = mainEnv.learnerStore.learners[learnerSelection]
-        if question != nil {
-            mainEnv.saveQuestionFromBindable(bindableQuestion: questionBindable, question: question!)
+        store.send(.edit(questionText: self.questionText, answerText: self.answerText, asker: self.asker!, question: self.question!))
         } else {
-            mainEnv.createQuestionFromBindable(bindable: questionBindable)
+            store.send(.create(questionText: questionText, answerText: answerText, asker: asker!))
         }
-        self.showModal = false
         self.presentationMode.wrappedValue.dismiss()
-       self.done()
-        
-        
+        self.done()
     }
     
-    func getLearner(name: String) -> Learner {
-        (mainEnv.learnerStore.learners.filter {$0.name == name})[0]
-    }
     
     var body : some View {
         Form{
-            TextField("Question", text: $questionBindable.question_text)
-            Picker("Who asked?", selection: $learnerSelection) {
-                ForEach(0 ..< mainEnv.learnerStore.learners.count){
-                    Text(self.mainEnv.learnerStore.learners[$0].name).tag($0)
-                }
-            }
+            TextField("Question", text: $questionText)
+            SingleSelect(title: "Who asked?", chosen: $asker, choices: learners.map {$0}, getName: {learner in learner.name})
             Section(header: Text("You can fill this in later 😃")){
-                TextField("Answer", text: $questionBindable.answer_text)
+                TextField("Answer", text: $answerText)
             }
             
         }
         .navigationBarItems(
             trailing:
             Button(action: {
+                if(self.questionText.isEmpty || self.asker == nil){
+                    return
+                }
                 self.save()
-               
+                
             }){
                 Text("Save")
+                    .foregroundColor((self.questionText.isEmpty || self.asker == nil) ? Color.gray : Color.blue)
             }
         )
     }
 }
 
+//typealias QuestionStateTest = (loggedInUser: User, questionEditable: QuestionBindable)
+
 struct QuestionCreateDetailView : View {
-    @EnvironmentObject var mainEnv : MainEnvObj
-    @Binding var showModal : Bool
+    //@EnvironmentObject var mainEnv : MainEnvObj
+    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
+    var learners: FetchedResults<Learner>
+    
+    @ObservedObject var store : Store<QuestionState, QuestionAction>
     var question : Question?
     var done : () -> Void
     
+    var questionText : String
+    var answerText : String
+    var asker: Learner?
     
-    var questionBindable : QuestionBindable {
-        if question != nil {
-            return mainEnv.createBindablefromQuestion(question: question!)
-        } else {
-            return QuestionBindable(question_text: "", asker: nil, answer_text: nil)
+    init(store: Store<QuestionState, QuestionAction>, question: Question?,  done: @escaping () -> Void){
+        self.store = store
+        self.done = done
+        self.questionText = ""
+        self.answerText = ""
+        self.asker = nil
+        if(question != nil){
+            self.question = question
+            self.questionText = question!.question_text
+            self.answerText = question!.answer_text ?? ""
+            self.asker = question!.asker
         }
     }
     
     
     var body: some View {
         
-        QuestionEditableForm(showModal: $showModal, question: question, questionBindable: questionBindable,  done: done)
-            
+        QuestionEditableForm(store: self.store, question: question, questionText: self.questionText, answerText: self.answerText, asker: self.asker, done: self.done)
             .navigationBarTitle("\(question != nil ? "Edit" : "Create") Question", displayMode: .inline)
         
         

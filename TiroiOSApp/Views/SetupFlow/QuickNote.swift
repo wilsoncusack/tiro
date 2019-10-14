@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct QuickNote : View {
-     @EnvironmentObject var mainEnv : MainEnvObj
+     @ObservedObject var store: Store<AppState, AppAction>
     
     var body: some View {
         VStack(alignment : .leading){
@@ -17,12 +17,12 @@ struct QuickNote : View {
                 .font(.largeTitle)
                 .bold()
                 .padding(.bottom, 15)
-            Text("We care a lot about your privacy. For now, everything you enter in this app, except feedback, is stored locally on your device only, not on our servers.")
+            Text("We care a lot about your privacy. For now, everything you enter in this app, except feedback, is stored locally on your device only, not on our servers. The only information we keep is anonymous usage.")
                 //.font(.title)
                 .lineLimit(nil)
                 .padding(.bottom, 15)
            Spacer()
-            NavigationLink(destination: UserDetails()){
+            NavigationLink(destination: UserDetails(store: store)){
                 Text("Next")
                     .foregroundColor(.white)
                     .padding()

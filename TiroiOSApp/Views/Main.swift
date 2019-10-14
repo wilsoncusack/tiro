@@ -24,38 +24,26 @@ import CoreData
 //}
 
 struct Main : View {
-    var data = DemoData()
-    @EnvironmentObject var mainEnv : MainEnvObj
+    //@EnvironmentObject var mainEnv : MainEnvObj
     @State var showUser = true
-    //var test = Test2()
-
-    
-    
-    
+    @ObservedObject var store: Store<AppState, AppAction>
     
     var body: some View {
         VStack{
-            if(!mainEnv.setupShowUserCreation && !mainEnv.setupShowLearnerCreation) {
-                TabbedMain().edgesIgnoringSafeArea(.top)
-            } else if(mainEnv.setupShowUserCreation){
-                Landing()//.padding()
+            if(store.value.loggedInUser != nil
+                && store.value.userHasFinishedSetup
+                //&& !mainEnv.setupShowLearnerCreation
+                ) {
+                TabbedMain(store: store).edgesIgnoringSafeArea(.top)
             }
-            else {
-                AddLearners()//.padding()
+            else if(store.value.loggedInUser == nil){
+                Landing(store: store)
+            }
+            else if(!store.value.userHasFinishedSetup){
+                AddLearners(store: store)
             }
         }
-        //.padding(.top, 30)
-//        .background(Color.init(red: 0.92, green: 0.92, blue: 0.95))
-//            .edgesIgnoringSafeArea(.top)
-//            .offset(y: -50)
     }
     
 }
 
-#if DEBUG
-struct Main_Previews : PreviewProvider {
-    static var previews: some View {
-        Main().environmentObject(MainEnvObj())
-    }
-}
-#endif

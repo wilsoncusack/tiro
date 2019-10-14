@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct CreateMain : View {
-    @EnvironmentObject var mainEnv : MainEnvObj
-    @State var dummyShowModal = false
+    //@EnvironmentObject var mainEnv : MainEnvObj
+    @ObservedObject var store: Store<AppState, AppAction>
     @Binding var tabSelection : Int
     
     func navigateHome() {
@@ -21,15 +21,22 @@ struct CreateMain : View {
         NavigationView{
             List{
                 NavigationLink(
-                destination: ActivityCreateDetailView(showModal: $dummyShowModal, activity: nil, done: navigateHome)){
+                destination: ActivityCreateDetailView(
+                    store: self.store.view(
+                        value: {$0.activityState},
+                        action: {.activity($0)}),
+                    done: navigateHome)){
                     CreationRowView(
                         title : "Activity",
                         description: "Record an Activity",
                         image: Image(systemName: "text.badge.star")
                     )
                 }
+                
                 NavigationLink(
-                    destination: QuestionCreateDetailView(showModal: $dummyShowModal, done: navigateHome)){
+                    destination:
+                    QuestionCreateDetailView(store:
+                        self.store.view(value: {$0.questionState}, action: {.question($0)}), question: nil, done: navigateHome)){
                     CreationRowView(title : "Question", description: "Record a question to answer later", image: Image(systemName: "questionmark.circle"))
                 }
 

@@ -9,217 +9,147 @@
 import SwiftUI
 import CoreData
 
-struct PopoverContainer : View {
-    @EnvironmentObject var mainEnv : MainEnvObj
-    @Binding var modalKind : String
-    @Binding var activity : Activity?
-    @Binding var question : Question?
-    @Binding var learner : Learner?
-    @Binding var showModal : Bool
-    var q : Question {
-        Question(question_text: "", answer_text: nil, asker: mainEnv.learnerStore.learners[0], created_by: mainEnv.userStore.user!)
-    }
-    
-    var body : some View {
-        NavigationView{
-            if(modalKind == "activity"){
-                if(self.activity != nil){
-                    ActivityDetailView(activity: activity!, showModal: $showModal)//.environmentObject(self.mainEnv)
-                }
-            } else if(self.modalKind == "question"){
-                QuestionDetailView(question: question!, showModal: $showModal)
-            }else if (self.modalKind == "activityCreate") {
-                ActivityCreateDetailView(showModal: $showModal, activity: activity, done: {}).environmentObject(mainEnv)
-            } else if (self.modalKind == "questionCreate"){
-                //QuestionCreateDetailView(showModal $showModal, question: question, done: {}).environmentObject(mainEnv)
-            } else if (self.modalKind == "learnerCreate"){
-                LearnerCreateModal(showModal: $showModal).environmentObject(mainEnv)
-            } else if (self.modalKind == "learnerEdit"){
-                LearnerDetail(showModal: $showModal, learner: learner!)
-                
-            }
-        }
-    }
-}
-
 
 struct LearnerCard: View {
-    var learner: Learner
-    var body: some View {
-        VStack{
-            ProfileImage(learner: learner, size: 100)
-            Text(learner.name)
-        }
-    }
-}
-
-struct NewLearnerDetail: View {
-    //@EnvironmentObject var mainEnv : MainEnvObj
     @ObservedObject var learner: Learner
     var body: some View {
         VStack{
             ProfileImage(learner: learner, size: 100)
             Text(learner.name)
         }
-        .navigationBarTitle(learner.name)
     }
 }
 
-struct NewAcitivityDetail: View {
-    @ObservedObject var activity: Activity
-    @State var showModal = true
+struct SectionTitle: View {
+    var title: String
+    
+    init(_ title: String){
+        self.title = title
+    }
     
     var body: some View {
-        ActivityDetailView(activity: activity, showModal: $showModal)
+        Text(title)
+            .font(.system(size: 22))
+            .bold()
+            .padding(.leading, 15)
     }
 }
 
-//class Store: ObservableObject {
-//    @Published var learner: Learner? = nil
-//
-//    var activitiesPredicate: NSPredicate {
-//        NSPredicate(
-//    }
-//    var activities: FetchRequest<NSFetchRequestResult> {
-//        FetchRequest<NSFetchRequestResult>(entity: Activity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Activity.activity_date, ascending: true)])
-//    }
-//}
 
-struct Home2: View {
-    var activityFilter: (Activity) -> Bool
+struct HomeReusable: View {
+    @ObservedObject var store: Store<AppState, AppAction>
+    var learner: Learner?
+    var activities: [Activity]
+    var questions: [Question]
+    var learners: [Learner]
     
-   @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
-    var learners: FetchedResults<Learner>
-
+    var learnerIsNil: Bool {
+        learner == nil
+    }
     
-    @FetchRequest(entity: Activity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Activity.activity_date, ascending: true)])
-    var activities: FetchedResults<Activity>
-
+    @State var showModal = false
     
     var body: some View {
-        NavigationView{
+        
+        ScrollView{
             VStack{
-                HorizontalList(items: activities.filter {self.activityFilter($0)}, card: {activity in ActivityCard(activity: activity)}, detail: {activity in NewAcitivityDetail(activity: activity)})
-                
-                HorizontalList(items: learners.map {$0}, card: {learner in LearnerCard(learner: learner)}, detail: {learner in NewLearnerDetail(learner: learner)})
+                VStack(alignment: .leading) {
+                    //SectionTitle("Summary")
+                    
+                    Trailing7DaysStatCard(activities: activities)
+                        .padding(.bottom, 40)
+                    
+                    
+                    ActivityHorizontalList(
+                        store: self.store.view(
+                            value: {$0.activityState},
+                            action: {.activity($0)}),
+                        activities: activities).padding(.bottom, 40)
+
+                    QuestionHorizontalList(store:
+                        self.store.view(value: {$0.questionState}, action: {.question($0)}),
+                        questions: questions)
+                        .padding(.bottom, 40)
+                    
+                    if(learnerIsNil){
+                        LearnerHorizontalList(store: store, activities: activities, questions: questions, learners: learners, showModal: $showModal)
+                            .padding(.bottom, 40)
+                    }
+                }
             }
+        }
+        .sheet(isPresented: self.$showModal, content: {
+            LearnerCreateModal(
+                store: self.store.view(
+                value: {$0.learnerState},
+                action: {.learner($0)}
+            ),
+                               showModal: self.$showModal)
+        })
+            // sheet probably isn't working currently
+            .navigationBarTitle(Text(learner?.name ?? "Home"), displayMode: .large)
+            //.navigationBarHidden(learnerIsNil)
+            .navigationBarItems(trailing:
+                Group{
+                    if(learnerIsNil){
+                        EmptyView()
+                    } else {
+                        NavigationLink(destination: LearnerDetail(
+                            store: self.store.view(
+                                value: {$0.learnerState},
+                                action: {.learner($0)}
+                            ),
+                            name: learner!.name,
+                            image: learner!.image,
+                            learner: learner!)){
+                            ProfileImage(learner: learner!, size: 30)
+                        }.buttonStyle(PlainButtonStyle())
+                    }
+            })
+    }
+    
+}
+
+
+
+struct Home: View {
+    @ObservedObject var store: Store<AppState, AppAction>
+    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
+    var learners: FetchedResults<Learner>
+    
+    
+    @FetchRequest(entity: Activity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Activity.activity_date, ascending: false)])
+    var activities: FetchedResults<Activity>
+    
+    @FetchRequest(entity: Question.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Question.date_created, ascending: false)])
+    var questions: FetchedResults<Question>
+    
+    @FetchRequest(entity: User.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \User.first_name, ascending: false)])
+    var users: FetchedResults<User>
+    
+    func reset(){
+        for thing in activities {
+            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
+        }
+        for thing in questions {
+            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
+        }
+        for thing in learners {
+            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
+        }
+        for thing in users {
+            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
+        }
+        AppDelegate.shared.saveContext()
+    }
+    
+    var body: some View{
+        NavigationView{
+//            Button(action: {self.reset()}){
+//                Text("reset")
+//            }
+            HomeReusable(store: store, learner: nil, activities: activities.map {$0}, questions: questions.map {$0}, learners: learners.map {$0})
             
         }
     }
 }
-
-struct Home: View {
-    
-    var body: some View {
-        Home2(activityFilter: { activity -> Bool in
-            return true
-        })
-    }
-}
-
-
-//struct Home : View {
-//    @EnvironmentObject var mainEnv : MainEnvObj
-//    @State var selectedActivity : Activity? = nil
-//    @State var selectedQuestion : Question? = nil
-//    @State var selectedLearner : Learner? = nil
-//    @State var showModal = false
-//    @State var modalKind = ""
-//
-//    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
-//    var learners: FetchedResults<Learner>
-//
-//
-//    var body: some View {
-//        NavigationView {
-//
-//            ScrollView(showsIndicators: false){
-//
-//                VStack(alignment:.leading){
-//                    //Divider().padding(.leading, 15)
-//
-//                    Text("Summary")
-//                        .font(.system(size: 22))
-//                        .bold()
-//                        .padding(.leading, 15)
-//                        .padding(.top, 15)
-//                    StatsThisWeek()
-//
-//                    //Text(mainEnv.activityStore.activities[0].title)
-//                    ActivitiesHorizontalList(showModal: $showModal, modalKind: $modalKind, selectedActivity: $selectedActivity)
-//
-//
-//                    QuestionHorizontalList(showModal: $showModal, modalKind: $modalKind, question: $selectedQuestion)
-//
-////                    HorizontalList(items: learners, card: learnerCardTest, @ViewBuilder detail: {learner in
-////                        NewLearnerDetail(learner: learner)
-////                    })
-//                    HorizontalList(items: learners, card: {learner in LearnerCard(learner: learner)}, detail: {learner in NewLearnerDetail(learner: learner)})
-//
-//
-//
-////                    LearnersHorizontalList(showModal: self.$showModal, selectedLearner: self.$selectedLearner, modalKind: self.$modalKind).padding(.bottom, 20)
-//
-//
-//                    //QuestionCard(question: "Why don't cockroaches like cucumbers?", answer: nil, learner: mainEnv.learnerStore.learners[0] )
-//
-//
-//                    //                Button(action: {
-//                    //
-//                    //
-//                    //                    for tag in self.mainEnv.tagStore.tags{
-//                    //                       self.mainEnv.tagStore.delete(tag: tag)
-//                    //                   }
-//                    //                   for tagType in self.mainEnv.tagTypeStore.tagTypes{
-//                    //                       self.mainEnv.tagTypeStore.delete(tagType: tagType)
-//                    //                   }
-//                    //                    for learner in  self.mainEnv.learnerStore.learners{
-//                    //                        self.mainEnv.deleteLearner(learner: learner)
-//                    //                    }
-//                    //                    for activity in self.mainEnv.activityStore.activities{
-//                    //                        self.mainEnv.deleteActivity(activity: activity)
-//                    //                    }
-//                    //                    for question in self.mainEnv.questionStore.questions{
-//                    //                        self.mainEnv.questionStore.delete(question: question)
-//                    //                    }
-//                    //
-//                    //
-//                    //                     self.mainEnv.deleteUser()
-//                    //
-//                    //
-//                    //                }){
-//                    //                        Text("Reset")
-//                    //                }
-//
-//
-//                }
-//
-//
-//            }//.edgesIgnoringSafeArea(.top)
-//                .background(Color.init(red: 0.92, green: 0.92, blue: 0.95))
-//                //.offset(y: -50)
-//                .padding(.top, -50)
-//
-//                .sheet(isPresented: $showModal, content: {
-//                    PopoverContainer(modalKind: self.$modalKind, activity: self.$selectedActivity, question: self.$selectedQuestion, learner: self.$selectedLearner, showModal: self.$showModal).environmentObject(self.mainEnv)
-//                })
-//                .navigationBarTitle("Home")
-//                .navigationBarHidden(true)
-//
-//        }
-//    }
-//
-//}
-
-func setup(){
-    
-}
-
-#if DEBUG
-struct Home_Previews : PreviewProvider {
-    static var data = DemoData()
-    static var previews: some View {
-        Home().environmentObject(MainEnvObj())
-    }
-}
-#endif

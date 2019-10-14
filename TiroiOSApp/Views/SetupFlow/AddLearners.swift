@@ -10,8 +10,11 @@ import SwiftUI
 
 
 struct AddLearners : View {
-    @EnvironmentObject var mainEnv : MainEnvObj
+    @ObservedObject var store: Store<AppState, AppAction>
     @State var showModal = false
+    
+    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
+    var learners: FetchedResults<Learner>
     
     var body: some View {
         NavigationView{
@@ -25,7 +28,7 @@ struct AddLearners : View {
                 }
             }.padding()
             
-            if(mainEnv.learnerStore.learners.count > 0){
+            if(learners.count > 0){
                 VStack(alignment: .leading){
                     Divider()
                     Text("Learners")
@@ -34,7 +37,7 @@ struct AddLearners : View {
                         .padding(.leading, 15)
                     .padding(.bottom, 15)
                 
-                ForEach(mainEnv.learnerStore.learners){learner in
+                ForEach(learners){learner in
                     HStack {
                         ProfileImage(learner: learner, size : 50)
                         Text(learner.name)
@@ -46,28 +49,26 @@ struct AddLearners : View {
             }
             Spacer()
             Button(action: {
-                if(self.mainEnv.learnerStore.learners.count > 0 ){
-                    self.mainEnv.userFinishedSetup()
+                if(self.learners.count > 0 ){
+                    self.store.send(.setup(.finish))
                 }
                 }){
                 Text("Done")
                     .foregroundColor(.white)
                     .padding()
                     .frame(width: UIScreen.main.bounds.width * 0.95)
-                    .background(mainEnv.learnerStore.learners.count > 0 ? Color.blue : Color.gray)
+                    .background(learners.count > 0 ? Color.blue : Color.gray)
                     .cornerRadius(8)
             }.padding(.bottom, 15)
         }
         .navigationBarTitle("Add Learners", displayMode: .inline)
-            .sheet(isPresented: $showModal, content: {LearnerCreateModal(showModal: self.$showModal).environmentObject(self.mainEnv)})
+            .sheet(isPresented: $showModal, content: {LearnerCreateModal(
+                store: self.store.view(
+                    value: {$0.learnerState},
+                    action: {.learner($0)}
+                ),
+                showModal: self.$showModal)})
         }
     }
 }
 
-#if DEBUG
-struct AddLearners_Previews : PreviewProvider {
-    static var previews: some View {
-        AddLearners().environmentObject(MainEnvObj())
-    }
-}
-#endif

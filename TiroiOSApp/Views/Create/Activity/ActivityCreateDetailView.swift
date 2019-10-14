@@ -16,130 +16,120 @@ import Combine
 class Multi: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
     }
-
+    
 }
 
 struct MultiPicker: UIViewControllerRepresentable {
     func makeUIViewController(context: UIViewControllerRepresentableContext<MultiPicker>) -> Multi {
         return Multi()
     }
-
+    
     func updateUIViewController(_ uiViewController: Multi, context: UIViewControllerRepresentableContext<MultiPicker>) {
         print("update")
     }
-
+    
     typealias UIViewControllerType = Multi
-
-
-
-
+    
+    
+    
+    
 }
 
 struct ImagePicker : View {
     @Binding var showModal: Bool
-    @Binding var image: UIImage?
-  
+    @Binding var image: Data?
+    @Binding var imageDate: Date
+    
     
     
     var body: some View {
-//        MultiPicker()
+        //        MultiPicker()
         VStack{
-        if(image == nil){
-        ImagePickerViewController(showModal: $showModal, image: $image)
-        } else {
-            Image(uiImage: image!)
-        }
+            //if(image == nil){
+            ImagePickerViewController(showModal: $showModal, image: $image, imageDate: $imageDate)
+            //}
+            
         }
     }
 }
 
 
 
+
 struct ActivityEditableForm : View {
-    @EnvironmentObject var mainEnv : MainEnvObj
-    @Binding var showModal : Bool
+    @ObservedObject var store: Store<ActivityState, ActivityAction>
     var activity : Activity?
-    @ObservedObject var activityBindable : ActivityBindable
+    @ObservedObject var learnerSelectionManger : GenericSelectionManager<Learner>
+    @ObservedObject var tagSelectionManager : GenericSelectionManager<Tag>
+    @State var title: String
     
     
-    @State var image : UIImage? = nil
-    @ObservedObject var learnerSelectionManger : MySelectionManager
-    @ObservedObject var tagSelectionManager : MySelectionManager
+    @State var image: Data? = nil
+    
+    
+    @State var activityDate: Date
+    // @State var participants: [Learner]
+    @State var notes: String
     var done : () -> Void
+    
+    
+    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
+    var learners: FetchedResults<Learner>
+    
+    @FetchRequest(entity: Tag.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)])
+    var tags: FetchedResults<Tag>
+    
+    
+    // @ObservedObject var activityBindable : ActivityBindable
+    
+    
+    //@State var image : UIImage? = nil
+    @State var imageDate: Date? = nil
+    @State var dateHasChange: Bool = false
+    
+    
+    
     
     @State var presentImagePicker : Bool = false
     @Environment(\.presentationMode) var presentationMode
     
-    var participants : [Learner] {
-        learnerSelectionManger.selectedAsArray as! [Learner]
-    }
-    
-    
-    
-    
-    
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.setLocalizedDateFormatFromTemplate("EEEE, MMMM d")
-        return formatter
-    }()
     
     func save() {
-        // might be interesting to try handling this in the deinit of the bindable object, but
-        // then you'd have to create activity in init and delete if cancelled
-        // another idea is to have tthe dinbale activity always be alive inside the NSObject
-        
-        // maybe they didn't change anythting, so don't save?
-        // or always save, and use title from date 
-        
-        if(image != nil){
-            activityBindable.image = image!.jpegData(compressionQuality: 1)
+        if(title == ""){
+            title = "Activity on " + longDateFormatter.string(from: activityDate)
         }
-        if(activityBindable.title == ""){
-            activityBindable.title = "Activity on " + Self.dateFormatter.string(from: activityBindable.activityDate)
-        }
-        activityBindable.participants = participants
-        activityBindable.tags = tagSelectionManager.selectedAsArray as! [Tag]
+        //activityBindable.participants = participants
+        //activityBindable.tags = tagSelectionManager.selectedAsArray
         
         if activity != nil {
-            mainEnv.saveActivityFromBindable(bindableActivity: activityBindable, activity: activity!)
+            print("sending edit")
+            store.send(.edit(activityDate: activityDate, title: title, image: image, notes: notes, tags: tagSelectionManager.selectedAsArray, participants: learnerSelectionManger.selectedAsArray, activity: activity!))
+            // saveActivityFromBindable(bindableActivity: activityBindable, activity: activity!)
         } else {
-            mainEnv.createActivtyFromBindable(bindable: activityBindable)
+            store.send(.create(activityDate: activityDate, title: title, image: image, notes: notes, participants: learnerSelectionManger.selectedAsArray))
         }
-        self.showModal = false
         self.presentationMode.wrappedValue.dismiss()
-       self.done()
+        self.done()
+        
         
         
     }
     
     var body : some View {
         Form{
-            Section(header: Text("Title")){
-                TextField("Activity on " + Self.dateFormatter.string(from: activityBindable.activityDate), text: $activityBindable.title)
-            }
-            Section(header : Text("Pick Image")){
-                if(activityBindable.image != nil){
+            Section{
+                TextField("Activity on " + longDateFormatter.string(from: activityDate), text: $title)
+                
+                if(image != nil){
                     HStack{
-                        DisplayUIImage(uiImageData: activityBindable.image!)
+                        DisplayUIImage(uiImageData: image!)
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 100)
                         Button(action: {self.presentImagePicker = true}){
-                                               Text("Change Photo")
-                                           }
-                    }
-                } else if(image != nil) {
-                    HStack{
-                        DisplayUIImage(uiImageData: image!.jpegData(compressionQuality: 1)!)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 100)
-                        
-                        Button(action: {self.presentImagePicker = true}){
-                                               Text("Change Photo")
-                                           }
+                            Text("Change Photo")
+                        }
                     }
                 }
                 else {
@@ -147,45 +137,32 @@ struct ActivityEditableForm : View {
                         Text("Add Photo")
                     }
                 }
+                DatePicker("Date", selection: $activityDate)
             }.sheet(isPresented: $presentImagePicker) {
-                ImagePicker(showModal: self.$presentImagePicker, image: self.$image)
+                ImagePicker(showModal: self.$presentImagePicker, image: self.$image, imageDate: self.$activityDate)
             }
             
             Section{
-                TagSelect(selectionManager: tagSelectionManager)
-                NavigationLink(destination: LearnerSelect(selectionManager: learnerSelectionManger)){
-                               HStack{
-                                   Text("Learners")
-                                   if(!participants.isEmpty){
-                                       Spacer()
-                                       
-                                       ForEach(participants){learner in
-                                           Text(learner.name)
-                                               .foregroundColor(.secondary)
-                                       }
-                                   }
-                               }
-                           }
-            }
-            Section{
-           
-            DatePicker("Date", selection: $activityBindable.activityDate)
+                MultiSelect(title: "tags", selectionManager: tagSelectionManager, choices: tags.map {$0}, getName: {$0.name})
+                MultiSelect(title: "learners", selectionManager: learnerSelectionManger, choices: learners.map {$0}, getName: {$0.name})
                 
-                TextField("Notes",  text: $activityBindable.notes)
-                               .lineLimit(nil)
-           
-            
+                //Section{
+                
+                
+                
+                TextField("Notes",  text: $notes)
+                    .lineLimit(nil)
+                //                    .multilineTextAlignment(.leading)
+                //                    .frame(height: 100)
             }
             
-            
-            
-            
+            // }
         }
         .navigationBarItems(
             trailing:
             Button(action: {
                 self.save()
-               
+                
             }){
                 Text("Save")
             }
@@ -194,50 +171,32 @@ struct ActivityEditableForm : View {
 }
 
 struct ActivityCreateDetailView : View {
-    @EnvironmentObject var mainEnv : MainEnvObj
-    @Binding var showModal : Bool
+    @ObservedObject var store: Store<ActivityState, ActivityAction>
     var activity : Activity?
     var done : () -> Void
+    var content: ActivityEditableForm
     
-    
-    var activityBindable : ActivityBindable {
-        if activity != nil {
-            return mainEnv.createBindablefromActivity(activity: activity!)
-        } else {
-            return ActivityBindable(title: "", notes: "", activityDate: Date(), image: nil, participants: [], tags: [])
-        }
+    init(store: Store<ActivityState, ActivityAction>, done: @escaping () -> Void){
+        self.store = store
+        self.done = done
+        self.content = ActivityEditableForm(store: store, activity: nil, learnerSelectionManger: GenericSelectionManager([]), tagSelectionManager: GenericSelectionManager([]), title: "", activityDate: Date(), notes: "", done: self.done)
     }
     
-    var participants : [Learner] {
-        if activity == nil{
-            return []
-        } else {
-           return activity!.participants!.allObjects as! [Learner]
-        }
+    init(store: Store<ActivityState, ActivityAction>, activity: Activity, done: @escaping () -> Void){
+        self.store = store
+        self.done = done
+        let participants = activity.participants!.allObjects as! [Learner]
+        let tags = activity.tags!.allObjects as! [Tag]
+        self.content = ActivityEditableForm(store: store, activity: activity, learnerSelectionManger: GenericSelectionManager(participants), tagSelectionManager: GenericSelectionManager(tags), title: activity.title, image: activity.image, activityDate: activity.activity_date, notes: activity.notes ?? "", done: self.done)
     }
     
-    var tags : [Tag] {
-        if activity == nil{
-            return []
-        } else {
-           return activity!.tags!.allObjects as! [Tag]
-        }
-    }
 
     var body: some View {
         
-        ActivityEditableForm(showModal: $showModal, activity: activity, activityBindable: activityBindable, learnerSelectionManger: MySelectionManager(selected: Set(participants)), tagSelectionManager: MySelectionManager(selected: Set(tags)), done: done)
+        content
             .navigationBarTitle("\(activity != nil ? "Edit" : "Create") Activity", displayMode: .inline)
         
         
     }
 }
 
-#if DEBUG
-//struct ActivityCreateDetailView_Previews : PreviewProvider {
-//    @State static var showModal = false
-//    static var previews: some View {
-//        ActivityCreateDetailView(showModal: $showModal).environmentObject(MainEnvObj())
-//    }
-//}
-#endif
