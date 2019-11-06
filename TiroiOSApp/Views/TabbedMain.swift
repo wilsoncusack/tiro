@@ -114,7 +114,7 @@ struct TabbedMain : View {
            }
            #else
            var body: some View {
-            NavigationView{
+           
         TabView(selection: $selection){
             //Home()//.environmentObject(mainEnvObj)
             PlanHome(store: store.view(value: {$0.toDoState}, action: {.toDo($0)}))
@@ -179,7 +179,7 @@ struct TabbedMain : View {
                 .tag(4)
             
         }.navigationViewStyle(StackNavigationViewStyle())
-    }
+    
     }
         #endif
 
