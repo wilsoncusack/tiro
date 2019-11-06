@@ -39,23 +39,42 @@ struct SectionTitle: View {
 struct HomeReusable: View {
     @ObservedObject var store: Store<AppState, AppAction>
     var learner: Learner?
+    var tag: Tag?
     var activities: [Activity]
     var questions: [Question]
     var learners: [Learner]
+    var tags: [Tag]
+    
+    @FetchRequest(entity: TagType.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \TagType.name, ascending: false)])
+    var tagTypes: FetchedResults<TagType>
+    
     
     var learnerIsNil: Bool {
         learner == nil
     }
     
     @State var showModal = false
+    @State var showTagModal = false
+    
+    func getNavTitle() -> String {
+        if (tag != nil && learner != nil){
+            return "\(learner!.name), \(tag!.name)"
+        }
+        if self.tag != nil {
+            return "Tag: \(tag!.name)"
+        }
+        if self.learner != nil {
+            return "\(learner!.name)"
+        }
+        return "Home"
+    }
     
     var body: some View {
         
         ScrollView{
             VStack{
-                VStack(alignment: .leading) {
+                VStack{
                     //SectionTitle("Summary")
-                    
                     Trailing7DaysStatCard(activities: activities)
                         .padding(.bottom, 40)
                     
@@ -72,9 +91,22 @@ struct HomeReusable: View {
                         .padding(.bottom, 40)
                     
                     if(learnerIsNil){
-                        LearnerHorizontalList(store: store, activities: activities, questions: questions, learners: learners, showModal: $showModal)
+                        LearnerHorizontalList(store: store, tag: tag, activities: activities, questions: questions, learners: learners, tags: tags, showModal: $showModal)
                             .padding(.bottom, 40)
                     }
+                    
+                    if(tag == nil){
+                        TagHorizontalList(store: store, learner: learner, activities: activities, questions: questions, learners: learners, tags: tags, showTagModal: $showTagModal)
+                            .sheet(isPresented: $showTagModal){
+                                TagCreate(
+                                    store: self.store.view(
+                                        value: {$0.tagState},
+                                        action: {.tag($0)}),
+                                    showModal: self.$showTagModal,
+                                    tagTypes: self.tagTypes.map {$0})
+                        }.padding(.bottom, 40)
+                    }
+                    
                 }
             }
         }
@@ -87,7 +119,7 @@ struct HomeReusable: View {
                                showModal: self.$showModal)
         })
             // sheet probably isn't working currently
-            .navigationBarTitle(Text(learner?.name ?? "Home"), displayMode: .large)
+            .navigationBarTitle(Text(getNavTitle()), displayMode: .large)
             //.navigationBarHidden(learnerIsNil)
             .navigationBarItems(trailing:
                 Group{
@@ -114,6 +146,12 @@ struct HomeReusable: View {
 
 struct Home: View {
     @ObservedObject var store: Store<AppState, AppAction>
+    
+    init(store: Store<AppState, AppAction>){
+        self.store = store
+        askNotification()
+    }
+    
     @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
     var learners: FetchedResults<Learner>
     
@@ -126,6 +164,11 @@ struct Home: View {
     
     @FetchRequest(entity: User.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \User.first_name, ascending: false)])
     var users: FetchedResults<User>
+    
+    @FetchRequest(entity: Tag.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: false)])
+    var tags: FetchedResults<Tag>
+    
+    
     
     func reset(){
         for thing in activities {
@@ -148,8 +191,9 @@ struct Home: View {
 //            Button(action: {self.reset()}){
 //                Text("reset")
 //            }
-            HomeReusable(store: store, learner: nil, activities: activities.map {$0}, questions: questions.map {$0}, learners: learners.map {$0})
+            HomeReusable(store: store, learner: nil, activities: activities.map {$0}, questions: questions.map {$0}, learners: learners.map {$0}, tags: tags.map {$0})
             
         }
+  //  .navigationViewStyle(DoubleColumnNavigationViewStyle())
     }
 }

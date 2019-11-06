@@ -94,7 +94,7 @@ struct LearnerCreateModal : View {
                     Text("Save")
                 }.foregroundColor(self.name == "" || (self.selectedIcon == "" && self.image == nil) ? .gray : .blue)
             )
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
         }
 
     

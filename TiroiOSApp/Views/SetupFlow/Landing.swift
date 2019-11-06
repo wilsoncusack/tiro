@@ -35,7 +35,8 @@ struct Landing : View {
                     
                 }.padding(.bottom, 15)
             }.frame(width: UIScreen.main.bounds.width * 0.95)
-        }
+            
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
 }

@@ -14,7 +14,7 @@ struct CreateMain : View {
     @Binding var tabSelection : Int
     
     func navigateHome() {
-        self.tabSelection = 0
+        self.tabSelection = 2
     }
     
     var body: some View {

@@ -17,13 +17,21 @@ struct ProfileImage : View {
             DisplayUIImage(uiImageData: learner.image!)
                 .frame(width: size, height: size)
                 .clipShape(Circle())
-        } else {
+        } else if (learner.profile_image_name != nil) {
             
         Image(learner.profile_image_name!)
             .resizable()
             .frame(width: size, height: size)
             .clipShape(Circle())
-        }
+//            Button(action: {
+//                AppDelegate.shared.persistentContainer.viewContext.delete(self.learner)
+//            }){Text("Delete")}
+        } else{
+//            EmptyView()
+            Button(action: {
+                AppDelegate.shared.persistentContainer.viewContext.delete(self.learner)
+            }){Text("Delete")}
+            }
         }
     }
 }

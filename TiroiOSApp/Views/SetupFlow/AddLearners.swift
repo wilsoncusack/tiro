@@ -68,7 +68,7 @@ struct AddLearners : View {
                     action: {.learner($0)}
                 ),
                 showModal: self.$showModal)})
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

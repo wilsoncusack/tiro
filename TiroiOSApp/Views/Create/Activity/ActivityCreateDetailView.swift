@@ -13,29 +13,6 @@ import Combine
 //import Photosu
 //import DKImagePickerController
 //
-class Multi: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
-}
-
-struct MultiPicker: UIViewControllerRepresentable {
-    func makeUIViewController(context: UIViewControllerRepresentableContext<MultiPicker>) -> Multi {
-        return Multi()
-    }
-    
-    func updateUIViewController(_ uiViewController: Multi, context: UIViewControllerRepresentableContext<MultiPicker>) {
-        print("update")
-    }
-    
-    typealias UIViewControllerType = Multi
-    
-    
-    
-    
-}
 
 struct ImagePicker : View {
     @Binding var showModal: Bool
@@ -71,6 +48,7 @@ struct ActivityEditableForm : View {
     
     @State var activityDate: Date
     // @State var participants: [Learner]
+    @State var link: String
     @State var notes: String
     var done : () -> Void
     
@@ -105,11 +83,12 @@ struct ActivityEditableForm : View {
         
         if activity != nil {
             print("sending edit")
-            store.send(.edit(activityDate: activityDate, title: title, image: image, notes: notes, tags: tagSelectionManager.selectedAsArray, participants: learnerSelectionManger.selectedAsArray, activity: activity!))
+            store.send(.edit(activityDate: activityDate, title: title, image: image, link: link.isEmpty ? nil : link, notes: notes.isEmpty ? nil : notes, tags: tagSelectionManager.selectedAsArray, participants: learnerSelectionManger.selectedAsArray, activity: activity!))
             // saveActivityFromBindable(bindableActivity: activityBindable, activity: activity!)
         } else {
-            store.send(.create(activityDate: activityDate, title: title, image: image, notes: notes, participants: learnerSelectionManger.selectedAsArray))
+            store.send(.create(activityDate: activityDate, title: title, image: image, link: link.isEmpty ? nil : link, notes: notes.isEmpty ? nil : notes, tags: tagSelectionManager.selectedAsArray, participants: learnerSelectionManger.selectedAsArray))
         }
+        
         self.presentationMode.wrappedValue.dismiss()
         self.done()
         
@@ -149,7 +128,8 @@ struct ActivityEditableForm : View {
                 //Section{
                 
                 
-                
+                TextField("Link",  text: $link)
+                    .foregroundColor(.blue)
                 TextField("Notes",  text: $notes)
                     .lineLimit(nil)
                 //                    .multilineTextAlignment(.leading)
@@ -158,7 +138,14 @@ struct ActivityEditableForm : View {
             
             // }
         }
+    .navigationBarTitle("\(activity != nil ? "Edit" : "Create") Activity", displayMode: .inline)
         .navigationBarItems(
+//            leading: Button(action: {
+//                self.presentationMode.wrappedValue.dismiss()
+//
+//            }){
+//                Text("Back")
+//            },
             trailing:
             Button(action: {
                 self.save()
@@ -175,11 +162,13 @@ struct ActivityCreateDetailView : View {
     var activity : Activity?
     var done : () -> Void
     var content: ActivityEditableForm
+    @Environment(\.presentationMode) var presentationMode
+    
     
     init(store: Store<ActivityState, ActivityAction>, done: @escaping () -> Void){
         self.store = store
         self.done = done
-        self.content = ActivityEditableForm(store: store, activity: nil, learnerSelectionManger: GenericSelectionManager([]), tagSelectionManager: GenericSelectionManager([]), title: "", activityDate: Date(), notes: "", done: self.done)
+        self.content = ActivityEditableForm(store: store, activity: nil, learnerSelectionManger: GenericSelectionManager([]), tagSelectionManager: GenericSelectionManager([]), title: "", activityDate: Date(), link: "", notes: "", done: self.done)
     }
     
     init(store: Store<ActivityState, ActivityAction>, activity: Activity, done: @escaping () -> Void){
@@ -187,14 +176,21 @@ struct ActivityCreateDetailView : View {
         self.done = done
         let participants = activity.participants!.allObjects as! [Learner]
         let tags = activity.tags!.allObjects as! [Tag]
-        self.content = ActivityEditableForm(store: store, activity: activity, learnerSelectionManger: GenericSelectionManager(participants), tagSelectionManager: GenericSelectionManager(tags), title: activity.title, image: activity.image, activityDate: activity.activity_date, notes: activity.notes ?? "", done: self.done)
+        self.content = ActivityEditableForm(store: store, activity: activity, learnerSelectionManger: GenericSelectionManager(participants), tagSelectionManager: GenericSelectionManager(tags), title: activity.title, image: activity.image, activityDate: activity.activity_date, link: activity.link ?? "", notes: activity.notes ?? "", done: self.done)
     }
     
 
     var body: some View {
         
         content
-            .navigationBarTitle("\(activity != nil ? "Edit" : "Create") Activity", displayMode: .inline)
+//        .navigationBarItems(
+//        leading: Button(action: {
+//            self.presentationMode.wrappedValue.dismiss()
+//            
+//        }){
+//            Text("Back")
+//        })
+            
         
         
     }

@@ -48,6 +48,7 @@ func tagString(_ tags: [Tag]) -> String {
 struct ActivityDetailView : View {
     @ObservedObject var store: Store<ActivityState, ActivityAction>
     @ObservedObject var activity : Activity
+    @State var editActive = false
     
     var participants : [Learner] {
         activity.participants?.allObjects as! [Learner]
@@ -93,6 +94,12 @@ struct ActivityDetailView : View {
                 .padding(.trailing, 15)
                 .padding(.bottom, 15)
                 
+                if(activity.link != nil){
+                    Link(activity.link!)
+                    .padding(.leading, 15)
+                    .padding(.trailing, 15)
+                        .padding(.bottom, 10)
+                }
                 
                 if(activity.notes == nil){
                     Text("Notes...")
@@ -119,7 +126,9 @@ struct ActivityDetailView : View {
                 Text("Edit")
             }
             
+            
         )
+        
         
         
     }

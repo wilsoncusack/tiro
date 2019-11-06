@@ -45,6 +45,19 @@ struct ActivityList: View {
     var activities: [Activity]
     @State var showPhotos = true
     
+    var scan: String {
+        var dict = [UUID: Int]()
+        for a in activities {
+            if(dict[a.id] != nil){
+                print("deleting")
+                AppDelegate.shared.persistentContainer.viewContext.delete(a)
+            } else {
+                dict[a.id] = 1
+            }
+        }
+        return "ok"
+    }
+    
     var body: some View{
         VStack{
             Picker(selection: $showPhotos, label: Text("")) {
@@ -54,9 +67,11 @@ struct ActivityList: View {
                 .frame(width: 300)
                 .padding()
             List(activities){activity in
+
                 NavigationLink(destination: ActivityDetailView(store: self.store, activity: activity)){
                     ActivityRow(activity: activity, showPhotos: self.$showPhotos)
                 }
+                
             }
         }
         .navigationBarTitle("Activities", displayMode: .inline)

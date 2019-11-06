@@ -14,6 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var appState = AppState()
+    var tabSelection = 2
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -30,6 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             //let store<AppState, AppAction> =
             //self.appState = AppState()
             window.rootViewController = UIHostingController(rootView: ContentView(
+                tabSelection: self.tabSelection,
             store: Store(
                 initialValue: self.appState,
                 reducer: with(

@@ -25,7 +25,7 @@ struct QuestionEditableForm : View {
     
     @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
        var learners: FetchedResults<Learner>
-    @Environment(\.presentationMode) var presentationMode
+     @Environment(\.presentationMode) var presentationMode
     
     func save() {
         //QuestionAction.create(questionText: <#T##String#>, answerText: <#T##String?#>, asker: <#T##Learner#>)
@@ -35,8 +35,11 @@ struct QuestionEditableForm : View {
         } else {
             store.send(.create(questionText: questionText, answerText: answerText, asker: asker!))
         }
+        
+       
         self.presentationMode.wrappedValue.dismiss()
         self.done()
+        
     }
     
     

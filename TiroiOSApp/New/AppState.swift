@@ -10,54 +10,9 @@ import Foundation
 import CoreData
 
 
-func activityReducer(state: inout ActivityState, action: ActivityAction){
-    switch action{
-    case let .create(activityDate, title, image, notes, participants):
-        var _ = Activity(activity_date: activityDate, title: title, image: image, notes: notes, created_by: state.loggedInUser, participants: NSSet(array: participants))
-        NotificationCenter.default.post(name: .activityCreate, object: nil)
-    case let .edit(activityDate, title, image, notes, tags, participants, activity):
-        print("in activity edit")
-        activity.objectWillChange.send()
-        activity.activity_date = activityDate
-        activity.title = title
-        activity.notes = notes
-        activity.tags = NSSet(array: tags)
-        activity.participants = NSSet(array: participants)
-        activity.image = image
-        NotificationCenter.default.post(name: .activityEdit, object: nil)
-    }
-}
 
-func questionReducer(state: inout QuestionState, action: QuestionAction){
-    switch action{
-    case let .create(questionText, answerText, asker):
-        var _ = Question(question_text: questionText, answer_text: answerText, asker: asker, created_by: state.loggedInUser)
-        // AppDelegate.shared.saveContext()
-        NotificationCenter.default.post(name: .questionCreate, object: nil)
-    case let .edit(questionText, answerText, asker, question):
-        question.objectWillChange.send()
-        question.question_text = questionText
-        question.asker = asker
-        question.answer_text = answerText
-        NotificationCenter.default.post(name: .questionEdit, object: nil)
-        //AppDelegate.shared.saveContext()
-    }
-}
 
-func learnerReducer(state: inout LearnerState, action: LearnerAction){
-    switch action{
-    case let .create(name, profile_image_name, image):
-        var _ = Learner(name: name, profile_image_name: profile_image_name, image: image, created_by: state.loggedInUser)
-        NotificationCenter.default.post(name: .learnerCreate, object: nil)
-    //AppDelegate.shared.saveContext()
-    case let .edit(learner, name, image):
-        learner.objectWillChange.send()
-        learner.name = name
-        learner.image = image
-        NotificationCenter.default.post(name: .learnerEdit, object: nil)
-    }
-    
-}
+
 
 /// should probably constrain the state view for these
 func userReducer(state: inout AppState, action: UserAction){
@@ -72,9 +27,16 @@ func userReducer(state: inout AppState, action: UserAction){
 func setupReducer(state: inout AppState, action: SetupAction){
     switch action{
     case .finish:
-        print("in setup reducer")
         state.userHasFinishedSetup = true
         NotificationCenter.default.post(name: .finishSetup, object: nil)
+    }
+}
+
+func tagReducer(state: inout AppState, action: TagAction){
+    switch action{
+    case let .create(name, tagType):
+        var _ = Tag(name: name, tag_type: tagType)
+        NotificationCenter.default.post(name: .tagCreate, object: nil)
     }
 }
 
@@ -164,6 +126,18 @@ public class AppState: ObservableObject {
         NotificationCenter.default.addObserver(forName: .finishSetup, object: nil, queue: nil, using: {notifcation in
            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
+        NotificationCenter.default.addObserver(forName: .tagCreate, object: nil, queue: nil, using: {notifcation in
+           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+        })
+        NotificationCenter.default.addObserver(forName: .toDoCreate, object: nil, queue: nil, using: {notifcation in
+           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+        })
+        NotificationCenter.default.addObserver(forName: .toDoEdit, object: nil, queue: nil, using: {notifcation in
+           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+        })
+        NotificationCenter.default.addObserver(forName: .toDoSavedToActivity, object: nil, queue: nil, using: {notifcation in
+           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+        })
     }
     
     func setAnonymousProfile(){
@@ -241,6 +215,7 @@ extension Notification.Name{
     static let learnerEdit = Notification.Name("learnerEdit")
     static let userCreate = Notification.Name("userCreate")
     static let finishSetup = Notification.Name("finishSetup")
+    static let tagCreate = Notification.Name("tagCreate")
 }
 
 
@@ -252,6 +227,22 @@ extension AppState{
     var learnerState: LearnerState {
         get{
             LearnerState(loggedInUser: self.loggedInUser!)
+        }
+        set{
+            
+        }
+    }
+}
+
+struct TagState{
+    
+}
+
+extension AppState{
+    var tagState: TagState {
+        get{
+            TagState()
+            //LearnerState(loggedInUser: self.loggedInUser!)
         }
         set{
             
@@ -295,7 +286,9 @@ let _appReducer: (inout AppState, AppAction) -> Void = combine(
     pullback(questionReducer, value: \.questionState, action: \.question),
     pullback(activityReducer, value: \.activityState, action: \.activity),
     pullback(userReducer, value: \.self, action: \.user),
-    pullback(setupReducer, value: \.self, action: \.setup)
+    pullback(setupReducer, value: \.self, action: \.setup),
+    pullback(tagReducer, value: \.self, action: \.tag),
+    pullback(toDoReducer, value: \.toDoState, action: \.toDo)
 )
 
 var systemProfileIcons : [Icon] = [

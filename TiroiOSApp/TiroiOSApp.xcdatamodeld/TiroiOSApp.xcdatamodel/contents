@@ -6,6 +6,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="image_name" optional="YES" attributeType="String"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="created_by" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="activities" inverseEntity="User"/>
@@ -23,6 +24,7 @@
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="participants" inverseEntity="Activity"/>
         <relationship name="created_by" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="learners" inverseEntity="User"/>
         <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" inverseName="asker" inverseEntity="Question"/>
+        <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToDo" inverseName="learner" inverseEntity="ToDo"/>
     </entity>
     <entity name="Question" representedClassName=".Question" syncable="YES">
         <attribute name="answer_text" optional="YES" attributeType="String"/>
@@ -32,16 +34,40 @@
         <relationship name="asker" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Learner" inverseName="questions" inverseEntity="Learner"/>
         <relationship name="created_by" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="questions" inverseEntity="User"/>
     </entity>
+    <entity name="Reminder" representedClassName="Reminder" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notification_id" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="toDo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ToDo" inverseName="reminders" inverseEntity="ToDo"/>
+    </entity>
     <entity name="Tag" representedClassName=".Tag" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="tags" inverseEntity="Activity"/>
         <relationship name="tag_type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag_Type" inverseName="instances" inverseEntity="Tag_Type"/>
+        <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToDo" inverseName="tags" inverseEntity="ToDo"/>
     </entity>
     <entity name="Tag_Type" representedClassName=".TagType" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="instances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="tag_type" inverseEntity="Tag"/>
+    </entity>
+    <entity name="ToDo" representedClassName="ToDo" syncable="YES">
+        <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="done" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="due_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="notification_id" optional="YES" attributeType="String"/>
+        <attribute name="saved_to_activity" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="createdBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="toDos" inverseEntity="User"/>
+        <relationship name="learner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Learner" inverseName="toDos" inverseEntity="Learner"/>
+        <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reminder" inverseName="toDo" inverseEntity="Reminder"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="toDos" inverseEntity="Tag"/>
     </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="first_name" optional="YES" attributeType="String"/>
@@ -51,14 +77,17 @@
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="created_by" inverseEntity="Activity"/>
         <relationship name="learners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Learner" inverseName="created_by" inverseEntity="Learner"/>
         <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" inverseName="created_by" inverseEntity="Question"/>
+        <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToDo" inverseName="createdBy" inverseEntity="ToDo"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="-23.80859375" positionY="-10.0078125" width="128" height="193"/>
-        <element name="Learner" positionX="-122.55859375" positionY="-213.75" width="128" height="148"/>
+        <element name="Activity" positionX="-23.80859375" positionY="-10.0078125" width="128" height="208"/>
+        <element name="AnonymousProfile" positionX="-271.7421875" positionY="-206.98828125" width="128" height="58"/>
+        <element name="Learner" positionX="-122.55859375" positionY="-213.75" width="128" height="163"/>
         <element name="Question" positionX="-359.09375" positionY="19.4765625" width="128" height="133"/>
-        <element name="Tag" positionX="178.484375" positionY="-103.5546875" width="128" height="103"/>
+        <element name="Reminder" positionX="56.109375" positionY="320.69921875" width="128" height="133"/>
+        <element name="Tag" positionX="178.484375" positionY="-103.5546875" width="128" height="118"/>
         <element name="Tag_Type" positionX="267.53125" positionY="89.87890625" width="128" height="88"/>
-        <element name="User" positionX="-409.171875" positionY="-149.1015625" width="128" height="148"/>
-        <element name="AnonymousProfile" positionX="-207" positionY="-63" width="128" height="58"/>
+        <element name="ToDo" positionX="-253.765625" positionY="186.61328125" width="128" height="238"/>
+        <element name="User" positionX="-409.171875" positionY="-149.1015625" width="128" height="163"/>
     </elements>
 </model>

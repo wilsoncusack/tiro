@@ -86,7 +86,7 @@ struct ActivityCard : View {
                 .overlay(
                     Text(activity.title)
                         .font(.subheadline)
-                        .foregroundColor(hasImage ? .white : .black)
+                        .foregroundColor(hasImage ? .white : .primary)
                         .fontWeight(.semibold)
                         //.frame(width: 195)
                         .lineLimit(2)
@@ -97,7 +97,7 @@ struct ActivityCard : View {
                     , alignment: .topLeading)
                 .overlay(
                     Text( Self.dateFormatter.string(from: activity.activity_date))
-                        .foregroundColor(hasImage ? .white : .black)
+                        .foregroundColor(hasImage ? .white : .primary)
                         .font(.caption)
                         .padding(.leading, 15)
                         .padding(.bottom, 10)

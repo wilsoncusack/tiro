@@ -8,37 +8,160 @@
 
 import SwiftUI
 
+func askNotification(){
+    let notificationCenter = UNUserNotificationCenter.current()
+    let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+    notificationCenter.requestAuthorization(options: options) {
+        (didAllow, error) in
+        if !didAllow {
+            print("User has declined notifications")
+        } else {
+            
+        }
+    }
+}
+
+enum OutlineMenu: Int, CaseIterable, Identifiable {
+    var id: Int {
+        return self.rawValue
+    }
+    
+    
+    case plan, today, home, new
+    
+    var title: String {
+        switch self {
+        case .plan:    return "Plan"
+        case .today:   return "Today"
+        case .home:   return "Home"
+        case .new: return "New"
+        
+        }
+    }
+    
+    var image: String {
+        switch self {
+        case .plan:    return "folder"
+        case .today:   return "calendar.circle"
+        case .home:   return "house"
+        case .new: return "plus.square"
+        
+        }
+    }
+    
+    
+}
+
+struct SplitView: View{
+    @State var selectedMenu: OutlineMenu = .home
+    @ObservedObject var store: Store<AppState, AppAction>
+    @State var content: AnyView? = nil
+    @State var dummySelection = 0
+    
+    var contentView: AnyView {
+        switch selectedMenu {
+        case .plan:    return AnyView(PlanHome(store: self.store.view(value: {$0.toDoState}, action: {.toDo($0)})).navigationViewStyle(StackNavigationViewStyle()))
+        case .today:   return AnyView(TodayMain(store: store).navigationViewStyle(StackNavigationViewStyle()))
+        case .home:   return AnyView(Home(store: store).navigationViewStyle(StackNavigationViewStyle()))
+        case .new: return AnyView(CreateMain(store: store, tabSelection: $dummySelection).navigationViewStyle(StackNavigationViewStyle()))
+        }
+    }
+    
+    var body: some View{
+        HStack(spacing: 0){
+            VStack(alignment: .leading){
+                VStack(alignment: .leading, spacing: 5){
+            ForEach(OutlineMenu.allCases){o in
+                HStack{
+                    Image(systemName: o.image)
+                    .foregroundColor(Color.primary.opacity(0.7))
+                Text(o.title)
+                    .font(.system(size: 17))
+                    //.fontWeight(.semibold)
+                    .foregroundColor(Color.primary.opacity(0.7))
+                    
+                
+                    Spacer()
+                }
+                .frame(width: 200, height: 35)
+                    .padding(.leading, 10)
+                .background(o == self.selectedMenu ? Color.gray.opacity(0.2) : Color.clear)
+                .onTapGesture {
+                self.selectedMenu = o
+                }
+            }
+                }.padding(.top, 50)
+               Spacer()
+            }.background(Color.gray.opacity(0.1))
+            NavigationView{
+            contentView
+            }.navigationViewStyle(StackNavigationViewStyle())
+        }//.navigationViewStyle(StackNavigationViewStyle())
+    }
+}
+
 struct TabbedMain : View {
-    @State private var selection = 0
+    @State var selection: Int
     //@EnvironmentObject var mainEnvObj : MainEnvObj
     @ObservedObject var store: Store<AppState, AppAction>
     
-    var body: some View {
+    
+    
+  //  var body: some View {
+        #if targetEnvironment(macCatalyst)
+           var body: some View {
+            SplitView( store: store)
+           }
+           #else
+           var body: some View {
+            NavigationView{
         TabView(selection: $selection){
             //Home()//.environmentObject(mainEnvObj)
+            PlanHome(store: store.view(value: {$0.toDoState}, action: {.toDo($0)}))
+            .tabItem({
+                selection == 0 ?
+                    Image(systemName: "folder.fill")
+                        .imageScale(.medium) :
+                    Image(systemName: "folder")
+                        .imageScale(.medium)
+                Text("Plan")
+            })
+            .tag(0)
+            
+            TodayMain(store: store)
+            .tabItem({
+                selection == 1 ?
+                    Image(systemName: "calendar.circle.fill")
+                        .imageScale(.medium) :
+                    Image(systemName: "calendar.circle")
+                        .imageScale(.medium)
+                Text("Today")
+            })
+            .tag(1)
+            
             Home(store: store)
                 .tabItem({
-                    selection == 0 ?
+                    selection == 2 ?
                         Image(systemName: "house.fill")
                             .imageScale(.medium) :
                         Image(systemName: "house")
                             .imageScale(.medium)
                     Text("Home")
                 })
-                .tag(0)
+                .tag(2)
             
             //CreateMain().environmentObject(mainEnvObj)
             CreateMain(store: store, tabSelection: $selection)
                 //Text("hey")
                 .tabItem({
-                    selection == 1 ?
+                    selection == 3 ?
                         Image(systemName: "plus.square.fill")
                             .imageScale(.medium) :
                         Image(systemName: "plus.square")
                             .imageScale(.medium)
                     Text("New")
                 })
-                .tag(1)
+                .tag(3)
             
             Text("""
                 ⚠️Under Construction⚠️
@@ -46,17 +169,21 @@ struct TabbedMain : View {
                 """).multilineTextAlignment(.center)
                 
                 .tabItem({
-                    selection == 2 ?
+                    selection == 4 ?
                         Image(systemName: "questionmark.diamond.fill")
                             .imageScale(.medium) :
                         Image(systemName: "questionmark.diamond")
                             .imageScale(.medium)
                     Text("Feedback")
                 })
-                .tag(2)
+                .tag(4)
             
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
+    }
+        #endif
+
+    //}
 }
 
 

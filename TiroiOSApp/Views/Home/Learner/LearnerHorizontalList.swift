@@ -10,9 +10,11 @@ import SwiftUI
 
 struct LearnerHorizontalList: View {
     @ObservedObject var store: Store<AppState, AppAction>
+    var tag: Tag?
     var activities: [Activity]
     var questions: [Question]
     var learners: [Learner]
+    var tags: [Tag]
     @Binding var showModal: Bool
     
     var body: some View{
@@ -31,12 +33,14 @@ struct LearnerHorizontalList: View {
                 HomeReusable(
                     store: self.store,
                     learner: learner,
+                    tag: self.tag,
                     activities: self.activities.filter {(activity: Activity) in
                         let participants: [Learner] = activity.participants?.allObjects as! [Learner]
                         return participants.contains(learner)
                     },
                     questions: self.questions.filter {$0.asker == learner},
-                    learners: [])})
+                    learners: [],
+                    tags: self.tags)})
             }
         }
 }

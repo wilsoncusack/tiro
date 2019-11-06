@@ -11,6 +11,8 @@ import SwiftUI
 struct ActivityHorizontalList: View {
     @ObservedObject var store: Store<ActivityState, ActivityAction>
     var activities: [Activity]
+    
+    
     var body: some View {
         VStack{
         HStack{

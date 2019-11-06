@@ -96,8 +96,9 @@ func networkLog(sessionLog: [Log]){
 }
 
 func logSingle(log: Log){
-//    guard let url = URL(string: "https://tiro-api-live.herokuapp.com/log") else { return }
-    guard let url = URL(string: "http://localhost:8080/log") else { return }
+    return
+    guard let url = URL(string: "https://tiro-api-live.herokuapp.com/log") else { return }
+//    guard let url = URL(string: "http://localhost:8080/log") else { return }
     let parameters : [String: Any] =
            [
                "event":log.action,

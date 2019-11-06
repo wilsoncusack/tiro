@@ -6,6 +6,8 @@ enum AppAction{
     case activity(ActivityAction)
     case user(UserAction)
     case setup(SetupAction)
+    case tag(TagAction)
+    case toDo(ToDoAction)
 
     var learner: LearnerAction? {
         get {
@@ -61,93 +63,30 @@ enum AppAction{
             self = .setup(newValue)
         }
     }
-}
 
-enum LearnerAction{
-    case create(name: String, imageString: String?, image: Data?)
-    case edit(learner: Learner, name: String, image: Data?)
-
-    
-
-    var create: (name: String, imageString: String?, image: Data?)? {
+    var tag: TagAction? {
         get {
-            guard case let .create(value) = self else { return nil }
+            guard case let .tag(value) = self else { return nil }
             return value
         }
         set {
-            guard case .create = self, let newValue = newValue else { return }
-            self = .create(name: newValue.0, imageString: newValue.1, image: newValue.2)
+            guard case .tag = self, let newValue = newValue else { return }
+            self = .tag(newValue)
         }
     }
 
-    var edit: (learner: Learner, name: String, image: Data?)? {
+    var toDo: ToDoAction? {
         get {
-            guard case let .edit(value) = self else { return nil }
+            guard case let .toDo(value) = self else { return nil }
             return value
         }
         set {
-            guard case .edit = self, let newValue = newValue else { return }
-            self = .edit(learner: newValue.0, name: newValue.1, image: newValue.2)
+            guard case .toDo = self, let newValue = newValue else { return }
+            self = .toDo(newValue)
         }
     }
 }
 
-enum QuestionAction{
-    case create(questionText: String, answerText: String?, asker: Learner)
-    case edit(questionText: String, answerText: String?, asker: Learner, question: Question)
-
-    var create: (questionText: String, answerText: String?, asker: Learner)? {
-        get {
-            guard case let .create(value) = self else { return nil }
-            return value
-        }
-        set {
-            guard case .create = self, let newValue = newValue else { return }
-            self = .create(questionText: newValue.0, answerText: newValue.1, asker: newValue.2)
-        }
-    }
-
-    var edit: (questionText: String, answerText: String?, asker: Learner, question: Question)? {
-        get {
-            guard case let .edit(value) = self else { return nil }
-            return value
-        }
-        set {
-            guard case .edit = self, let newValue = newValue else { return }
-            self = .edit(questionText: newValue.0, answerText: newValue.1, asker: newValue.2, question: newValue.3)
-        }
-    }
-
-}
-
-enum ActivityAction{
-    case create(activityDate: Date, title: String, image: Data?, notes: String?, participants: [Learner])
-    case edit(activityDate: Date, title: String, image: Data?, notes: String?, tags: [Tag], participants: [Learner], activity: Activity)
-
-    var create: (activityDate: Date, title: String, image: Data?, notes: String?, participants: [Learner])? {
-        get {
-            guard case let .create(value) = self else { return nil }
-            return value
-        }
-        set {
-            guard case .create = self, let newValue = newValue else { return }
-            self = .create(activityDate: newValue.0, title: newValue.1, image: newValue.2, notes: newValue.3, participants: newValue.4)
-        }
-    }
-
-    var edit: (activityDate: Date, title: String, image: Data?, notes: String?, tags: [Tag], participants: [Learner], activity: Activity)? {
-        get {
-            guard case let .edit(value) = self else { return nil }
-            return value
-        }
-        set {
-            guard case .edit = self, let newValue = newValue else { return }
-            self = .edit(activityDate: newValue.0, title: newValue.1, image: newValue.2, notes: newValue.3, tags: newValue.4, participants: newValue.5, activity: newValue.6)
-        }
-    }
-
-   
-}
 
 enum UserAction{
     case create(firstName: String, lastName: String)
@@ -166,6 +105,21 @@ enum UserAction{
 
 enum SetupAction{
     case finish
+}
+
+enum TagAction{
+    case create(name: String, tagType: TagType)
+
+    var create: (name: String, tagType: TagType)? {
+        get {
+            guard case let .create(value) = self else { return nil }
+            return value
+        }
+        set {
+            guard case .create = self, let newValue = newValue else { return }
+            self = .create(name: newValue.0, tagType: newValue.1)
+        }
+    }
 }
 
 

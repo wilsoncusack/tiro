@@ -43,22 +43,7 @@ extension Learner {
     }
 }
 
-extension Learner {
-    convenience init(
-        id : UUID = UUID(),
-        name : String,
-        profile_image_name: String?,
-        image: Data?,
-        created_by: User
-    ){
-        self.init(context: AppDelegate.shared.persistentContainer.viewContext)
-        self.id = id
-        self.name = name
-        self.profile_image_name = profile_image_name
-        self.image = image
-        self.created_by = created_by
-    }
-}
+
 
 extension Learner {
     static func allLearnersFetchRequest() -> NSFetchRequest<Learner> {

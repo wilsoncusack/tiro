@@ -25,6 +25,7 @@ import CoreData
 
 struct Main : View {
     //@EnvironmentObject var mainEnv : MainEnvObj
+    var tabSelection: Int
     @State var showUser = true
     @ObservedObject var store: Store<AppState, AppAction>
     
@@ -34,7 +35,7 @@ struct Main : View {
                 && store.value.userHasFinishedSetup
                 //&& !mainEnv.setupShowLearnerCreation
                 ) {
-                TabbedMain(store: store).edgesIgnoringSafeArea(.top)
+                TabbedMain(selection: tabSelection, store: store).edgesIgnoringSafeArea(.top)
             }
             else if(store.value.loggedInUser == nil){
                 Landing(store: store)

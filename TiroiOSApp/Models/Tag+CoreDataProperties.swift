@@ -24,6 +24,7 @@ extension Tag: Identifiable {
     @NSManaged public var name: String
     @NSManaged public var tag_type: TagType
     @NSManaged public var activities: NSSet?
+    @NSManaged public var toDos: NSSet?
 
 }
 
