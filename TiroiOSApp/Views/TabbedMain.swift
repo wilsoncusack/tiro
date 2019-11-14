@@ -106,83 +106,96 @@ struct TabbedMain : View {
     @ObservedObject var store: Store<AppState, AppAction>
     
     
-    
-  //  var body: some View {
-        #if targetEnvironment(macCatalyst)
            var body: some View {
-            SplitView( store: store)
-           }
-           #else
-           var body: some View {
-           
-        TabView(selection: $selection){
-            //Home()//.environmentObject(mainEnvObj)
-            PlanHome(store: store.view(value: {$0.toDoState}, action: {.toDo($0)}))
-            .tabItem({
-                selection == 0 ?
-                    Image(systemName: "folder.fill")
-                        .imageScale(.medium) :
-                    Image(systemName: "folder")
-                        .imageScale(.medium)
-                Text("Plan")
-            })
-            .tag(0)
-            
-            TodayMain(store: store)
-            .tabItem({
-                selection == 1 ?
-                    Image(systemName: "calendar.circle.fill")
-                        .imageScale(.medium) :
-                    Image(systemName: "calendar.circle")
-                        .imageScale(.medium)
+              TabView(selection: $selection){
+                Text("Library")
+                    .tabItem({
+                        Image(systemName: "square.stack")
+                        Text("Library")
+                        }
+                )
+                    .tag(0)
+                Today(store: store)
+                .tabItem({
+                Image(systemName: "app")
                 Text("Today")
-            })
-            .tag(1)
-            
-            Home(store: store)
-                .tabItem({
-                    selection == 2 ?
-                        Image(systemName: "house.fill")
-                            .imageScale(.medium) :
-                        Image(systemName: "house")
-                            .imageScale(.medium)
-                    Text("Home")
                 })
+                    .tag(1)
+                Text("Home")
+                    .tabItem({
+                                   Image(systemName: "circle")
+                                   Text("Home")
+                                   })
                 .tag(2)
-            
-            //CreateMain().environmentObject(mainEnvObj)
-            CreateMain(store: store, tabSelection: $selection)
-                //Text("hey")
-                .tabItem({
-                    selection == 3 ?
-                        Image(systemName: "plus.square.fill")
-                            .imageScale(.medium) :
-                        Image(systemName: "plus.square")
-                            .imageScale(.medium)
-                    Text("New")
-                })
-                .tag(3)
-            
-            Text("""
-                ⚠️Under Construction⚠️
-                For now, please text me at 347-610-9067 with issues, ideas, and encouragement ❤️
-                """).multilineTextAlignment(.center)
-                
-                .tabItem({
-                    selection == 4 ?
-                        Image(systemName: "questionmark.diamond.fill")
-                            .imageScale(.medium) :
-                        Image(systemName: "questionmark.diamond")
-                            .imageScale(.medium)
-                    Text("Feedback")
-                })
-                .tag(4)
-            
-        }.navigationViewStyle(StackNavigationViewStyle())
+            }
+           
+//        TabView(selection: $selection){
+//            //Home()//.environmentObject(mainEnvObj)
+//            PlanHome(store: store.view(value: {$0.toDoState}, action: {.toDo($0)}))
+//            .tabItem({
+//                selection == 0 ?
+//                    Image(systemName: "folder.fill")
+//                        .imageScale(.medium) :
+//                    Image(systemName: "folder")
+//                        .imageScale(.medium)
+//                Text("Plan")
+//            })
+//            .tag(0)
+//
+//            TodayMain(store: store)
+//            .tabItem({
+//                selection == 1 ?
+//                    Image(systemName: "calendar.circle.fill")
+//                        .imageScale(.medium) :
+//                    Image(systemName: "calendar.circle")
+//                        .imageScale(.medium)
+//                Text("Today")
+//            })
+//            .tag(1)
+//
+//            Home(store: store)
+//                .tabItem({
+//                    selection == 2 ?
+//                        Image(systemName: "house.fill")
+//                            .imageScale(.medium) :
+//                        Image(systemName: "house")
+//                            .imageScale(.medium)
+//                    Text("Home")
+//                })
+//                .tag(2)
+//
+//            //CreateMain().environmentObject(mainEnvObj)
+//            CreateMain(store: store, tabSelection: $selection)
+//                //Text("hey")
+//                .tabItem({
+//                    selection == 3 ?
+//                        Image(systemName: "plus.square.fill")
+//                            .imageScale(.medium) :
+//                        Image(systemName: "plus.square")
+//                            .imageScale(.medium)
+//                    Text("New")
+//                })
+//                .tag(3)
+//
+//            Text("""
+//                ⚠️Under Construction⚠️
+//                For now, please text me at 347-610-9067 with issues, ideas, and encouragement ❤️
+//                """).multilineTextAlignment(.center)
+//
+//                .tabItem({
+//                    selection == 4 ?
+//                        Image(systemName: "questionmark.diamond.fill")
+//                            .imageScale(.medium) :
+//                        Image(systemName: "questionmark.diamond")
+//                            .imageScale(.medium)
+//                    Text("Feedback")
+//                })
+//                .tag(4)
+//
+//        }.navigationViewStyle(StackNavigationViewStyle())
     
-    }
-        #endif
 
+    }
     //}
 }
 

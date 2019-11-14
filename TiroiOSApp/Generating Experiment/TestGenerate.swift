@@ -11,11 +11,11 @@ import SwiftUI
 
 /// hmm what's the utility of this? It's not planning. It's just making views more modular. so that people can create more things.
 
-var document = [
-    ["type": "boldText",
-     "valueType": "String",
-    "value": "test text"]
-]
+//var document = [
+//    ["type": "boldText",
+//     "valueType": "String",
+//    "value": "test text"]
+//]
 
 /// hmm there's other ways to structure
 // do these all need to be high level, or could also be

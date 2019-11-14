@@ -23,7 +23,9 @@ struct ImagePickerViewController: UIViewControllerRepresentable {
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePickerViewController>) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+//        imagePicker.sourceType = UIImagePickerController.SourceType.camera
         imagePicker.allowsEditing = true
+        
         imagePicker.delegate = context.coordinator
 
         //I had the same the issue, first check permissions and request access:

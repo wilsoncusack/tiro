@@ -28,7 +28,7 @@ struct Link: View {
 // create to do
 // on finish, create an activity, and ask to take a picture
 // I think once I have this I can start charging, so let's go
-var orangeBright = Color(red: 0.9529411765, green: 0.8392156863, blue: 0.4705882353)
+var orangeBright = Color(red: 0.9803921569, green: 0.7803921569, blue: 0.1450980392)
 var orangeSoft = Color(red: 255, green: 0.9843137255, blue: 0.9411764706)
 
 let toDoDateFormatter: DateFormatter = {
