@@ -20,6 +20,7 @@ class GenericSelectionManager<Item>: ObservableObject where Item: Hashable {
     }
     
     func select(_ value: SelectionValue) {
+        //AnySubj $selected
         selected.insert(value)
     }
     

@@ -46,10 +46,58 @@
             filePath = "TiroiOSApp/Views/v0.4.1/Document Builder Stuff/TransientDocumentElement.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "unknown"
             landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "134AEBB0-8ADD-48F2-BB73-32B1D7F8C6E0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiroiOSApp/Views/v0.4.1/Views/Day/GenericDay.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "134AEBB0-8ADD-48F2-BB73-32B1D7F8C6E0 - 15396dbdebcc4c0a"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiroiOSApp.GenericDay2.body.getter : some"
+                  moduleName = "TiroiOSApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Views/v0.4.1/Views/Day/GenericDay.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "86"
+                  endingLineNumber = "86"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "134AEBB0-8ADD-48F2-BB73-32B1D7F8C6E0 - 7bb9982e2b9c95cf"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.ForEach&lt;Swift.Array&lt;TiroiOSApp.DocumentWrapper2&gt;, Foundation.UUID, TiroiOSApp.BasicDayRow2&gt;)&gt; in TiroiOSApp.GenericDay2.body.getter : some"
+                  moduleName = "TiroiOSApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wilsoncusack/github/tiro/TiroiOSApp/TiroiOSApp/Views/v0.4.1/Views/Day/GenericDay.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "87"
+                  endingLineNumber = "87"
+                  offsetFromSymbolStart = "108">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

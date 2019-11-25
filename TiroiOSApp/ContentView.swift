@@ -17,7 +17,7 @@ struct ContentView : View {
     var body: some View {
 //        MultiLineTextfield()
 //        TestGenerate()
-        Main(tabSelection: tabSelection, store: store).accentColor(.primary)//.environmentObject(mainEnvObj)
+        Main(tabSelection: tabSelection, store: store)//.accentColor(.primary)//.environmentObject(mainEnvObj)
 //            .background(Color.init(red: 0.92, green: 0.92, blue: 0.95))
         
             

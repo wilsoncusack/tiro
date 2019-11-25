@@ -33,7 +33,7 @@ enum ActivityType: String, Codable{
 }
 
 enum DocumentType: String {
-     case book
+     case book = "book"
      case event
      case activity
     
@@ -41,10 +41,15 @@ enum DocumentType: String {
     case text 
     case quote
     case image
+    case camera
     case scan
     case video
     case question
     case reflection
+}
+
+func getDocumentTypeString(type: DocumentType) -> String{
+    return type.rawValue.capitalized
 }
 
 extension Document: Identifiable {
@@ -72,6 +77,9 @@ extension Document: Identifiable {
             type_private = newValue.rawValue
         }
     }
+    
+    
+//    var x : MyValueParams<NSSet, StringDisplayType, StringCreateDisplayType, StringEditDisplayType>
 
 }
 
@@ -143,5 +151,76 @@ extension Document {
         self.date = date ?? date_created
         self.date_created = date_created
         
+    }
+}
+
+//extension Document: Codable{
+//
+//    enum CodingKeys: String, CodingKey {
+//        case id
+//    }
+//
+//    convenience init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//
+//        var id = try container.decodeIfPresent(String.self, forKey: .id)
+//        if(id != nil){
+//            var document = getDocumentFromID(id: id!)!
+//
+//            self.title = document.title
+//
+//        }
+//        }
+//
+//    }
+//
+//    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//        switch self {
+//        case .string(let value, let displayType, let editType):
+//            try container.encode(Base.string, forKey: .base)
+//            try container.encode(ValueParams<String, StringDisplayType, StringCreateDisplayType, StringEditDisplayType>(value: value, displayType: displayType, editType: editType), forKey: .stringParams)
+//}
+import SwiftUI
+class  DocumentWrapper: ObservableObject, Codable {
+    @ObservedObject public var document: Document
+    
+    var loading: Bool {
+        var elements = document.elements?.allObjects as! [Document_Element]
+        for e in elements{
+            if e.value == nil{
+                return true
+            }
+        }
+        return false 
+    }
+
+     public enum CodingKeys: String, CodingKey {
+       case id
+     }
+    
+    public init(document: Document) {
+      self.document = document
+    }
+    
+    required public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+    
+            let id = try container.decodeIfPresent(String.self, forKey: .id)
+            
+        if let document = getDocumentFromID(id: id!) {
+                self.document = document
+        } else {
+            throw SDKError.documentFindError
+        }
+    
+            
+            }
+    
+        
+
+public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.document.id.description, forKey: .id)
     }
 }

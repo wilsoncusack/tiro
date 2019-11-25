@@ -115,7 +115,8 @@ struct TabbedMain : View {
                         }
                 )
                     .tag(0)
-                Today(store: store)
+                Today2(store: store)
+                //TodayHolder(store: store)
                 .tabItem({
                 Image(systemName: "app")
                 Text("Today")

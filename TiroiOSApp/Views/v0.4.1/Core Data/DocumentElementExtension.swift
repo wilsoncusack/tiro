@@ -9,26 +9,26 @@
 import Foundation
 import SwiftUI
 
-extension Document_Element{
-    func getDisplayView() -> AnyView {
-        if(self.value == nil){
-            return AnyView(EmptyView())
-        } else {
-            switch self.value!{
-                
-            case .string(let value, let displayType, let editType):
-                return AnyView(Text(value))
-            case .data(let value, let displayType, let editType):
-                 return AnyView(EmptyView())
-            case .int(let value, let displayType, let editType):
-                 return AnyView(EmptyView())
-            case .date(let value, let displayType, let editType):
-                 return AnyView(EmptyView())
-            case .picker(let value, let displayType, let editType):
-                 return AnyView(EmptyView())
-            case .document(let value, let displayType, let editType):
-                 return AnyView(EmptyView())
-            }
-        }
-    }
-}
+//extension Document_Element{
+//    func getDisplayView() -> AnyView {
+//        if(self.value == nil){
+//            return AnyView(EmptyView())
+//        } else {
+//            switch self.value!{
+//                
+//            case .string(let value, let displayType, let editType):
+//                return AnyView(Text(value))
+//            case .data(let value, let displayType, let editType):
+//                 return AnyView(EmptyView())
+//            case .int(let value, let displayType, let editType):
+//                 return AnyView(EmptyView())
+//            case .date(let value, let displayType, let editType):
+//                 return AnyView(EmptyView())
+//            case .picker(let value, let displayType, let editType):
+//                 return AnyView(EmptyView())
+//            case .document(let value, let displayType, let editType):
+//                 return AnyView(EmptyView())
+//            }
+//        }
+//    }
+//}

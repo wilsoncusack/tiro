@@ -7,57 +7,91 @@
 //
 
 import Foundation
+import UIKit
 
 func makeTextViewElement(order: Int, document: Document) -> Document_Element{
     return Document_Element(order: order, value: Value.string(value: "", displayType: .text, editType: .textView), document: document)
-  //  (order: order, value: .string(""), editType: .textView, displayType: .text, document: document)
 }
 
-func makeDay(date: Date){
-    //    Document(title: longDateFormatter.string(from: date), type: .day, elements: nil, tags: nil, associated_users: nil, created_by: <#T##User#>, date: nil)
-    // maybe should do the user query on save? Or we're passing state around everywhere
+func makeTagsPicker(order: Int, document: Document) -> Document_Element{
+    return Document_Element(order: order,
+    value: .picker(value:
+      PickerStruct(
+          selected: [],
+          allowedChoices: Int.max,
+          isCoreData: true,
+          coreDataType: .tag,
+          choices: []),
+      displayType: .basic,
+    editType: .basic),
+    document: document)
+}
+
+func makeUserPicker(order: Int, document: Document) -> Document_Element {
+    return Document_Element(order: order,
+    value: .picker(value:
+      PickerStruct(
+          selected: [],
+          allowedChoices: Int.max,
+          isCoreData: true,
+          coreDataType: .learner,
+          choices: []),
+            displayType: .basic,
+          editType: .basic),
+          document: document)
+}
+
+func makeDay(date: Date, user: User) -> Document{
+    let document = Document(title: longDateFormatter.string(from: date), type: .day, elements: nil, tags: nil, associated_users: nil, created_by: user, date: nil)
+    AppDelegate.shared.saveContext()
+    return document
+}
+
+func uiImageToData(imgs: [UIImage]) -> [Data] {
+    var imgArray = [UIImage]();
+
+    var CDataArray = NSMutableArray();
+    
+    var dataArray = [Data]()
+
+    for img in imgArray{
+       // let data : NSData = NSData(data: img.pngData()!)
+        let data = img.pngData()!
+        dataArray.append(data)
+    }
+    //NSKeyedArchiver.archivedData(withRootObject: CDataArray);
+    
+    //CDataArray.encode(
+    
+    return dataArray//Data(
+}
+
+func makeImagePicker(order: Int, document: Document) -> Document_Element {
+//    var emptyImageArray = [Data]()
+//    return Document_Element(
+//        order: order,
+//        value: Value.dataArray(value: emptyImageArray, displayType: .images, createType: .photoLibrary,editType: .images),
+//        document: document)
+      var emptyImageArray = [ImageWrapper]()
+        return Document_Element(
+            order: order,
+            value: Value.images(value: emptyImageArray, displayType: .images, createType: .photoLibrary,editType: .images),
+            document: document)
 }
 
 func makeTextTemplate(creator: User){
     var document = Document(title: "Text", type: .text, is_template: true, elements: nil, tags: nil, associated_users: nil, created_by: creator, date: nil)
-    var tagsPicker = Document_Element(order: 0,
-                                      value: .picker(value:
-                                        PickerStruct(
-                                            selected: [],
-                                            allowedChoices: Int.max,
-                                            isCoreData: true,
-                                            coreDataType: .tag,
-                                            choices: []),
-                                        displayType: .basic,
-                                      editType: .basic),
-                                      document: document)
-    var userPicker = Document_Element(order: 1,
-                                      value: .picker(value:
-                                        PickerStruct(
-                                            selected: [],
-                                            allowedChoices: Int.max,
-                                            isCoreData: true,
-                                            coreDataType: .learner,
-                                            choices: []),
-                                              displayType: .basic,
-                                            editType: .basic),
-                                            document: document)
-    
+    var tagsPicker = makeTagsPicker(order: 0, document: document)
+    var userPicker = makeUserPicker(order: 1, document: document)
     var textView = makeTextViewElement(order: 2, document: document)
-        //Document_Element(order: 2, value: .string(""), editType: .textView, displayType: .text, document: document)
     AppDelegate.shared.saveContext()
-    //var textField = makeTextViewElement(order: 0, document: document)
 }
 
-// oh this is why we want Value it self to have a document type
-// that's self referential
-// because then we can create one in memory
-
-// and we can have a save to core data method that saves, so that
-// each thing knows how to save itself.
-// nice!
-// so you can create a whole document
-// fuck this is cool 
-
-/// hmm, how do we know where to position tags and learners. Really there's only one document element here.
-// would be nice to just have one document render function and not have to adjust 
+func makePhotoPickerDocument(creator: User){
+    var document = Document(title: "Image", type: .image, is_template: true, elements: nil, tags: nil, associated_users: nil, created_by: creator, date: nil)
+    var imagePicker = makeImagePicker(order: 0, document: document)
+     var tagsPicker = makeTagsPicker(order: 1, document: document)
+       var userPicker = makeUserPicker(order: 2, document: document)
+       var textView = makeTextViewElement(order: 3, document: document)
+       AppDelegate.shared.saveContext()
+}

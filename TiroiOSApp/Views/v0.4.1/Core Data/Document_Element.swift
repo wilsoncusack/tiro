@@ -46,35 +46,36 @@ extension Document_Element: Identifiable {
     @NSManaged public var order: Int16
   //  @NSManaged public var display_type: String
     //@NSManaged public var edit_type: String
-    @NSManaged private var value_private: Data
+    @NSManaged public var value_private: Data
     @NSManaged public var date_created: Date
     @NSManaged public var document: Document
     
 
     
-    var value: Value? {
-        get {
-            let k = JSONDecoder()
-            do{
-                let v : Value = try k.decode(Value.self, from: self.value_private)
-                return v
-            } catch {
-                print("error in get: \(error)")
-            }
-            return nil
-
-        }
-        set {
-
-            do{
-                let k = try JSONEncoder().encode(newValue)
-                self.value_private = k
-            }catch{
-                print("error in set: \(error)")
-            }
-
-        }
-    }
+//    var value: Value? {
+//        get {
+//
+//            let k = JSONDecoder()
+//            do{
+//                let v : Value = try k.decode(Value.self, from: self.value_private)
+//                return v
+//            } catch {
+//                print("error in get: \(error)")
+//            }
+//            return nil
+//
+//        }
+//        set {
+//
+//            do{
+//                let k = try JSONEncoder().encode(newValue)
+//                self.value_private = k
+//            }catch{
+//                print("error in set: \(error)")
+//            }
+//
+//        }
+//    }
     
 //    var displayType: DisplayType {
 //        get {
@@ -110,7 +111,7 @@ extension Document_Element {
         self.id = id
         self.order = Int16(order)
        // self.valueType = valueType
-        self.value = value
+        //self.value = value
 //        self.editType = editType
 //        self.displayType = displayType
         self.date_created = date_created

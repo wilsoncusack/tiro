@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct UITextField : UIViewRepresentable {
+struct UITextViewRepresentable: UIViewRepresentable {
     typealias UIViewType = UITextView
     
     @Binding var text: String
@@ -49,9 +49,9 @@ struct UITextField : UIViewRepresentable {
     }
     
     class Coordinator: NSObject, UITextViewDelegate {
-        var field: UITextField
+        var field: UITextViewRepresentable
         
-        init(_ field: UITextField) {
+        init(_ field: UITextViewRepresentable) {
             self.field = field
           
         }
@@ -61,7 +61,7 @@ struct UITextField : UIViewRepresentable {
             if(textView.text == "Type something..."){
                 
                 textView.text = ""
-                textView.textColor = UIColor.black
+                textView.textColor = UIColor.label
             }
         }
         

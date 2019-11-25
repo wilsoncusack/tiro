@@ -11,37 +11,163 @@ import Foundation
 import Photos
 import Gallery
 import YPImagePicker
+import Combine
 
-func get(item: YPMediaItem) -> UIImage{
-    switch item{
-        
-    case .photo(let p):
-       return  p.image
-    case .video(let v):
-        return v.thumbnail
+//func get(item: YPMediaItem) -> UIImage{
+//    switch item{
+//
+//    case .photo(let p):
+//       return  p.image
+//    case .video(let v):
+//        return v.thumbnail
+//    }
+//}
+
+func getImageFromData(data: Data) -> UIImage{
+    var x = UIImage(data: data)
+    if(x == nil){
+        print("image is nil")
+    }
+    return x!
+}
+
+class ImagePickerObject: ObservableObject {
+    @Published var images: [Data]
+    var listener : AnyCancellable?
+    
+    init(images: [Data]){
+        self.images = images
+        self.listener = self.$images.sink { (data) in
+            print("received value")
+        }
+    }
+    
+    deinit {
+        print("cancelling")
+        listener!.cancel()
+    }
+}
+
+struct MyValueParams<Value, DisplayType, CreateType, EditType>: Codable where Value: Codable, DisplayType: Codable, CreateType: Codable, EditType: Codable{
+    let value: Value
+    let displayType: DisplayType
+    let createType: CreateType?
+    let editType: EditType
+    
+    init(value: Value, displayType: DisplayType, createType: CreateType? = nil, editType: EditType) {
+        self.value = value
+        self.displayType = displayType
+        self.createType = createType
+        self.editType = editType
     }
 }
 
 struct YPCreate: View {
-    @State var items = [YPMediaItem]()
-    @State var showModal = true
+    //@ObservedObject var el: Document_Element
+    @ObservedObject var obj: ImagePickerObject
+   // @State var items = [YPMediaItem]()
+    @State var showModal: Bool
+    
+//    var value: Value {
+//        Value.dataArray(value: obj.images, displayType: .images, createType: .photoLibrary, editType: .images)
+//    }
+    
+//    var images: [UIImage] {
+//           var toReturn = [UIImage]()
+//
+//               if case .dataArray(let value, let displayType, let createType, let editType) = value {
+//               switch displayType{
+//
+//               case .images:
+//                   print("returning value map images")
+//                   print("length: \(value.count)")
+//                   for d in value{
+//                       toReturn.append(getImageFromData(data: d))
+//                   }
+//                   //return value.map {getImageFromData(data: $0)}
+//
+//
+//               }
+//           }
+//
+//           return toReturn
+//       }
+    
+//    var valueParams: MyValueParams<[Data], DataArrayDisplayType, DataCreateDisplayType, DataArrayEditDisplayType>{
+//        MyValueParams<[Data], DataArrayDisplayType, DataCreateDisplayType, DataArrayEditDisplayType>(value: images.map {$0.pngData()!}, displayType: DataArrayDisplayType.images, editType: DataArrayEditDisplayType.images)
+//    }
+//
+//    var element: Document_Element{
+//
+//        return Document_Element(order: 0, value: value, document: el.document)
+//    }
+//
+//    var final: MyValueParams<[Data], DataArrayDisplayType, DataCreateDisplayType, DataArrayEditDisplayType>? {
+//        var encoder = JSONEncoder.init()
+//        do{
+//        let x = try encoder.encode(valueParams)
+//            let k = try JSONDecoder().decode(MyValueParams<[Data], DataArrayDisplayType, DataCreateDisplayType, DataArrayEditDisplayType>.self, from:  x)
+//            return k
+//        } catch {
+//            print("error")
+//        }
+//        return nil
+//    }
+//
+//    var final_from_el: [UIImage] {
+//        var toReturn = [UIImage]()
+//
+//        if case .dataArray(let value, let displayType, let createType, let editType) = element.value {
+//                switch displayType{
+//
+//                case .images:
+//                    print("returning value map images")
+//                    print("length: \(value.count)")
+//                    for d in value{
+//                        toReturn.append(getImageFromData(data: d))
+//                    }
+//                    //return value.map {getImageFromData(data: $0)}
+//
+//
+//                }
+//            }
+//
+//            return toReturn
+//    }
+    
+    
+    
+   
     var body: some View {
+       // Section{
         VStack{
-            Form{
-                Section{
+            //ScrollView(.horizontal, showsIndicators: false){
+//            if(final != nil){
+//                HStack(spacing: 10){
+//                    ForEach(final_from_el, id: \.self){i in
+//                        Image(uiImage: i).resizable().scaledToFit()
+//                    }}
+//            }
+            //}
+           // Form{
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 10){
-            ForEach(items.map {get(item: $0)}, id: \.self){i in
+                    ForEach(obj.images.map {getImageFromData(data: $0)}, id: \.self){i in
                 Image(uiImage: i).resizable().scaledToFit()
             }
                 }
             }.frame(height: 200)
-                }
-                Text("caption")
-            }
+               // }
+           // }
         }.sheet(isPresented: $showModal){
-            YPRepresentable(items: self.$items)
+            YPRepresentable(items: self.$obj.images)
+            //YPRepresentable(items: self.$items)
+                
             
+        }
+        .onDisappear(){
+            print("disappear")
+            self.obj.listener!.cancel()
         }
     }
         

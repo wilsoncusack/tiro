@@ -32,12 +32,29 @@
 		F721FE462356523B00BA1074 /* QuestionActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F721FE452356523B00BA1074 /* QuestionActions.swift */; };
 		F721FE492356565600BA1074 /* PlanHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F721FE482356565600BA1074 /* PlanHome.swift */; };
 		F721FE4B23565E4E00BA1074 /* LinkPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F721FE4A23565E4E00BA1074 /* LinkPresentation.swift */; };
+		F722450F23846AD7004403AB /* NewValueTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F722450E23846AD7004403AB /* NewValueTest.swift */; };
 		F7249949236D269B00A2F834 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7249948236D269B00A2F834 /* CloudKit.framework */; };
 		F73F0D6E234968630042A4B7 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73F0D6D234968630042A4B7 /* DateExtensions.swift */; };
 		F73F2A042347CD8600C86BB4 /* MultiSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73F2A032347CD8600C86BB4 /* MultiSelect.swift */; };
+		F74821CB238339F1004ECBDB /* ImagePickerCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74821CA238339F1004ECBDB /* ImagePickerCreate.swift */; };
 		F753651E2374B7600032C5EC /* DocumentElementEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F753651D2374B7600032C5EC /* DocumentElementEnum.swift */; };
 		F75365202375D41D0032C5EC /* ImageCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F753651F2375D41D0032C5EC /* ImageCreate.swift */; };
 		F75365222375D43A0032C5EC /* TextCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75365212375D43A0032C5EC /* TextCreate.swift */; };
+		F753FF182389BBD2005059D7 /* Today2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F753FF172389BBD2005059D7 /* Today2.swift */; };
+		F753FF1A238C2412005059D7 /* NewValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F753FF19238C2412005059D7 /* NewValue.swift */; };
+		F756ADA1237EEECC002B5D18 /* GenericDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADA0237EEECC002B5D18 /* GenericDay.swift */; };
+		F756ADA3237EEF21002B5D18 /* BasicDayElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADA2237EEF21002B5D18 /* BasicDayElement.swift */; };
+		F756ADA6237EEF5E002B5D18 /* getCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADA5237EEF5E002B5D18 /* getCardView.swift */; };
+		F756ADA8237EEFA3002B5D18 /* getDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADA7237EEFA3002B5D18 /* getDetailView.swift */; };
+		F756ADAA237EEFF6002B5D18 /* GenericDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADA9237EEFF6002B5D18 /* GenericDetailView.swift */; };
+		F756ADAC237EF039002B5D18 /* GenericEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADAB237EF039002B5D18 /* GenericEditView.swift */; };
+		F756ADAE237EF31A002B5D18 /* getDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADAD237EF31A002B5D18 /* getDayView.swift */; };
+		F756ADB1237EF417002B5D18 /* getDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADB0237EF417002B5D18 /* getDisplayView.swift */; };
+		F756ADB4237EF4CA002B5D18 /* getEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADB3237EF4CA002B5D18 /* getEditView.swift */; };
+		F756ADB8237EF554002B5D18 /* TextViewEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADB7237EF554002B5D18 /* TextViewEditable.swift */; };
+		F756ADBA237F649C002B5D18 /* TextViewDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADB9237F649C002B5D18 /* TextViewDay.swift */; };
+		F756ADBC237F702C002B5D18 /* LearnerPickerEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADBB237F702C002B5D18 /* LearnerPickerEditable.swift */; };
+		F756ADBE237F7156002B5D18 /* TagPickerEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F756ADBD237F7156002B5D18 /* TagPickerEditable.swift */; };
 		F76029042358E174006144B7 /* Reminder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76029002358E174006144B7 /* Reminder+CoreDataClass.swift */; };
 		F76029052358E174006144B7 /* Reminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76029012358E174006144B7 /* Reminder+CoreDataProperties.swift */; };
 		F76029062358E174006144B7 /* ToDo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76029022358E174006144B7 /* ToDo+CoreDataClass.swift */; };
@@ -264,6 +281,7 @@
 		F7EC68F6234C110C0063F62B /* ActivityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EC68F5234C110C0063F62B /* ActivityList.swift */; };
 		F7EC68F9234C113F0063F62B /* QuestionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EC68F8234C113F0063F62B /* QuestionList.swift */; };
 		F7EC68FC234C11B80063F62B /* QuestionHorizontalList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EC68FB234C11B80063F62B /* QuestionHorizontalList.swift */; };
+		F7F7428D2380B00600DFBF26 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F7428C2380B00600DFBF26 /* CreateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -347,12 +365,29 @@
 		F721FE452356523B00BA1074 /* QuestionActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionActions.swift; sourceTree = "<group>"; };
 		F721FE482356565600BA1074 /* PlanHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanHome.swift; sourceTree = "<group>"; };
 		F721FE4A23565E4E00BA1074 /* LinkPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPresentation.swift; sourceTree = "<group>"; };
+		F722450E23846AD7004403AB /* NewValueTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewValueTest.swift; sourceTree = "<group>"; };
 		F7249948236D269B00A2F834 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		F73F0D6D234968630042A4B7 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		F73F2A032347CD8600C86BB4 /* MultiSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelect.swift; sourceTree = "<group>"; };
+		F74821CA238339F1004ECBDB /* ImagePickerCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCreate.swift; sourceTree = "<group>"; };
 		F753651D2374B7600032C5EC /* DocumentElementEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentElementEnum.swift; sourceTree = "<group>"; };
 		F753651F2375D41D0032C5EC /* ImageCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCreate.swift; sourceTree = "<group>"; };
 		F75365212375D43A0032C5EC /* TextCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCreate.swift; sourceTree = "<group>"; };
+		F753FF172389BBD2005059D7 /* Today2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Today2.swift; sourceTree = "<group>"; };
+		F753FF19238C2412005059D7 /* NewValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewValue.swift; sourceTree = "<group>"; };
+		F756ADA0237EEECC002B5D18 /* GenericDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericDay.swift; sourceTree = "<group>"; };
+		F756ADA2237EEF21002B5D18 /* BasicDayElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicDayElement.swift; sourceTree = "<group>"; };
+		F756ADA5237EEF5E002B5D18 /* getCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getCardView.swift; sourceTree = "<group>"; };
+		F756ADA7237EEFA3002B5D18 /* getDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getDetailView.swift; sourceTree = "<group>"; };
+		F756ADA9237EEFF6002B5D18 /* GenericDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericDetailView.swift; sourceTree = "<group>"; };
+		F756ADAB237EF039002B5D18 /* GenericEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericEditView.swift; sourceTree = "<group>"; };
+		F756ADAD237EF31A002B5D18 /* getDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getDayView.swift; sourceTree = "<group>"; };
+		F756ADB0237EF417002B5D18 /* getDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getDisplayView.swift; sourceTree = "<group>"; };
+		F756ADB3237EF4CA002B5D18 /* getEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getEditView.swift; sourceTree = "<group>"; };
+		F756ADB7237EF554002B5D18 /* TextViewEditable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewEditable.swift; sourceTree = "<group>"; };
+		F756ADB9237F649C002B5D18 /* TextViewDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewDay.swift; sourceTree = "<group>"; };
+		F756ADBB237F702C002B5D18 /* LearnerPickerEditable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnerPickerEditable.swift; sourceTree = "<group>"; };
+		F756ADBD237F7156002B5D18 /* TagPickerEditable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPickerEditable.swift; sourceTree = "<group>"; };
 		F76029002358E174006144B7 /* Reminder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F76029012358E174006144B7 /* Reminder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F76029022358E174006144B7 /* ToDo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDo+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -599,6 +634,7 @@
 		F7EC68F5234C110C0063F62B /* ActivityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityList.swift; sourceTree = "<group>"; };
 		F7EC68F8234C113F0063F62B /* QuestionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionList.swift; sourceTree = "<group>"; };
 		F7EC68FB234C11B80063F62B /* QuestionHorizontalList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionHorizontalList.swift; sourceTree = "<group>"; };
+		F7F7428C2380B00600DFBF26 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -704,6 +740,64 @@
 				F7249948236D269B00A2F834 /* CloudKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F756AD9F237EEEB5002B5D18 /* Day */ = {
+			isa = PBXGroup;
+			children = (
+				F753FF172389BBD2005059D7 /* Today2.swift */,
+				F7A1309723725B6E0097A776 /* Today.swift */,
+				F756ADA0237EEECC002B5D18 /* GenericDay.swift */,
+				F756ADA2237EEF21002B5D18 /* BasicDayElement.swift */,
+				F756ADB9237F649C002B5D18 /* TextViewDay.swift */,
+				F722450E23846AD7004403AB /* NewValueTest.swift */,
+			);
+			path = Day;
+			sourceTree = "<group>";
+		};
+		F756ADA4237EEF4C002B5D18 /* Document Functions */ = {
+			isa = PBXGroup;
+			children = (
+				F756ADA5237EEF5E002B5D18 /* getCardView.swift */,
+				F756ADA7237EEFA3002B5D18 /* getDetailView.swift */,
+				F756ADAD237EF31A002B5D18 /* getDayView.swift */,
+				F7F7428C2380B00600DFBF26 /* CreateView.swift */,
+			);
+			path = "Document Functions";
+			sourceTree = "<group>";
+		};
+		F756ADAF237EF3AC002B5D18 /* Document Element Functions */ = {
+			isa = PBXGroup;
+			children = (
+				F756ADB0237EF417002B5D18 /* getDisplayView.swift */,
+			);
+			path = "Document Element Functions";
+			sourceTree = "<group>";
+		};
+		F756ADB2237EF4AB002B5D18 /* Transient Element Functions */ = {
+			isa = PBXGroup;
+			children = (
+				F756ADB3237EF4CA002B5D18 /* getEditView.swift */,
+			);
+			path = "Transient Element Functions";
+			sourceTree = "<group>";
+		};
+		F756ADB5237EF521002B5D18 /* Generic Elements */ = {
+			isa = PBXGroup;
+			children = (
+				F756ADB6237EF538002B5D18 /* Editable */,
+			);
+			path = "Generic Elements";
+			sourceTree = "<group>";
+		};
+		F756ADB6237EF538002B5D18 /* Editable */ = {
+			isa = PBXGroup;
+			children = (
+				F756ADB7237EF554002B5D18 /* TextViewEditable.swift */,
+				F756ADBB237F702C002B5D18 /* LearnerPickerEditable.swift */,
+				F756ADBD237F7156002B5D18 /* TagPickerEditable.swift */,
+			);
+			path = Editable;
 			sourceTree = "<group>";
 		};
 		F76AD160235DF40B00F308F1 /* Today */ = {
@@ -904,11 +998,15 @@
 		F78EEEB8237C895A002B3DA3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F7A1309723725B6E0097A776 /* Today.swift */,
+				F756ADB5237EF521002B5D18 /* Generic Elements */,
+				F756ADAB237EF039002B5D18 /* GenericEditView.swift */,
+				F756ADA9237EEFF6002B5D18 /* GenericDetailView.swift */,
+				F756AD9F237EEEB5002B5D18 /* Day */,
 				F753651F2375D41D0032C5EC /* ImageCreate.swift */,
 				F75365212375D43A0032C5EC /* TextCreate.swift */,
 				F705EC63237789FC001AF01A /* ScanCreate.swift */,
 				F7DE1AAF2379C581006E5846 /* GalleryCreate.swift */,
+				F74821CA238339F1004ECBDB /* ImagePickerCreate.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -916,6 +1014,8 @@
 		F78EEEB9237C895F002B3DA3 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				F756ADAF237EF3AC002B5D18 /* Document Element Functions */,
+				F756ADA4237EEF4C002B5D18 /* Document Functions */,
 				F771FA892375E3430082681D /* Document.swift */,
 				F771FA8B2375E4470082681D /* Document_Element.swift */,
 				F78EEEBF237C8CB7002B3DA3 /* DocumentExtension.swift */,
@@ -927,9 +1027,11 @@
 		F78EEEBA237C89A7002B3DA3 /* Document Builder Stuff */ = {
 			isa = PBXGroup;
 			children = (
+				F756ADB2237EF4AB002B5D18 /* Transient Element Functions */,
 				F78EEEB6237C8924002B3DA3 /* Value.swift */,
 				F78EEEBB237C89B6002B3DA3 /* TransientDocument.swift */,
 				F78EEEBD237C8A78002B3DA3 /* TransientDocumentElement.swift */,
+				F753FF19238C2412005059D7 /* NewValue.swift */,
 			);
 			path = "Document Builder Stuff";
 			sourceTree = "<group>";
@@ -1746,6 +1848,7 @@
 				F77513AD22DBF9B500FE5334 /* Main.swift in Sources */,
 				F7C93B5A23466BD6007B90C5 /* HorizontalScrollList.swift in Sources */,
 				F77513B322DC192600FE5334 /* CreateMain.swift in Sources */,
+				F7F7428D2380B00600DFBF26 /* CreateView.swift in Sources */,
 				F78EEEBE237C8A78002B3DA3 /* TransientDocumentElement.swift in Sources */,
 				F73F0D6E234968630042A4B7 /* DateExtensions.swift in Sources */,
 				F721FE442356515900BA1074 /* ActivityActions.swift in Sources */,
@@ -1755,22 +1858,27 @@
 				F721FE3F2356105600BA1074 /* TagCreate.swift in Sources */,
 				F700F710234D32D70030BAEA /* Util.swift in Sources */,
 				F7DB8C5623707DC9000FEA8B /* QuestionCard.swift in Sources */,
+				F756ADA8237EEFA3002B5D18 /* getDetailView.swift in Sources */,
 				F7E2489322DD7A7B008B925C /* ProfileImage.swift in Sources */,
 				F7DE191323779BC6006E5846 /* ScannerText.swift in Sources */,
 				F70D46B222DEC7AB00D93E79 /* ActivityCreateDetailView.swift in Sources */,
+				F753FF182389BBD2005059D7 /* Today2.swift in Sources */,
 				F78EEEC0237C8CB7002B3DA3 /* DocumentExtension.swift in Sources */,
 				F771FA8C2375E4470082681D /* Document_Element.swift in Sources */,
 				F76029072358E174006144B7 /* ToDo+CoreDataProperties.swift in Sources */,
 				F76029062358E174006144B7 /* ToDo+CoreDataClass.swift in Sources */,
 				F7DE19212379BEA5006E5846 /* Gallery.swift in Sources */,
+				F756ADBA237F649C002B5D18 /* TextViewDay.swift in Sources */,
 				F7C93B6723466F50007B90C5 /* Learner+CoreDataProperties.swift in Sources */,
 				F775134B22DA42D700FE5334 /* TiroiOSApp.xcdatamodeld in Sources */,
 				F7EC68F9234C113F0063F62B /* QuestionList.swift in Sources */,
 				F7A1309A23726FA80097A776 /* NewImagePicker.swift in Sources */,
 				F753651E2374B7600032C5EC /* DocumentElementEnum.swift in Sources */,
 				F7769F502354F9A900D33354 /* DocumentElement.swift in Sources */,
+				F756ADAE237EF31A002B5D18 /* getDayView.swift in Sources */,
 				F7DE1BF62379DA52006E5846 /* VideoRecorder.swift in Sources */,
 				F78EEEB7237C8924002B3DA3 /* Value.swift in Sources */,
+				F74821CB238339F1004ECBDB /* ImagePickerCreate.swift in Sources */,
 				F700F70E234CFF430030BAEA /* ComposableArchitecture.swift in Sources */,
 				F76AD162235DF41700F308F1 /* TodayMain.swift in Sources */,
 				F77513B822DC1BFF00FE5334 /* Landing.swift in Sources */,
@@ -1782,11 +1890,15 @@
 				F77513C722DCE63300FE5334 /* LearnerCreateModal.swift in Sources */,
 				F775134D22DA42D700FE5334 /* ContentView.swift in Sources */,
 				F7A69C75233D30620063040B /* LearnerDetail.swift in Sources */,
+				F722450F23846AD7004403AB /* NewValueTest.swift in Sources */,
 				F79CD3CD22DE2FC600C3D998 /* ActivityCard.swift in Sources */,
+				F756ADA3237EEF21002B5D18 /* BasicDayElement.swift in Sources */,
 				F7891BF022E58421000265C4 /* DisplayUIImage.swift in Sources */,
+				F756ADA6237EEF5E002B5D18 /* getCardView.swift in Sources */,
 				F706143A2347D23D004F0ECD /* MultiSelect2.swift in Sources */,
 				F7EC68F6234C110C0063F62B /* ActivityList.swift in Sources */,
 				F705EC6023773424001AF01A /* Templates.swift in Sources */,
+				F756ADB1237EF417002B5D18 /* getDisplayView.swift in Sources */,
 				F7C93B6A23466F50007B90C5 /* Activity+CoreDataProperties.swift in Sources */,
 				F75365222375D43A0032C5EC /* TextCreate.swift in Sources */,
 				F721FE3D23560C7800BA1074 /* TagHorizontalList.swift in Sources */,
@@ -1794,6 +1906,7 @@
 				F7EC68F2234BC16A0063F62B /* Trailing7DaysStatCard.swift in Sources */,
 				F7602944235B97BC006144B7 /* CreateToDo.swift in Sources */,
 				F78EEEBC237C89B6002B3DA3 /* TransientDocument.swift in Sources */,
+				F753FF1A238C2412005059D7 /* NewValue.swift in Sources */,
 				F76029042358E174006144B7 /* Reminder+CoreDataClass.swift in Sources */,
 				F721FE462356523B00BA1074 /* QuestionActions.swift in Sources */,
 				F7EC68F0234BBEBF0063F62B /* LearnerHorizontalList.swift in Sources */,
@@ -1802,15 +1915,19 @@
 				F78EEEC2237C9730002B3DA3 /* DocumentElementExtension.swift in Sources */,
 				F7A1309823725B6E0097A776 /* Today.swift in Sources */,
 				F7C93B6523466F50007B90C5 /* User+CoreDataProperties.swift in Sources */,
+				F756ADB8237EF554002B5D18 /* TextViewEditable.swift in Sources */,
 				F775134822DA42D700FE5334 /* SceneDelegate.swift in Sources */,
 				F7DE1AB02379C581006E5846 /* GalleryCreate.swift in Sources */,
 				F77513C222DCD24C00FE5334 /* AddLearners.swift in Sources */,
+				F756ADAC237EF039002B5D18 /* GenericEditView.swift in Sources */,
 				F785AC7D22E0EA8400992812 /* ImagePicker.swift in Sources */,
 				F7EC68F4234BD3630063F62B /* SingleSelect.swift in Sources */,
 				F7C93B6823466F50007B90C5 /* ActivityBindable.swift in Sources */,
 				F700F715234EA86D0030BAEA /* AnonymousProfile+CoreDataClass.swift in Sources */,
 				F73F2A042347CD8600C86BB4 /* MultiSelect.swift in Sources */,
 				F7C93B6623466F50007B90C5 /* QuestionBindable.swift in Sources */,
+				F756ADBC237F702C002B5D18 /* LearnerPickerEditable.swift in Sources */,
+				F756ADBE237F7156002B5D18 /* TagPickerEditable.swift in Sources */,
 				F7A130952372594F0097A776 /* UITextField.swift in Sources */,
 				F771FA8A2375E3430082681D /* Document.swift in Sources */,
 				F721FE492356565600BA1074 /* PlanHome.swift in Sources */,
@@ -1823,6 +1940,7 @@
 				F76029052358E174006144B7 /* Reminder+CoreDataProperties.swift in Sources */,
 				F705EC64237789FC001AF01A /* ScanCreate.swift in Sources */,
 				F7C93B6323466F50007B90C5 /* Question+CoreDataProperties.swift in Sources */,
+				F756ADA1237EEECC002B5D18 /* GenericDay.swift in Sources */,
 				F7C93B6423466F50007B90C5 /* TagTypes+CoreDataProperties.swift in Sources */,
 				F7A69A082337DA070063040B /* Enums.swift in Sources */,
 				F76AD166235FB32000F308F1 /* MultiLineTextfield.swift in Sources */,
@@ -1831,6 +1949,8 @@
 				F7B8C2582333CAC800577F78 /* AppState.swift in Sources */,
 				F70BDB20234905C800CEB62E /* NewStats.swift in Sources */,
 				F77513BE22DC29E700FE5334 /* QuickNote.swift in Sources */,
+				F756ADAA237EEFF6002B5D18 /* GenericDetailView.swift in Sources */,
+				F756ADB4237EF4CA002B5D18 /* getEditView.swift in Sources */,
 				F70D46AB22DE806700D93E79 /* ActivityDetailView.swift in Sources */,
 				F75365202375D41D0032C5EC /* ImageCreate.swift in Sources */,
 			);

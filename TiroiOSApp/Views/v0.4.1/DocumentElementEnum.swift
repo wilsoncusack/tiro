@@ -68,7 +68,7 @@ enum ValueOptions: Int, CaseIterable, Identifiable {
         case .camera:
             return AnyView(GalleryCreate())
         case .photos:
-            return AnyView(YPCreate())
+            return AnyView(EmptyView())
             //        case .video:
         //            return AnyView(YPCreate())
         case .quote:
@@ -92,7 +92,7 @@ enum ValueOptions: Int, CaseIterable, Identifiable {
         case .camera:
              return getTemplate(name: "Text", type: .text)
         case .photos:
-             return getTemplate(name: "Text", type: .text)
+             return getTemplate(name: "Image", type: .image)
             //        case .video:
         //            return AnyView(YPCreate())
         case .quote:
