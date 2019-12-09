@@ -12,7 +12,7 @@ struct UITextViewRepresentable: UIViewRepresentable {
     typealias UIViewType = UITextView
     
     @Binding var text: String
-    var onChange: (String) -> Void
+   // var onChange: (String) -> Void
     @Binding var isFirstResponder: Bool
     let textView = UITextView()
     
@@ -45,7 +45,7 @@ struct UITextViewRepresentable: UIViewRepresentable {
         if(isFirstResponder == false){
             textView.resignFirstResponder()
         }
-        onChange(text)
+//        onChange(text)
     }
     
     class Coordinator: NSObject, UITextViewDelegate {

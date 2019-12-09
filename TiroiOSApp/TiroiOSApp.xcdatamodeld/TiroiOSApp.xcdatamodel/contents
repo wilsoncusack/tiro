@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19B88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19B88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Activity" representedClassName=".Activity" syncable="YES">
         <attribute name="activity_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -32,7 +32,8 @@
         <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="value_private" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="type_private" optional="YES" attributeType="String"/>
+        <attribute name="value_raw" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <relationship name="document" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Document" inverseName="elements" inverseEntity="Document"/>
     </entity>
     <entity name="Learner" representedClassName=".Learner" syncable="YES">
@@ -118,7 +119,7 @@
         <element name="Activity" positionX="-23.80859375" positionY="-10.0078125" width="128" height="208"/>
         <element name="AnonymousProfile" positionX="-271.7421875" positionY="-206.98828125" width="128" height="58"/>
         <element name="Document" positionX="-207" positionY="-63" width="128" height="193"/>
-        <element name="Document_Element" positionX="-198" positionY="-54" width="128" height="118"/>
+        <element name="Document_Element" positionX="-198" positionY="-54" width="128" height="133"/>
         <element name="Learner" positionX="-122.55859375" positionY="-213.75" width="128" height="178"/>
         <element name="Question" positionX="-359.09375" positionY="19.4765625" width="128" height="133"/>
         <element name="Reminder" positionX="56.109375" positionY="320.69921875" width="128" height="133"/>

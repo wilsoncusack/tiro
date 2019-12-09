@@ -11,6 +11,7 @@ import SwiftUI
 
 import Vision
 import VisionKit
+import PDFKit
 
 final class TextRecognizer {
     let cameraScan: VNDocumentCameraScan
@@ -45,8 +46,10 @@ final class TextRecognizer {
 }
 
 struct ScannerView: UIViewControllerRepresentable {
+    
     @Binding var showModal: Bool
-     @Binding var imageArray: [UIImage]
+    @Binding var pdfDocument: PDFDocument
+     //@Binding var imageArray: [UIImage]
 //    private let completionHandler: ([UIImage]?) -> Void
     
 //    init(showModal: Bool, completion: @escaping ([UIImage]?) -> Void) {
@@ -66,7 +69,7 @@ struct ScannerView: UIViewControllerRepresentable {
     
     func makeCoordinator() -> Coordinator {
         //return Coordinator(completion: completionHandler)
-        return Coordinator(showModal: $showModal, imageArray: $imageArray)
+        return Coordinator(showModal: $showModal, pdfDocument: $pdfDocument)
     }
     
     final class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
@@ -76,23 +79,29 @@ struct ScannerView: UIViewControllerRepresentable {
 //            self.completionHandler = completion
 //        }
         var showModal: Binding<Bool>
-        var imageArray: Binding<[UIImage]>
+//        var imageArray: Binding<[UIImage]>
+        var pdfDocument: Binding<PDFDocument>
         
-        init(showModal: Binding<Bool>, imageArray: Binding<[UIImage]>){
+        init(showModal: Binding<Bool>, pdfDocument: Binding<PDFDocument>){
             self.showModal = showModal
-            self.imageArray = imageArray
+//            self.imageArray = imageArray
+            self.pdfDocument = pdfDocument
         }
         
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
             print("Document camera view controller did finish with ", scan)
             let recognizer = TextRecognizer(cameraScan: scan)
-            var imgArray = [UIImage]()
+            //var imgArray = [UIImage]()
+            let pdfDocument = PDFDocument()
             for i in 0 ..< scan.pageCount{
-                imgArray.append(scan.imageOfPage(at: i))
+                //imgArray.append(scan.imageOfPage(at: i))
+                let pdfPage = PDFPage(image: scan.imageOfPage(at: i))
+                pdfDocument.insert(pdfPage!, at: i)
                 
             }
            // completionHandler(imgArray)
-            imageArray.wrappedValue = imgArray
+            //imageArray.wrappedValue = imgArray
+            self.pdfDocument.wrappedValue = pdfDocument
             showModal.wrappedValue = false
             //recognizer.recognizeText(withCompletionHandler: completionHandler)
         }
