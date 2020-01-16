@@ -14,6 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var appState = AppState()
+    var tabSelection = 1
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -30,6 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             //let store<AppState, AppAction> =
             //self.appState = AppState()
             window.rootViewController = UIHostingController(rootView: ContentView(
+                tabSelection: self.tabSelection,
             store: Store(
                 initialValue: self.appState,
                 reducer: with(
@@ -62,6 +64,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        appState.checkToday()
         if(appState.reportingProfile != nil){
             logSingle(log: Log(action: "startSession", anonID: appState.reportingProfile!.id))
             //appState.sessionLog.append(Log(action: "startSession", anonID: appState.reportingProfile!.id))
@@ -77,6 +80,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        appState.checkToday()
         print("scene will enter foreground")
     }
 

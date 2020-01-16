@@ -10,60 +10,15 @@ import Foundation
 import CoreData
 
 
-func activityReducer(state: inout ActivityState, action: ActivityAction){
-    switch action{
-    case let .create(activityDate, title, image, notes, participants):
-        var _ = Activity(activity_date: activityDate, title: title, image: image, notes: notes, created_by: state.loggedInUser, participants: NSSet(array: participants))
-        NotificationCenter.default.post(name: .activityCreate, object: nil)
-    case let .edit(activityDate, title, image, notes, tags, participants, activity):
-        print("in activity edit")
-        activity.objectWillChange.send()
-        activity.activity_date = activityDate
-        activity.title = title
-        activity.notes = notes
-        activity.tags = NSSet(array: tags)
-        activity.participants = NSSet(array: participants)
-        activity.image = image
-        NotificationCenter.default.post(name: .activityEdit, object: nil)
-    }
-}
 
-func questionReducer(state: inout QuestionState, action: QuestionAction){
-    switch action{
-    case let .create(questionText, answerText, asker):
-        var _ = Question(question_text: questionText, answer_text: answerText, asker: asker, created_by: state.loggedInUser)
-        // AppDelegate.shared.saveContext()
-        NotificationCenter.default.post(name: .questionCreate, object: nil)
-    case let .edit(questionText, answerText, asker, question):
-        question.objectWillChange.send()
-        question.question_text = questionText
-        question.asker = asker
-        question.answer_text = answerText
-        NotificationCenter.default.post(name: .questionEdit, object: nil)
-        //AppDelegate.shared.saveContext()
-    }
-}
 
-func learnerReducer(state: inout LearnerState, action: LearnerAction){
-    switch action{
-    case let .create(name, profile_image_name, image):
-        var _ = Learner(name: name, profile_image_name: profile_image_name, image: image, created_by: state.loggedInUser)
-        NotificationCenter.default.post(name: .learnerCreate, object: nil)
-    //AppDelegate.shared.saveContext()
-    case let .edit(learner, name, image):
-        learner.objectWillChange.send()
-        learner.name = name
-        learner.image = image
-        NotificationCenter.default.post(name: .learnerEdit, object: nil)
-    }
-    
-}
+
 
 /// should probably constrain the state view for these
 func userReducer(state: inout AppState, action: UserAction){
     switch action{
-    case let .create(firstName, lastName):
-        let user = User(first_name: firstName, last_name: lastName)
+    case let .create(birthday, image, firstName, lastName):
+        let user = User(birthday: birthday, image: image, first_name: firstName, last_name: lastName)
         state.loggedInUser = user
         NotificationCenter.default.post(name: .userCreate, object: nil)
     }
@@ -72,9 +27,16 @@ func userReducer(state: inout AppState, action: UserAction){
 func setupReducer(state: inout AppState, action: SetupAction){
     switch action{
     case .finish:
-        print("in setup reducer")
         state.userHasFinishedSetup = true
         NotificationCenter.default.post(name: .finishSetup, object: nil)
+    }
+}
+
+func tagReducer(state: inout AppState, action: TagAction){
+    switch action{
+    case let .create(name, tagType):
+        var _ = Tag(name: name, tag_type: tagType)
+        NotificationCenter.default.post(name: .tagCreate, object: nil)
     }
 }
 
@@ -98,31 +60,74 @@ public struct Log{
 
 
 public class AppState: ObservableObject {
-    @Published var loggedInUser: User?
+    @Published var loggedInUser: User? = nil
     @Published var userHasFinishedSetup = true
+    @Published var today: Document? = nil
     
-    @Published var reportingProfile : AnonymousProfile?
+    @Published var reportingProfile : AnonymousProfile? = nil
     
     public var sessionLog = [Log]()
     
     //@Published var questionEditable = QuestionBindable(question_text: "", asker: nil, answer_text: nil)
     
     init(){
+        print("app init called")
+        checkUser()
+        checkLearners()
+        checkToday()
+        checkMigrations()
+        
+        setAnonymousProfile()
+        makeLogger()
+    }
+    
+//    func checkMigrations(){
+//        migration1()
+//    }
+    
+    func checkToday(){
+        //var today: Document
+        let todayFetch = NSFetchRequest<Document>(entityName: "Document")
+        todayFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSPredicate(format: "date >= %@", Date().removeTimeStamp() as NSDate),
+            NSPredicate(format: "type_private == %@", "day")
+        ])
+        do {
+            let fetched = try AppDelegate.viewContext.fetch(todayFetch)
+            if(fetched.count > 0){
+                today = fetched[0]
+            } else {
+                if(loggedInUser != nil){
+                    today = makeDay(date: Date(), user: loggedInUser!)
+                }
+            }
+            
+        } catch {
+            print("Failed to load today document in app state: \(error)")
+        }
+      
+       // return today
+    }
+    
+    func checkUser(){
         let userFetch = NSFetchRequest<User>(entityName: "User")
         do {
             let fetchedUsers = try AppDelegate.viewContext.fetch(userFetch)
             if(fetchedUsers.count != 0){
                 loggedInUser = fetchedUsers[0]
-                checkNewTags()
+                //checkNewTags()
             } else {
                 print("```in else to creat first tags```")
-                createFirstTags()
+                //createFirstTags()
             }
         } catch {
             fatalError("Failed to fetch users: \(error)")
         }
-        
-        let learnerFetch = NSFetchRequest<Learner>(entityName: "Learner")
+    }
+    
+    func checkLearners(){
+        let learnerFetch = NSFetchRequest<User>(entityName: "User")
+        learnerFetch.predicate = NSPredicate(format: "is_managed = true")
         do {
             let fetchLearners = try AppDelegate.viewContext.fetch(learnerFetch)
             if(fetchLearners.count == 0){
@@ -133,14 +138,12 @@ public class AppState: ObservableObject {
         } catch {
             fatalError("Failed to fetch learners: \(error)")
         }
-        setAnonymousProfile()
-        makeLogger()
     }
     
     
     func makeLogger(){
         NotificationCenter.default.addObserver(forName: .questionEdit, object: nil, queue: nil, using: {notifcation in
-           // self.sessionLog.append(Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            // self.sessionLog.append(Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
             logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .questionCreate, object: nil, queue: nil, using: {notifcation in
@@ -150,19 +153,31 @@ public class AppState: ObservableObject {
             logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .activityEdit, object: nil, queue: nil, using: {notifcation in
-          logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .learnerCreate, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .learnerEdit, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .userCreate, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .finishSetup, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+        })
+        NotificationCenter.default.addObserver(forName: .tagCreate, object: nil, queue: nil, using: {notifcation in
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+        })
+        NotificationCenter.default.addObserver(forName: .toDoCreate, object: nil, queue: nil, using: {notifcation in
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+        })
+        NotificationCenter.default.addObserver(forName: .toDoEdit, object: nil, queue: nil, using: {notifcation in
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+        })
+        NotificationCenter.default.addObserver(forName: .toDoSavedToActivity, object: nil, queue: nil, using: {notifcation in
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
     }
     
@@ -211,26 +226,7 @@ func checkNewTags(){
     
 }
 
-func createFirstTags(){
-    let tagFetch = NSFetchRequest<Tag>(entityName: "Tag")
-    do{
-    let tags = try AppDelegate.viewContext.fetch(tagFetch)
-        if(tags.count == 0 ){
-            print("creating first tags")
-            let subjectType = TagType(name: "Subject")
-            var _ = Tag(name: "math", tag_type: subjectType)
-            var _ = Tag(name: "science", tag_type: subjectType)
-            var _ = Tag(name: "reading", tag_type: subjectType)
-            var _ = Tag(name: "writing", tag_type: subjectType)
-            var _ = Tag(name: "history", tag_type: subjectType)
-            var _ = Tag(name: "foreign language", tag_type: subjectType)
-            AppDelegate.shared.saveContext()
-        }
-    } catch {
-        print(error)
-    }
-    
-}
+
 
 extension Notification.Name{
     static let questionCreate = Notification.Name("questionCreate")
@@ -241,6 +237,7 @@ extension Notification.Name{
     static let learnerEdit = Notification.Name("learnerEdit")
     static let userCreate = Notification.Name("userCreate")
     static let finishSetup = Notification.Name("finishSetup")
+    static let tagCreate = Notification.Name("tagCreate")
 }
 
 
@@ -252,6 +249,22 @@ extension AppState{
     var learnerState: LearnerState {
         get{
             LearnerState(loggedInUser: self.loggedInUser!)
+        }
+        set{
+            
+        }
+    }
+}
+
+struct TagState{
+    
+}
+
+extension AppState{
+    var tagState: TagState {
+        get{
+            TagState()
+            //LearnerState(loggedInUser: self.loggedInUser!)
         }
         set{
             
@@ -295,7 +308,9 @@ let _appReducer: (inout AppState, AppAction) -> Void = combine(
     pullback(questionReducer, value: \.questionState, action: \.question),
     pullback(activityReducer, value: \.activityState, action: \.activity),
     pullback(userReducer, value: \.self, action: \.user),
-    pullback(setupReducer, value: \.self, action: \.setup)
+    pullback(setupReducer, value: \.self, action: \.setup),
+    pullback(tagReducer, value: \.self, action: \.tag),
+    pullback(toDoReducer, value: \.toDoState, action: \.toDo)
 )
 
 var systemProfileIcons : [Icon] = [

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A573a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19D49f" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Activity" representedClassName=".Activity" syncable="YES">
         <attribute name="activity_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="image_name" optional="YES" attributeType="String"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="created_by" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="activities" inverseEntity="User"/>
@@ -15,6 +16,27 @@
     <entity name="AnonymousProfile" representedClassName=".AnonymousProfile" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
+    <entity name="Document" representedClassName="Document" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="is_template" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="system_image" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="type_private" optional="YES" attributeType="String"/>
+        <relationship name="associated_users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="associated_documents" inverseEntity="User"/>
+        <relationship name="created_by" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="created_documents" inverseEntity="User"/>
+        <relationship name="elements" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Document_Element" inverseName="document" inverseEntity="Document_Element"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="documents" inverseEntity="Tag"/>
+    </entity>
+    <entity name="Document_Element" representedClassName="Document_Element" syncable="YES">
+        <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type_private" optional="YES" attributeType="String"/>
+        <attribute name="value_raw" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <relationship name="document" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Document" inverseName="elements" inverseEntity="Document"/>
+    </entity>
     <entity name="Learner" representedClassName=".Learner" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
@@ -22,7 +44,14 @@
         <attribute name="profile_image_name" optional="YES" attributeType="String"/>
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="participants" inverseEntity="Activity"/>
         <relationship name="created_by" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="learners" inverseEntity="User"/>
+        <relationship name="documents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Document"/>
         <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" inverseName="asker" inverseEntity="Question"/>
+        <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToDo" inverseName="learner" inverseEntity="ToDo"/>
+    </entity>
+    <entity name="Migration" representedClassName=".Migration" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="runOn" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="Question" representedClassName=".Question" syncable="YES">
         <attribute name="answer_text" optional="YES" attributeType="String"/>
@@ -32,33 +61,92 @@
         <relationship name="asker" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Learner" inverseName="questions" inverseEntity="Learner"/>
         <relationship name="created_by" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="questions" inverseEntity="User"/>
     </entity>
+    <entity name="Reminder" representedClassName="Reminder" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notification_id" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="toDo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ToDo" inverseName="reminders" inverseEntity="ToDo"/>
+    </entity>
     <entity name="Tag" representedClassName=".Tag" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="tags" inverseEntity="Activity"/>
+        <relationship name="documents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Document" inverseName="tags" inverseEntity="Document"/>
         <relationship name="tag_type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag_Type" inverseName="instances" inverseEntity="Tag_Type"/>
+        <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToDo" inverseName="tags" inverseEntity="ToDo"/>
     </entity>
     <entity name="Tag_Type" representedClassName=".TagType" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="instances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="tag_type" inverseEntity="Tag"/>
     </entity>
+    <entity name="ToDo" representedClassName="ToDo" syncable="YES">
+        <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="done" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="due_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="notification_id" optional="YES" attributeType="String"/>
+        <attribute name="saved_to_activity" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="createdBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="toDos" inverseEntity="User"/>
+        <relationship name="learner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Learner" inverseName="toDos" inverseEntity="Learner"/>
+        <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reminder" inverseName="toDo" inverseEntity="Reminder"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="toDos" inverseEntity="Tag"/>
+    </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
+        <attribute name="birthday" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="first_name" optional="YES" attributeType="String"/>
         <attribute name="has_finished_setup" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="is_managed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="last_name" optional="YES" attributeType="String"/>
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="created_by" inverseEntity="Activity"/>
+        <relationship name="associated_documents" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Document" inverseName="associated_users" inverseEntity="Document"/>
+        <relationship name="created_documents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Document" inverseName="created_by" inverseEntity="Document"/>
         <relationship name="learners" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Learner" inverseName="created_by" inverseEntity="Learner"/>
+        <relationship name="managed_by" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="managed_users" inverseEntity="User"/>
+        <relationship name="managed_users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="managed_by" inverseEntity="User"/>
         <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" inverseName="created_by" inverseEntity="Question"/>
+        <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToDo" inverseName="createdBy" inverseEntity="ToDo"/>
+    </entity>
+    <entity name="User_New" representedClassName="User_New" syncable="YES">
+        <attribute name="birthday" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="date_created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="first_name" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="is_managed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="last_name" optional="YES" attributeType="String"/>
+        <relationship name="documents_associated" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Document"/>
+        <relationship name="documents_created" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Document"/>
+    </entity>
+    <entity name="User_Relationship" representedClassName="User_Relationship" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lefts_name_for_right" optional="YES" attributeType="String"/>
+        <attribute name="rights_name_for_left" optional="YES" attributeType="String"/>
+        <relationship name="left" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User"/>
+        <relationship name="right" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="-23.80859375" positionY="-10.0078125" width="128" height="193"/>
-        <element name="Learner" positionX="-122.55859375" positionY="-213.75" width="128" height="148"/>
+        <element name="Activity" positionX="-23.80859375" positionY="-10.0078125" width="128" height="208"/>
+        <element name="AnonymousProfile" positionX="-271.7421875" positionY="-206.98828125" width="128" height="58"/>
+        <element name="Document" positionX="-207" positionY="-63" width="128" height="208"/>
+        <element name="Document_Element" positionX="-198" positionY="-54" width="128" height="133"/>
+        <element name="Learner" positionX="-122.55859375" positionY="-213.75" width="128" height="178"/>
         <element name="Question" positionX="-359.09375" positionY="19.4765625" width="128" height="133"/>
-        <element name="Tag" positionX="178.484375" positionY="-103.5546875" width="128" height="103"/>
+        <element name="Reminder" positionX="56.109375" positionY="320.69921875" width="128" height="133"/>
+        <element name="Tag" positionX="178.484375" positionY="-103.5546875" width="128" height="133"/>
         <element name="Tag_Type" positionX="267.53125" positionY="89.87890625" width="128" height="88"/>
-        <element name="User" positionX="-409.171875" positionY="-149.1015625" width="128" height="148"/>
-        <element name="AnonymousProfile" positionX="-207" positionY="-63" width="128" height="58"/>
+        <element name="ToDo" positionX="-253.765625" positionY="186.61328125" width="128" height="238"/>
+        <element name="User" positionX="-409.171875" positionY="-149.1015625" width="128" height="283"/>
+        <element name="User_New" positionX="-420.703125" positionY="271.60546875" width="128" height="178"/>
+        <element name="User_Relationship" positionX="-198" positionY="-54" width="128" height="118"/>
+        <element name="Migration" positionX="-216" positionY="-63" width="128" height="88"/>
     </elements>
 </model>
