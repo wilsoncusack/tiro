@@ -11,6 +11,7 @@ import SwiftUI
 struct UITextViewRepresentable: UIViewRepresentable {
     typealias UIViewType = UITextView
     
+    var placeholder: String
     @Binding var text: String
    // var onChange: (String) -> Void
     @Binding var isFirstResponder: Bool
@@ -29,7 +30,7 @@ struct UITextViewRepresentable: UIViewRepresentable {
         textView.textContainerInset = .zero
         
         if(text.isEmpty){
-            textView.text = "Type something..."
+            textView.text = placeholder
             textView.textColor = UIColor.gray
         }
         
@@ -58,7 +59,7 @@ struct UITextViewRepresentable: UIViewRepresentable {
         
         func textViewDidBeginEditing(_ textView: UITextView) {
             self.field.isFirstResponder = true
-            if(textView.text == "Type something..."){
+            if(textView.text == self.field.placeholder){
                 
                 textView.text = ""
                 textView.textColor = UIColor.label

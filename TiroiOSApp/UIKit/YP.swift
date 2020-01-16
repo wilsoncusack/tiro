@@ -69,11 +69,12 @@ struct YPRepresentable: UIViewControllerRepresentable{
 
 struct YPRepresentable2: UIViewControllerRepresentable{
     @Binding var items: [ImageWrapper]
+    @Binding var imageDate: Date
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<YPRepresentable2>) -> YPImagePicker {
         var config = YPImagePickerConfiguration()
         config.library.maxNumberOfItems = 10
-        config.screens = [.library]
+        config.screens = [.library, .photo]
         config.library.mediaType = .photo
         config.colors.filterBackgroundColor = UIColor.white
         config.icons.capturePhotoImage =  config.icons.capturePhotoImage.withTintColor(UIColor.gray)
@@ -97,6 +98,10 @@ struct YPRepresentable2: UIViewControllerRepresentable{
                 switch item {
                 case .photo(let photo):
                     self.items.append(ImageWrapper(uiImage: photo.originalImage))
+                    if let asset = photo.asset,
+                        let creationDate = asset.creationDate {
+                        self.imageDate = creationDate
+                    }
                 case .video(let video):
                     print(video)
                 }

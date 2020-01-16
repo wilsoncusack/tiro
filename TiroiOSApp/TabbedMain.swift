@@ -105,15 +105,7 @@ struct TabbedMain : View {
     //@EnvironmentObject var mainEnvObj : MainEnvObj
     @ObservedObject var store: Store<AppState, AppAction>
     
-    @FetchRequest(
-        entity: Document.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Document.date_created, ascending: true)],
-        predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
-            NSPredicate(format: "date_created >= %@", Date().removeTimeStamp() as NSDate),
-            NSPredicate(format: "type_private == %@", "day")
-        ])
-    )
-    var documents: FetchedResults<Document>
+
     
     @FetchRequest(
         entity: Document.entity(),
@@ -123,27 +115,9 @@ struct TabbedMain : View {
             NSPredicate(format: "is_template = false")
         ])
     )
-    var documents2: FetchedResults<Document>
+    var documents: FetchedResults<Document>
     
-    var today: Document {
-        var today: Document
-        if(documents.count != 0){
-            print("found today")
-            
-            //today = DocumentLoadable(document: documents[0])
-            today = documents[0]
-            
-        } else {
-            let new = makeDay(date: Date(), user: store.value.loggedInUser!)
-//            today.lo
-            //today = DocumentLoadable(document: new)
-            today = new
-        }
-        
-        return today
-        // I think this still won't work for relaunching the app
-        
-    }
+
     
     
     
@@ -156,7 +130,7 @@ struct TabbedMain : View {
                         }
                 )
                     .tag(0)
-                TodayTest(store: store, today: today)
+                Today(store: store)
                 //TodayHolder(store: store)
                 .tabItem({
                 Image(systemName: "app")
@@ -164,13 +138,19 @@ struct TabbedMain : View {
                 })
                     .tag(1)
                 
-                
-                SearchMain(searchObj: SearchObject(documents: documents2.map{DocumentLoadable(document: $0)}))
-                    .tabItem({
-                                   Image(systemName: "circle")
-                                   Text("Home")
-                                   })
+                Home(store: store)
+                .tabItem({
+                    Image(systemName: "square.grid.2x2")
+                    Text("Home")
+                })
                 .tag(2)
+                
+                SearchMain(searchObj: SearchObject(documents: documents.map{DocumentLoadable(document: $0)}))
+                    .tabItem({
+                                   Image(systemName: "magnifyingglass")
+                                   Text("Search")
+                                   })
+                .tag(3)
               }
            
 //        TabView(selection: $selection){

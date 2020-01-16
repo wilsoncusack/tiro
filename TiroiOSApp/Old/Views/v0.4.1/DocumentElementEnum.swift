@@ -8,6 +8,7 @@
 //
 import Foundation
 import SwiftUI
+import CoreData
 
 enum ValueOptions: Int, CaseIterable, Identifiable {
     var id: Int {
@@ -52,36 +53,7 @@ enum ValueOptions: Int, CaseIterable, Identifiable {
         }
     }
     
-    // wait ok
-    // so first we need to get today
-    // then we need to get an editable version
-    // then
-    // we really, when we save this thing,
-    // we need to make sure we save it to an editable version of today
-    
-//    func getCreateView(user: User, today: Document) -> AnyView {
-//        switch self {
-//        case .text:
-//            var template = getTemplate(name: "Text", type: .text)
-//            
-//            return template.getEditableVersion(user: user).getEditView()
-//        case .camera:
-//            return AnyView(GalleryCreate())
-//        case .photos:
-//            return AnyView(EmptyView())
-//            //        case .video:
-//        //            return AnyView(YPCreate())
-//        case .quote:
-//            return AnyView(TextCreate())
-//        case .scan:
-//            return AnyView(ScanCreate())
-//            
-//        case .question:
-//            return AnyView(TextCreate())
-//        case .reading:
-//            return AnyView(TextCreate())
-//        }
-//    }
+ 
     var template: Document {
         switch self {
         case .text:
@@ -107,48 +79,7 @@ enum ValueOptions: Int, CaseIterable, Identifiable {
         }
     }
 }
-//
-// just make it work and get it out
-// we can work on it more when we get help
 
-//// it does feel kind of unnecessary to have to do this at every step
-//// maybe we should have a display type
-
-
-
-
-
-//extension Document_Element{
-//    func getDisplayView() -> AnyView {
-//        AnyView(EmptyView())
-//    }
-//}
-
-
-
-
-
-// ok but how do we create the editable version
-// in the case they want to throw it away?
-// I suppose we could just create and then delete?
-// That seems easier than maintaining a whole different
-// set of data objects in memory as document templates
-// yeah because eventually they'll want to create their own templates
-// but ok let me think: if given a template, we could create a
-// transient document
-// need to keep track of things like order
-// so yeah, given a template, we could copy all of the types
-
-///
-/// so maybe a template flag
-/// not edit the template
-// yeah I think that works great
-//
-
-
-
-
-// maybe we want like an in memory value type?
 
 enum ValueTranscient {
     case string(String)
@@ -197,6 +128,21 @@ struct imageView: View {
     
     var body: some View{
         EmptyView()
+    }
+}
+
+var orangeMedium = Color(red: 0.9921568627, green: 0.9490196078, blue: 0.8274509804)
+
+func getTemplate(name: String, type: DocumentType) -> Document {
+    let templateFetch = NSFetchRequest<Document>(entityName: "Document")
+    let p1 = NSPredicate(format: "is_template == true")
+    let p2 = NSPredicate(format: "type_private == %@", type.rawValue)
+    templateFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2])
+    do {
+        let fetchedTemplates = try AppDelegate.viewContext.fetch(templateFetch)
+        return fetchedTemplates[0]
+    } catch {
+        fatalError("Failed to fetch users: \(error)")
     }
 }
 

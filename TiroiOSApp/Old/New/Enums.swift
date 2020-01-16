@@ -89,18 +89,22 @@ enum AppAction{
 
 
 enum UserAction{
-    case create(firstName: String, lastName: String)
+    case create(birthday: Date?, image: Data?, firstName: String, lastName: String)
 
-    var create: (firstName: String, lastName: String)? {
+    var create: (birthday: Date?, image: Data?, firstName: String, lastName: String)? {
         get {
             guard case let .create(value) = self else { return nil }
             return value
         }
         set {
             guard case .create = self, let newValue = newValue else { return }
-            self = .create(firstName: newValue.0, lastName: newValue.1)
+            self = .create(birthday: newValue.0, image: newValue.1, firstName: newValue.2, lastName: newValue.3)
         }
     }
+
+   
+
+    
 }
 
 enum SetupAction{

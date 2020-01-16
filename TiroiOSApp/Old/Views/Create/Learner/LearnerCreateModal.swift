@@ -37,6 +37,7 @@ struct LearnerCreateModal : View {
                                         .overlay(Circle().stroke(Color.black, lineWidth: icon.image == self.selectedIcon ? 4 : 0))
                                         .onTapGesture {
                                             self.selectedIcon = icon.image
+//                                            self.image = UIImage(imageLiteralResourceName: icon.image).jpegData(compressionQuality: 0.8)
                                             //                                            icon.image == self.selectedIcon ? self.selectedIcon = "" : self.selectedIcon =
                                     }
                                 }
@@ -84,7 +85,10 @@ struct LearnerCreateModal : View {
                 ,trailing:
                 Button(action : {
                     if(self.name != "" && (self.selectedIcon != "" || self.image != nil)){
-                        self.store.send(.create(name: self.name, imageString: self.selectedIcon, image: self.image))
+                        if(self.selectedIcon != "" && self.image == nil){
+                            self.image = UIImage(imageLiteralResourceName: self.selectedIcon).jpegData(compressionQuality: 0.8)
+                        }
+                        self.store.send(.create(name: self.name, image: self.image))
                         self.showModal = false
                         self.name = ""
                         self.selectedIcon = ""

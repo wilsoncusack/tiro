@@ -36,11 +36,11 @@ struct ElementDetailView: View{
     }
     var body: some View{
         Group{
-        if(self.element.value == nil){
-            ElementDetailViewLoading(type: element.element.type)
-       } else {
-            ElementDetailViewLoaded(value: element.value!)
-       }
+            if(self.element.value == nil){
+                ElementDetailViewLoading(type: element.element.type)
+            } else {
+                ElementDetailViewLoaded(element: element.element ,value: element.value!, documentType: element.element.document.type)
+            }
         }
     }
 }
@@ -64,78 +64,184 @@ struct ElementDetailViewLoading: View {
             return AnyView(Rectangle().foregroundColor(Color(UIColor.systemGray6)))
         case .document:
             return AnyView(EmptyView())
+        case .bool:
+            return AnyView(EmptyView())
         }
     }
 }
 
 struct ElementDetailViewLoaded: View {
+    @ObservedObject var element: Document_Element
     var value: Value
+    var documentType: DocumentType
     
     var body: some View{
         switch value{
             
-        case .string(let value, let displayType, let editType):
+        case .string(let value, let displayType, _):
             switch displayType{
                 
             case .text:
                 return AnyView(
-                    HStack{
-                    Text(value)
-                        .padding()
-                        Spacer()
+                    VStack(alignment: .leading){
+                        if(documentType == .question){
+                            Text("Answer")
+                                .fontWeight(.bold)
+                                .padding(.bottom, 10)
+                        }
+                        HStack{
+                            Text(value.string)
+                                
+                                .font(.body)
+                                .lineLimit(nil)
+                                .multilineTextAlignment(.leading)
+                                .fixedSize(horizontal: false, vertical: true)
+                            Spacer()
+                        }
                     }
+                    .padding(.leading, 20)
+                    .padding(.trailing, 20)
+                    .padding(.top, 10)
+                    .padding(.bottom, 20)
                 )
-                        
+                
             case .caption:
                 return AnyView(
                     HStack{
-                        Text(value)
+                        Text(value.string)
                             .font(.subheadline)
-//                            .foregroundColor(.secondary)
+                            //                            .foregroundColor(.secondary)
                             .padding(.leading, 20)
                             .padding(.top, 10)
                         Spacer()
                 })
             case .quote:
-                 return AnyView(
-                                    HStack{
-                                        Text(value)
-                                        
-                                            .font(.subheadline)
-                                        .italic()
-                                            .lineLimit(nil)
-                                            .frame(width:  UIScreen.main.bounds.width - 40)
-                                        .scaledToFill()
-//                                            .padding(.leading, 20)
-//                                            .padding(.trailing, 20)
-//                                            .padding(.top, 10)
-                                        
-                                        Spacer()
-                                    }.padding(.leading, 20)
-                                                                                .padding(.trailing, 20)
-                                                                                .padding(.top, 10))
+                return AnyView(
+                    VStack(alignment: .leading){
+                        if(documentType == .question){
+                            Text("Question")
+                                .fontWeight(.bold)
+                                .padding(.bottom, 10)
+                        }
+                        HStack{
+                            Text(value.string)
+                                
+                                .font(.body)
+                                .italic()
+                                .lineLimit(nil)
+                                .multilineTextAlignment(.leading)
+                                .fixedSize(horizontal: false, vertical: true)
+                            Spacer()
+                        }
+                    }
+                    .padding(.leading, 20)
+                    .padding(.trailing, 20)
+                    .padding(.top, 10)
+                    
+                )
+            case .bookTitle:
+                return AnyView(
+                    HStack(spacing: 4){
+                        Text("Read")
+                        Text(value.string)
+                            .fontWeight(.semibold)
+                            .italic()
+                        
+                        Spacer()
+                    }.padding(.leading, 20)
+                )
+            case .title:
+                return AnyView(
+                    HStack{
+                        
+                        Text(value.string)
+                            .fontWeight(.bold)
+                       // lineLimit(nil)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        Spacer()
+                    }.padding(.leading, 20)
+                )
                 
             }
             
-        
+            
         case .int(let value, let displayType, let editType):
-            return AnyView(EmptyView())
+            switch displayType{
+                
+            case .dollars:
+                return AnyView(EmptyView())
+            case .minutes:
+                return AnyView(
+                    HStack{
+                        if(value == -1){
+                            EmptyView()
+                        } else {
+                        Text("for \(value.description) minutes")
+                            //  .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        }
+                    }.padding(.leading, 20)
+                )
+                
+            }
         case .date(let value, let displayType, let editType):
             return AnyView(EmptyView())
         case .picker(let value, let displayType, let editType):
             return AnyView(
-                PickerDetailView(picker: value, displayMode: .detail).padding(.leading, 15)
+                PickerDetailView(picker: value, displayMode: .detail, displayType: displayType)
+                    .padding(.leading, 20)
+                    .padding(.top, 10)
+                // .padding(.bottom, 5)
             )
         case .documentValue(let value, let displayType, let editType):
-            return AnyView(EmptyView())
+            return AnyView(
+                DocumentLoadableDetailView(doc: DocumentLoadable(document: value.document))
+            )
         case .images(let value, let displayType, let createType, let editType):
-            return AnyView(GenericImagesView(images: value.map {$0.uiImage}, displayType: displayType, frameWidth: UIScreen.main.bounds.width).padding(.top, -20))
+            var width: CGFloat = 0
+            var leadingPadding: CGFloat = 0
+            switch displayType{
+                
+            case .smallScroll:
+                leadingPadding = 20
+                width = UIScreen.main.bounds.width * 0.6
+            case .mediumScroll:
+                leadingPadding = 20
+                width = UIScreen.main.bounds.width * 0.7
+            case .largeScroll:
+                width = UIScreen.main.bounds.width 
+            }
+            return AnyView(GenericImagesView(images: value.map {$0.uiImage}, displayType: displayType, frameWidth: width).padding(.top, documentType == .image ? -20 : 0).padding(.leading, leadingPadding))
         case .pdf(let value, let displayType, let createType, let editType):
-        
+            
             return AnyView(
                 PDFKitRepresentedView(pdfDoc: value.pdfDocument)
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 1.29)
                     .padding(.top, -20)
+            )
+        case let .bool(value, displayType, createType, editType):
+            return AnyView(
+                HStack(alignment: .center){
+                    // VStack(alignment: .leading, spacing: 5){
+                    Text(value ? "Done" : "Not Done")
+                        //   .italic()
+                        .padding(.all, 0)
+                        //.foregroundColor(.secondary)
+                        
+                        .foregroundColor(value ? .green : .orange)
+                    Text("-")
+                    // .foregroundColor(.secondary)
+                    Button(action: {
+                        //  self.
+                        self.element.updateValue(value: Value.bool(value: !value, displayType: displayType, createType: createType, editType: editType))
+                    }){
+                        Text(value ? "Mark Undone" : "Mark Done")
+                    }
+                    //}
+                    Spacer()
+                }.frame(height: 25).padding(.leading, 20)
             )
         }
     }

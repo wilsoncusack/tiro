@@ -11,9 +11,10 @@ import SwiftUI
 
 struct DayRowView: View {
     @ObservedObject var document: DocumentLoadable
+    @State var presentAlert = false
     
-    var learners: [Learner]{
-        document.document.associated_users?.allObjects as! [Learner]
+    var learners: [User]{
+        document.document.associated_users?.allObjects as! [User]
     }
     
     var body: some View {
@@ -29,27 +30,35 @@ struct DayRowView: View {
                     }
                     .frame(width: 70)
                     VStack(alignment: .leading){
-                        HStack(alignment: .top, spacing: 2){
+                        HStack(alignment: .center, spacing: 2){
+//                            Image(systemName: document.document.system_image ?? "")
+//                                
+//                                .resizable()
+//                                .frame(width: 12, height: 12)
+//                            .foregroundColor(.secondary)
+//                                .padding(.trailing, 2)
+                                //.foregroundColor(.secondary)
                             Text(getDocumentTypeString(type: document.document.type))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                                 .bold()
                                 .padding(.trailing, 2)
-                            if(!learners.isEmpty){
-                                Text("with")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            } else {
-                                EmptyView()
-                            }
-                            ForEach(learners){learner in
-                                HStack{
-                                    Text(learner.name)
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                }
-                                
-                            }
+                            PickerLearnersView(learners: learners, displayType: .participants, font: .caption)
+//                            if(!learners.isEmpty){
+//                                Text("with")
+//                                    .font(.caption)
+//                                    .foregroundColor(.secondary)
+//                            } else {
+//                                EmptyView()
+//                            }
+//                            ForEach(learners){learner in
+//                                HStack{
+//                                    Text(learner.first_name)
+//                                        .font(.caption)
+//                                        .foregroundColor(.secondary)
+//                                }
+//
+//                            }
                         }.padding(.bottom, 10)
                         
                         DocumentLoadableRowView(doc: document)
@@ -63,7 +72,17 @@ struct DayRowView: View {
                 .padding(.bottom, 10)
             
             TagsRowView(document: document)
+            .padding(.leading, 70)
         }
+//        .onLongPressGesture {
+//                   self.presentAlert = true
+//               }
+//    
+//               .alert(isPresented: self.$presentAlert){
+//                Alert(title: Text("Do you want to delete this element?"), primaryButton: Alert.Button.destructive(Text("Delete")){
+//                    self.document.delete()
+//                }, secondaryButton: .cancel())
+//               }
     }
 }
 

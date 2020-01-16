@@ -40,7 +40,7 @@ struct UserDetails : View {
                
                 
                 Button(action: {
-                    self.store.send(.user(.create(firstName: self.first_name, lastName: self.last_name)))
+                    self.store.send(.user(.create(birthday: nil, image: nil, firstName: self.first_name, lastName: self.last_name)))
 //                    self.mainEnv.createUser(first_name: self.first_name, last_name: self.last_name)
 //                    self.mainEnv.setupShowUserCreation = false
                 }){

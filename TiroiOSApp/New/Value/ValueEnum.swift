@@ -9,12 +9,12 @@
 import Foundation
 
 enum ElementValueType: String, Codable {
-    case string, date, int, picker, pdf, images, document
+    case string, date, int, picker, pdf, images, document, bool
 }
 
 enum Value {
     case string(
-        value: String,
+        value: StringElement,
         displayType: StringDisplayType,
         editType: StringEditDisplayType)
     
@@ -23,6 +23,12 @@ enum Value {
         value: Int,
         displayType: IntDisplayType,
         editType: IntEditDisplayType)
+    
+    case bool(
+    value: Bool,
+    displayType: BoolDisplayType,
+        createType: BoolCreateDisplayType,
+    editType: BoolEditDisplayType)
     
     case date(
         value: Date,

@@ -19,19 +19,21 @@ import SwiftUI
 //}
 
 struct StringElementEditView: View {
+    var placeholder: String
     var editableObj: ObservableValue<String>
     var editType: StringEditDisplayType
+    var keyboardType: UIKeyboardType
     
     var body: some View{
         switch editType{
         case .caption:
-            return AnyView(TextViewEditable(editableObject: editableObj, isFirstResponer: false).frame(height: 150))
+            return AnyView(TextViewEditable(placeholder: placeholder,editableObject: editableObj, isFirstResponder: false).frame(height: 150))
         case .quote:
-            return AnyView(TextViewEditable(editableObject: editableObj, isFirstResponer: false).frame(height: 150))
+            return AnyView(TextViewEditable(placeholder: placeholder,editableObject: editableObj, isFirstResponder: false).frame(height: 150))
         case .longText:
-            return AnyView(TextViewEditable(editableObject: editableObj, isFirstResponer: false).frame(height: 300))
+            return AnyView(TextViewEditable(placeholder: placeholder,editableObject: editableObj, isFirstResponder: false).frame(height: 300))
         case .shortText:
-        return AnyView(TextFieldEditable(editableObject: editableObj))
+            return AnyView(TextFieldEditable(placeholder: placeholder, editableObject: editableObj, keyboardType: keyboardType))
         
             
         }
@@ -39,32 +41,39 @@ struct StringElementEditView: View {
 }
 
 struct TextFieldEditable: View {
+    var placeholder: String
     @ObservedObject var editableObject: ObservableValue<String>
+    var keyboardType: UIKeyboardType
     
     var body: some View{
-        TextField("title", text: $editableObject.value)
+        
+        TextField(placeholder, text: $editableObject.value)
+            .keyboardType(keyboardType)
     }
 }
 
 struct TextViewEditable: View {
+    var placeholder: String
     @ObservedObject var editableObject: ObservableValue<String>
-    @State var isFirstResponer: Bool
+    @State var isFirstResponder: Bool
     
     var body: some View{
         VStack{
-            if(isFirstResponer){
+            if(isFirstResponder){
             HStack{
                 Spacer()
-                Button(action: {self.isFirstResponer = false}){
+                Button(action: {self.isFirstResponder = false}){
                     Text("Close Keyboard")
                 }
             
             }
             }
-            Section{
-                UITextViewRepresentable(text: $editableObject.value, isFirstResponder: $isFirstResponer)
+           // Section{
+            UITextViewRepresentable(placeholder: placeholder, text: $editableObject.value, isFirstResponder: $isFirstResponder)
+               
+               
             
-        }
-        }
+      //  }
+            }//.padding(.bottom, isFirstResponder ? 500 : 0)
     }
 }

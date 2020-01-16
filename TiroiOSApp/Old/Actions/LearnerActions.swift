@@ -10,8 +10,9 @@ import Foundation
 
 func learnerReducer(state: inout LearnerState, action: LearnerAction){
     switch action{
-    case let .create(name, profile_image_name, image):
-        var _ = Learner(name: name, profile_image_name: profile_image_name, image: image, created_by: state.loggedInUser)
+    case let .create(name, image):
+        //var _ =
+        var _ = User(birthday: nil, created_by: state.loggedInUser, image: image, first_name: name, last_name: "")
         NotificationCenter.default.post(name: .learnerCreate, object: nil)
     case let .edit(learner, name, image):
         learner.objectWillChange.send()
@@ -23,21 +24,12 @@ func learnerReducer(state: inout LearnerState, action: LearnerAction){
 }
 
 enum LearnerAction{
-    case create(name: String, imageString: String?, image: Data?)
+    case create(name: String, image: Data?)
     case edit(learner: Learner, name: String, image: Data?)
 
     
 
-    var create: (name: String, imageString: String?, image: Data?)? {
-        get {
-            guard case let .create(value) = self else { return nil }
-            return value
-        }
-        set {
-            guard case .create = self, let newValue = newValue else { return }
-            self = .create(name: newValue.0, imageString: newValue.1, image: newValue.2)
-        }
-    }
+   
 
     var edit: (learner: Learner, name: String, image: Data?)? {
         get {
@@ -47,6 +39,17 @@ enum LearnerAction{
         set {
             guard case .edit = self, let newValue = newValue else { return }
             self = .edit(learner: newValue.0, name: newValue.1, image: newValue.2)
+        }
+    }
+
+    var create: (name: String, image: Data?)? {
+        get {
+            guard case let .create(value) = self else { return nil }
+            return value
+        }
+        set {
+            guard case .create = self, let newValue = newValue else { return }
+            self = .create(name: newValue.0, image: newValue.1)
         }
     }
 }

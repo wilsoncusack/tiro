@@ -44,25 +44,33 @@ extension KeyedDecodingContainer {
     }
 
 }
-class ImageWrapper: Codable {
+class ImageWrapper: Codable, Equatable {
+    static func == (lhs: ImageWrapper, rhs: ImageWrapper) -> Bool {
+        lhs.uiImage == rhs.uiImage
+    }
+    
 
     private enum CodingKeys: String, CodingKey {
-        case uiImage
+        case uiImage, encodingQuality
     }
 
     let uiImage: UIImage
+    //let encodingQuality: ImageEncodingQuality
     
     init(uiImage: UIImage){
         self.uiImage = uiImage
+        //self.encodingQuality = encodingQuality
+         
     }
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         uiImage = try container.decode(UIImage.self, forKey: .uiImage)
+        //encodingQuality = ImageEncodingQuality(rawValue: try container.decode(CGFloat.self, forKey: .encodingQuality))!
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(uiImage, forKey: .uiImage, quality: .png)
+        try container.encode(uiImage, forKey: .uiImage, quality: .jpegHigh)
     }
 }

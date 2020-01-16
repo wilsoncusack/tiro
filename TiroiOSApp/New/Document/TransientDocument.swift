@@ -173,7 +173,10 @@ func shallowCopy(v: Value) -> Value{
         return Value.documentValue(value: value, displayType: displayType, editType: editType)
     case .images(let value, let displayType, let createType, let editType):
         return Value.images(value: value, displayType: displayType, createType: createType, editType: editType)
-        case .pdf(let value, let displayType, let createType, let editType):
-            return Value.pdf(value: value, displayType: displayType, createType: createType, editType: editType)
+    case .pdf(let value, let displayType, let createType, let editType):
+        return Value.pdf(value: value, displayType: displayType, createType: createType, editType: editType)
+    
+    case .bool(let value, let displayType, let createType, let editType):
+        return Value.bool(value: value, displayType: displayType, createType: createType, editType: editType)
     }
 }

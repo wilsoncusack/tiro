@@ -13,8 +13,16 @@ struct AddLearners : View {
     @ObservedObject var store: Store<AppState, AppAction>
     @State var showModal = false
     
-    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
-    var learners: FetchedResults<Learner>
+    @FetchRequest(
+        entity: User.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \User.date_created, ascending: true)],
+        predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSPredicate(format: "is_managed == true")
+        ])
+    )
+    var learners: FetchedResults<User>
+//    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
+//    var learners: FetchedResults<Learner>
     
     var body: some View {
         NavigationView{
@@ -39,8 +47,8 @@ struct AddLearners : View {
                 
                 ForEach(learners){learner in
                     HStack {
-                        ProfileImage(learner: learner, size : 50)
-                        Text(learner.name)
+                        //ProfileImage(learner: learner, size : 50)
+                        Text(learner.first_name)
                             .font(.title)
                     }.padding(.leading, 15)
                 }

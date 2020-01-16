@@ -16,7 +16,7 @@ struct DayView: View {
                if case .document =  e.element.type {
                    e.loadSync()
                    if case .documentValue(let value, let displayType, let editType) = e.value{
-                   var toAdd = DocumentLoadable(document: value.document)
+                    var toAdd = DocumentLoadable(document: value.document, element: e.element)
                        //toAdd.loadAsync()
                        toReturn.append(toAdd)
                    }
@@ -36,6 +36,7 @@ struct DayView: View {
            
        
        var body: some View{
+         ScrollView{
            VStack(alignment: .leading, spacing: 20){
                ForEach(documents, id: \.document.id){d in
                 DayRowView(document: d)
@@ -43,6 +44,8 @@ struct DayView: View {
                Spacer()
            }
            .padding(.leading, 15)
+        }
+         .navigationBarTitle(Text(document.document.title), displayMode: .inline)
        }
 }
 

@@ -10,6 +10,11 @@ import SwiftUI
 
 struct DocumentLoadableDetailView: View {
     @ObservedObject var doc: DocumentLoadable
+    
+    func getEdit() -> DocumentEditableView {
+        DocumentEditableView(is_create: false, document: DocumentEditable(documentLoadable: doc))
+    }
+    
     var body: some View {
         ScrollView(.vertical){
             
@@ -23,12 +28,13 @@ struct DocumentLoadableDetailView: View {
                 Spacer()
                     .navigationBarItems(trailing:
                         NavigationLink(destination:
-                            doc.editable)
+                            self.doc.editable)
                         {
                             Text("Edit")
                         }.buttonStyle(PlainButtonStyle())
                 )
             }.padding(.top, 20)
+             
         }
         
         

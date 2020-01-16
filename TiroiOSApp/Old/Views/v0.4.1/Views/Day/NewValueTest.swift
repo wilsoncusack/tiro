@@ -79,47 +79,47 @@ struct ImagesDocumentRowView: View{
 //struct NewGenericDisplayView: View {
 //
 //}
-
-struct DisplayView: View {
-    var widthOffset: CGFloat
-    var value: Value
-    
-    var body: some View{
-        switch value{
-            
-        case .string(let value, let displayType, let editType):
-            return AnyView(Text(value).padding(.all, 15))
-            return AnyView(EmptyView())
-        case .int(let value, let displayType, let editType):
-            return AnyView(EmptyView())
-        case .date(let value, let displayType, let editType):
-            return AnyView(EmptyView())
-        case .picker(let value, let displayType, let editType):
-            return getPickerDisplay(pickerStruct: value, displayType: displayType, editType: editType)
-        case .documentValue(let value, let displayType, let editType):
-            var documentLoadable = DocumentLoadable(document: value.document)
-            return AnyView(
-                DocumentLoadableRowView(doc: documentLoadable))
-                //DocumentLoadable(document: value.document).RowView)
-        case .images(let value, let displayType, let createType, let editType):
-            return AnyView(
-                ScrollView(.horizontal, showsIndicators: false){
-                    HStack(spacing: 10){
-                        ForEach(value.map {$0.uiImage}, id: \.self){i in
-                            Image(uiImage: i)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                           // .scaledToFit()
-                                .frame(width: UIScreen.main.bounds.width - self.widthOffset)
-                            //.scaledToFit()
-                        }
-                    }
-            })
-        case .pdf(let value, let displayType, let createType, let editType):
-            return AnyView(EmptyView())
-        }
-    }
-}
+//
+//struct DisplayView: View {
+//    var widthOffset: CGFloat
+//    var value: Value
+//    
+//    var body: some View{
+//        switch value{
+//            
+//        case .string(let value, let displayType, let editType):
+//            return AnyView(Text(value.string).padding(.all, 15))
+//            return AnyView(EmptyView())
+//        case .int(let value, let displayType, let editType):
+//            return AnyView(EmptyView())
+//        case .date(let value, let displayType, let editType):
+//            return AnyView(EmptyView())
+//        case .picker(let value, let displayType, let editType):
+//            return getPickerDisplay(pickerStruct: value, displayType: displayType, editType: editType)
+//        case .documentValue(let value, let displayType, let editType):
+//            var documentLoadable = DocumentLoadable(document: value.document)
+//            return AnyView(
+//                DocumentLoadableRowView(doc: documentLoadable))
+//                //DocumentLoadable(document: value.document).RowView)
+//        case .images(let value, let displayType, let createType, let editType):
+//            return AnyView(
+//                ScrollView(.horizontal, showsIndicators: false){
+//                    HStack(spacing: 10){
+//                        ForEach(value.map {$0.uiImage}, id: \.self){i in
+//                            Image(uiImage: i)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
+//                           // .scaledToFit()
+//                                .frame(width: UIScreen.main.bounds.width - self.widthOffset)
+//                            //.scaledToFit()
+//                        }
+//                    }
+//            })
+//        case .pdf(let value, let displayType, let createType, let editType):
+//            return AnyView(EmptyView())
+//        }
+//    }
+//}
 
 
 

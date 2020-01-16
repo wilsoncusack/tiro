@@ -9,7 +9,7 @@
 import Foundation
 
 enum CoreDataChoiceTypes: String, Codable {
-    case learner
+    case user
     case tag
 }
 
@@ -19,4 +19,12 @@ struct PickerStruct: Codable {
     var isCoreData: Bool
     var coreDataType: CoreDataChoiceTypes?
     var choices: [String]
+}
+
+
+struct ToDoElement: Codable {
+    var done: Bool
+    var what: String
+    var when: Date
+    var sendReminder: Bool
 }

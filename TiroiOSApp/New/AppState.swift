@@ -17,8 +17,8 @@ import CoreData
 /// should probably constrain the state view for these
 func userReducer(state: inout AppState, action: UserAction){
     switch action{
-    case let .create(firstName, lastName):
-        let user = User(first_name: firstName, last_name: lastName)
+    case let .create(birthday, image, firstName, lastName):
+        let user = User(birthday: birthday, image: image, first_name: firstName, last_name: lastName)
         state.loggedInUser = user
         NotificationCenter.default.post(name: .userCreate, object: nil)
     }
@@ -60,31 +60,74 @@ public struct Log{
 
 
 public class AppState: ObservableObject {
-    @Published var loggedInUser: User?
+    @Published var loggedInUser: User? = nil
     @Published var userHasFinishedSetup = true
+    @Published var today: Document? = nil
     
-    @Published var reportingProfile : AnonymousProfile?
+    @Published var reportingProfile : AnonymousProfile? = nil
     
     public var sessionLog = [Log]()
     
     //@Published var questionEditable = QuestionBindable(question_text: "", asker: nil, answer_text: nil)
     
     init(){
+        print("app init called")
+        checkUser()
+        checkLearners()
+        checkToday()
+        checkMigrations()
+        
+        setAnonymousProfile()
+        makeLogger()
+    }
+    
+//    func checkMigrations(){
+//        migration1()
+//    }
+    
+    func checkToday(){
+        //var today: Document
+        let todayFetch = NSFetchRequest<Document>(entityName: "Document")
+        todayFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSPredicate(format: "date >= %@", Date().removeTimeStamp() as NSDate),
+            NSPredicate(format: "type_private == %@", "day")
+        ])
+        do {
+            let fetched = try AppDelegate.viewContext.fetch(todayFetch)
+            if(fetched.count > 0){
+                today = fetched[0]
+            } else {
+                if(loggedInUser != nil){
+                    today = makeDay(date: Date(), user: loggedInUser!)
+                }
+            }
+            
+        } catch {
+            print("Failed to load today document in app state: \(error)")
+        }
+      
+       // return today
+    }
+    
+    func checkUser(){
         let userFetch = NSFetchRequest<User>(entityName: "User")
         do {
             let fetchedUsers = try AppDelegate.viewContext.fetch(userFetch)
             if(fetchedUsers.count != 0){
                 loggedInUser = fetchedUsers[0]
-                checkNewTags()
+                //checkNewTags()
             } else {
                 print("```in else to creat first tags```")
-                createFirstTags()
+                //createFirstTags()
             }
         } catch {
             fatalError("Failed to fetch users: \(error)")
         }
-        
-        let learnerFetch = NSFetchRequest<Learner>(entityName: "Learner")
+    }
+    
+    func checkLearners(){
+        let learnerFetch = NSFetchRequest<User>(entityName: "User")
+        learnerFetch.predicate = NSPredicate(format: "is_managed = true")
         do {
             let fetchLearners = try AppDelegate.viewContext.fetch(learnerFetch)
             if(fetchLearners.count == 0){
@@ -95,14 +138,12 @@ public class AppState: ObservableObject {
         } catch {
             fatalError("Failed to fetch learners: \(error)")
         }
-        setAnonymousProfile()
-        makeLogger()
     }
     
     
     func makeLogger(){
         NotificationCenter.default.addObserver(forName: .questionEdit, object: nil, queue: nil, using: {notifcation in
-           // self.sessionLog.append(Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            // self.sessionLog.append(Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
             logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .questionCreate, object: nil, queue: nil, using: {notifcation in
@@ -112,31 +153,31 @@ public class AppState: ObservableObject {
             logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .activityEdit, object: nil, queue: nil, using: {notifcation in
-          logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .learnerCreate, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .learnerEdit, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .userCreate, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .finishSetup, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .tagCreate, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .toDoCreate, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .toDoEdit, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
         NotificationCenter.default.addObserver(forName: .toDoSavedToActivity, object: nil, queue: nil, using: {notifcation in
-           logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
+            logSingle(log: Log(action: notifcation.name.rawValue, anonID: self.reportingProfile!.id))
         })
     }
     
@@ -185,26 +226,7 @@ func checkNewTags(){
     
 }
 
-func createFirstTags(){
-    let tagFetch = NSFetchRequest<Tag>(entityName: "Tag")
-    do{
-    let tags = try AppDelegate.viewContext.fetch(tagFetch)
-        if(tags.count == 0 ){
-            print("creating first tags")
-            let subjectType = TagType(name: "Subject")
-            var _ = Tag(name: "math", tag_type: subjectType)
-            var _ = Tag(name: "science", tag_type: subjectType)
-            var _ = Tag(name: "reading", tag_type: subjectType)
-            var _ = Tag(name: "writing", tag_type: subjectType)
-            var _ = Tag(name: "history", tag_type: subjectType)
-            var _ = Tag(name: "foreign language", tag_type: subjectType)
-            AppDelegate.shared.saveContext()
-        }
-    } catch {
-        print(error)
-    }
-    
-}
+
 
 extension Notification.Name{
     static let questionCreate = Notification.Name("questionCreate")

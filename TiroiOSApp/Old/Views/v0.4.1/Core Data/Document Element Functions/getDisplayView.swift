@@ -101,10 +101,10 @@ func getPickerDisplay(pickerStruct: PickerStruct, displayType: PickerDisplayType
        if(pickerStruct.isCoreData){
            switch pickerStruct.coreDataType!{
                
-           case .learner:
+           case .user:
                return AnyView(
                    ForEach(pickerStruct.selected, id: \.self){id in
-                       Text(getLearnerByID(id: id)!.name)
+                       Text(getUserByID(id: id)!.first_name)
                            .foregroundColor(.secondary)
                        .padding()
                    }

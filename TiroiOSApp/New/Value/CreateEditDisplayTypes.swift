@@ -12,6 +12,8 @@ enum StringDisplayType: String, Codable {
     case text
     case caption
     case quote
+    case bookTitle
+    case title
 }
 
 enum StringCreateDisplayType: String, Codable{
@@ -24,6 +26,7 @@ enum StringEditDisplayType: String, Codable{
     case quote
     case longText
     case shortText
+    
 }
 ///
 
@@ -49,7 +52,8 @@ enum DateCreateDisplayType: String, Codable {
 }
 
 enum DateEditDisplayType: String, Codable {
-    case basic
+    case full
+    case hourAndMinute
 }
 
 ///
@@ -73,7 +77,9 @@ enum DataEditDisplayType: String, Codable {
 
 ///
 enum ImagesDisplayType: String, Codable{
-    case images
+    case smallScroll
+    case mediumScroll
+    case largeScroll
 }
 
 enum ImagesEditDisplayType: String, Codable {
@@ -105,6 +111,10 @@ enum IntEditDisplayType: String, Codable {
 //
 enum PickerDisplayType: String, Codable{
     case basic
+    case participants // makes me think we should be like a
+    // learner specific one 
+    case quoteAttribution
+    case conversationAttribution
 }
 
 enum PickerCreateDisplayType: String, Codable{
@@ -125,5 +135,17 @@ enum PDFCreateDisplayType: String, Codable{
 }
 
 enum PDFEditDisplayType: String, Codable{
+    case basic
+}
+///
+enum BoolDisplayType: String, Codable{
+    case ToDo
+}
+
+enum BoolCreateDisplayType: String, Codable{
+    case basic 
+}
+
+enum BoolEditDisplayType: String, Codable{
     case basic
 }

@@ -16,11 +16,12 @@ enum DisplayMode {
 struct PickerDetailView: View {
     var picker: PickerStruct
     var displayMode: DisplayMode
+    //var displayType: PickerDisplayType
     var selected: [String]
     var string = ""
     var content: AnyView
     
-    init(picker: PickerStruct, displayMode: DisplayMode){
+    init(picker: PickerStruct, displayMode: DisplayMode, displayType: PickerDisplayType){
         self.picker = picker
         self.displayMode = displayMode
         self.selected = picker.selected
@@ -28,15 +29,15 @@ struct PickerDetailView: View {
         if(picker.isCoreData){
             switch picker.coreDataType!{
                 
-            case .learner:
-                var learners = picker.selected
-                    .map { getLearnerByID(id: $0) }
+            case .user:
+                let learners = picker.selected
+                    .map { getUserByID(id: $0) }
                     .filter {$0 != nil}
                     .map {$0!}
-                self.content = AnyView(PickerLearnersView(learners: learners))
+                self.content = AnyView(PickerLearnersView(learners: learners, displayType: displayType, font: .subheadline))
                 
             case .tag:
-                var tags = picker.selected
+                let tags = picker.selected
                     .map { getTagByID(id: $0) }
                     .filter {$0 != nil}
                     .map {$0!}
@@ -63,7 +64,7 @@ struct PickerTagsView: View {
                 .font(.caption)
                 .foregroundColor(.primary)
                 .padding(.all, 5)
-                .background(Color(UIColor.systemGray6))
+                .background(Color(UIColor.systemGray5))
                                .cornerRadius(8)
         }
 //        .padding()
@@ -77,14 +78,27 @@ struct PickerTagsView: View {
 }
 
 struct PickerLearnersView: View {
-    var learners: [Learner]
+    var learners: [User]
+    var displayType: PickerDisplayType
+    var font: Font
     
     var str: String? {
         if(learners.count == 0){
             return nil
         }
-        return "Participants: " + learners
-            .map {$0.name}
+        var lead = ""
+        switch displayType{
+        case .basic:
+            lead = "Participants: "
+            case .participants:
+            lead = "with "
+            case .quoteAttribution:
+                lead = "-"
+        case .conversationAttribution:
+            lead = ""
+        }
+        return lead + learners
+            .map {$0.first_name}
             .joined(separator: ", ")
     }
     
@@ -95,9 +109,10 @@ struct PickerLearnersView: View {
             
             
            Text(str!)
-                .font(.subheadline)
+                .font(font)
                 .foregroundColor(.secondary)
-                .padding(.all, 5)
+               // .padding(.all, 5)
+            .padding(.leading, 0)
             
         
             Spacer()

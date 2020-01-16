@@ -45,7 +45,9 @@ enum DocumentType: String {
     case scan
     case video
     case question
-    case reflection
+    case activityReflection
+    case reading
+    case toDo
 }
 
 func getDocumentTypeString(type: DocumentType) -> String{
@@ -62,10 +64,11 @@ extension Document: Identifiable {
     @NSManaged private var type_private: String
     @NSManaged public var title: String
     @NSManaged public var is_template: Bool
+    @NSManaged public var system_image: String?
     @NSManaged public var elements: NSSet?
     @NSManaged public var tags: NSSet?
     @NSManaged public var associated_users: NSSet?
-    @NSManaged public var created_by: User
+    @NSManaged public var created_by: User?
     @NSManaged public var date: Date
     @NSManaged public var date_created: Date
     
@@ -109,7 +112,7 @@ extension Document {
         elements: NSSet?,
         tags: NSSet?,
         associated_users: NSSet?,
-        created_by: User,
+        created_by: User?,
         date: Date?,
         date_created: Date = Date()
     ) {
@@ -118,6 +121,7 @@ extension Document {
         self.title = title
         self.type = type
         self.is_template = false
+        self.system_image = nil
         self.elements = elements
         self.tags = tags
         self.associated_users = associated_users
@@ -132,10 +136,11 @@ extension Document {
         title: String,
         type: DocumentType,
         is_template: Bool,
+        systemImage: String,
         elements: NSSet?,
         tags: NSSet?,
         associated_users: NSSet?,
-        created_by: User,
+        created_by: User?,
         date: Date?,
         date_created: Date = Date()
     ) {
@@ -144,6 +149,7 @@ extension Document {
         self.title = title
         self.type = type
         self.is_template = is_template
+        self.system_image = systemImage
         self.elements = elements
         self.tags = tags
         self.associated_users = associated_users

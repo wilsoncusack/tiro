@@ -11,7 +11,7 @@ import Foundation
 extension Value: Codable{
     
     enum CodingKeys: String, CodingKey {
-        case base, stringParams, intParams, dataParams, dataArrayParams, dateParams, pickerParams, documentValueParams, imagesParams, pdfParams
+        case base, stringParams, intParams, dataParams, dataArrayParams, dateParams, pickerParams, documentValueParams, imagesParams, pdfParams, boolParams
     }
     
     
@@ -21,7 +21,7 @@ extension Value: Codable{
         //
         switch base {
         case .string:
-            let params = try container.decode(ValueParams<String, StringDisplayType, StringCreateDisplayType, StringEditDisplayType>.self, forKey: .stringParams)
+            let params = try container.decode(ValueParams<StringElement, StringDisplayType, StringCreateDisplayType, StringEditDisplayType>.self, forKey: .stringParams)
             self = .string(value: params.value, displayType: params.displayType, editType: params.editType)
         case .date:
             let params = try container.decode(ValueParams<Date, DateDisplayType, DateCreateDisplayType, DateEditDisplayType>.self, forKey: .dateParams)
@@ -39,13 +39,17 @@ extension Value: Codable{
         case .images:
             let params = try container.decode(ValueParams<[ImageWrapper], ImagesDisplayType, ImagesCreateDisplayType, ImagesEditDisplayType>.self, forKey: .imagesParams)
             self = .images(value: params.value, displayType: params.displayType, createType: params.createType!, editType: params.editType)
-        
-        
+            
+            
         case .pdf:
-                  let params = try container.decode(ValueParams<PDFDocumentWrapper, PDFDisplayType, PDFCreateDisplayType, PDFEditDisplayType>.self, forKey: .pdfParams)
-                  self = .pdf(value: params.value, displayType: params.displayType, createType: params.createType!, editType: params.editType)
-              
-    
+            let params = try container.decode(ValueParams<PDFDocumentWrapper, PDFDisplayType, PDFCreateDisplayType, PDFEditDisplayType>.self, forKey: .pdfParams)
+            self = .pdf(value: params.value, displayType: params.displayType, createType: params.createType!, editType: params.editType)
+            
+            
+        case .bool:
+            let params = try container.decode(ValueParams<Bool, BoolDisplayType, BoolCreateDisplayType, BoolEditDisplayType>.self, forKey: .boolParams)
+            
+            self = .bool(value: params.value, displayType: params.displayType, createType: params.createType!, editType: params.editType)
         }
         
     }
@@ -55,9 +59,9 @@ extension Value: Codable{
         switch self {
         case .string(let value, let displayType, let editType):
             try container.encode(ElementValueType.string, forKey: .base)
-            try container.encode(ValueParams<String, StringDisplayType, StringCreateDisplayType, StringEditDisplayType>(value: value, displayType: displayType, editType: editType), forKey: .stringParams)
+            try container.encode(ValueParams<StringElement, StringDisplayType, StringCreateDisplayType, StringEditDisplayType>(value: value, displayType: displayType, editType: editType), forKey: .stringParams)
         case .int(let value, let displayType, let editType):
-            try container.encode(ElementValueType.string, forKey: .base)
+            try container.encode(ElementValueType.int, forKey: .base)
             try container.encode(ValueParams<Int, IntDisplayType, IntCreateDisplayType, IntEditDisplayType>(value: value, displayType: displayType, editType: editType), forKey: .intParams)
         case .picker(let value, let displayType, let editType):
             try container.encode(ElementValueType.picker, forKey: .base)
@@ -72,9 +76,12 @@ extension Value: Codable{
             try container.encode(ElementValueType.images, forKey: .base)
             try container.encode(ValueParams<[ImageWrapper], ImagesDisplayType, ImagesCreateDisplayType, ImagesEditDisplayType>(value: value, displayType: displayType, createType: createType, editType: editType), forKey: .imagesParams)
             
-            case .pdf(let value, let displayType, let createType, let editType):
+        case .pdf(let value, let displayType, let createType, let editType):
             try container.encode(ElementValueType.pdf, forKey: .base)
             try container.encode(ValueParams<PDFDocumentWrapper, PDFDisplayType, PDFCreateDisplayType, PDFEditDisplayType>(value: value, displayType: displayType, createType: createType, editType: editType), forKey: .pdfParams)
+        case .bool(let value, let displayType, let createType, let editType):
+             try container.encode(ElementValueType.bool, forKey: .base)
+             try container.encode(ValueParams<Bool, BoolDisplayType, BoolCreateDisplayType, BoolEditDisplayType>(value: value, displayType: displayType, createType: createType, editType: editType), forKey: .boolParams)
         }
     }
 }

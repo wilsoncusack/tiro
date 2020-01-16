@@ -14,19 +14,25 @@ public class User: NSManagedObject {
     
 }
 
-extension User {
+extension User: Identifiable {
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<User> {
         return NSFetchRequest<User>(entityName: "User")
     }
     
     @NSManaged public var id: UUID
+    @NSManaged public var birthday: Date?
+    @NSManaged public var date_created: Date
+    @NSManaged public var is_managed: Bool
     @NSManaged public var first_name: String
     @NSManaged public var last_name: String
+    @NSManaged public var image: Data?
     @NSManaged public var has_finished_setup: Bool
     @NSManaged public var questions: NSSet?
     @NSManaged public var learners: NSSet?
     @NSManaged public var activities: NSSet?
+    @NSManaged public var managed_by: User
+    @NSManaged public var managed_users: NSSet?
     
 }
 
@@ -43,16 +49,45 @@ extension User {
 extension User {
     convenience init(
         id: UUID = UUID(),
+        birthday: Date?,
+        date_created: Date = Date(),
+        image: Data?,
         first_name : String,
         last_name : String,
         has_finished_setup : Bool = false)
     {
         self.init(context: AppDelegate.viewContext)
         self.id = id
+        self.birthday = birthday
+        self.date_created = date_created
+        self.image = image
         self.first_name = first_name
         self.last_name = last_name
         
     }
+    
+    convenience init(
+           id: UUID = UUID(),
+           birthday: Date?,
+           date_created: Date = Date(),
+           created_by: User,
+           image: Data?,
+           first_name : String,
+           last_name : String,
+           has_finished_setup : Bool = false)
+       {
+           self.init(context: AppDelegate.viewContext)
+           self.id = id
+           self.birthday = birthday
+           self.date_created = date_created
+        self.image = image
+           self.first_name = first_name
+           self.last_name = last_name
+        self.is_managed = true
+        self.managed_by = created_by
+           
+       }
+    
 }
 
 

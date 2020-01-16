@@ -144,56 +144,56 @@ struct HomeReusable: View {
 
 
 
-struct Home: View {
-    @ObservedObject var store: Store<AppState, AppAction>
-    
-    init(store: Store<AppState, AppAction>){
-        self.store = store
-        askNotification()
-    }
-    
-    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
-    var learners: FetchedResults<Learner>
-    
-    
-    @FetchRequest(entity: Activity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Activity.activity_date, ascending: false)])
-    var activities: FetchedResults<Activity>
-    
-    @FetchRequest(entity: Question.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Question.date_created, ascending: false)])
-    var questions: FetchedResults<Question>
-    
-    @FetchRequest(entity: User.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \User.first_name, ascending: false)])
-    var users: FetchedResults<User>
-    
-    @FetchRequest(entity: Tag.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: false)])
-    var tags: FetchedResults<Tag>
-    
-    
-    
-    func reset(){
-        for thing in activities {
-            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
-        }
-        for thing in questions {
-            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
-        }
-        for thing in learners {
-            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
-        }
-        for thing in users {
-            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
-        }
-        AppDelegate.shared.saveContext()
-    }
-    
-    var body: some View{
-        NavigationView{
-//            Button(action: {self.reset()}){
-//                Text("reset")
-//            }
-            HomeReusable(store: store, learner: nil, activities: activities.map {$0}, questions: questions.map {$0}, learners: learners.map {$0}, tags: tags.map {$0})
-            
-        }
-  //  .navigationViewStyle(DoubleColumnNavigationViewStyle())
-    }
-}
+//struct Home: View {
+//    @ObservedObject var store: Store<AppState, AppAction>
+//    
+//    init(store: Store<AppState, AppAction>){
+//        self.store = store
+//        askNotification()
+//    }
+//    
+//    @FetchRequest(fetchRequest: Learner.allLearnersFetchRequest())
+//    var learners: FetchedResults<Learner>
+//    
+//    
+//    @FetchRequest(entity: Activity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Activity.activity_date, ascending: false)])
+//    var activities: FetchedResults<Activity>
+//    
+//    @FetchRequest(entity: Question.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Question.date_created, ascending: false)])
+//    var questions: FetchedResults<Question>
+//    
+//    @FetchRequest(entity: User.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \User.first_name, ascending: false)])
+//    var users: FetchedResults<User>
+//    
+//    @FetchRequest(entity: Tag.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: false)])
+//    var tags: FetchedResults<Tag>
+//    
+//    
+//    
+//    func reset(){
+//        for thing in activities {
+//            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
+//        }
+//        for thing in questions {
+//            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
+//        }
+//        for thing in learners {
+//            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
+//        }
+//        for thing in users {
+//            AppDelegate.shared.persistentContainer.viewContext.delete(thing)
+//        }
+//        AppDelegate.shared.saveContext()
+//    }
+//    
+//    var body: some View{
+//        NavigationView{
+////            Button(action: {self.reset()}){
+////                Text("reset")
+////            }
+//            HomeReusable(store: store, learner: nil, activities: activities.map {$0}, questions: questions.map {$0}, learners: learners.map {$0}, tags: tags.map {$0})
+//            
+//        }
+//  //  .navigationViewStyle(DoubleColumnNavigationViewStyle())
+//    }
+//}

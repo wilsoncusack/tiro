@@ -18,8 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
     }
     
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+//        guard let options = launchOptions, let cloudKitShare = options[UIApplication.LaunchOptionsKey.cloudKitShareMetadata] else {
+//            print("no thing")
+//        }
+//        print(cloudKitShare)
         return true
     }
     
@@ -53,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
          application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
+         error conditionss that could cause the creation of the store to fail.
         */
         let container = NSPersistentCloudKitContainer(name: "TiroiOSApp")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in

@@ -9,10 +9,12 @@
 import Foundation
 
 class DocumentElementEditable {
+    var documentEditable: DocumentEditable
     var elementLoadable: ElementLoadable
     var localValue: Value
     
-    init(elementLoadable: ElementLoadable){
+    init(documentEditable: DocumentEditable, elementLoadable: ElementLoadable){
+        self.documentEditable = documentEditable
         self.elementLoadable = elementLoadable
         if(elementLoadable.value == nil){
             elementLoadable.loadSync()
@@ -26,12 +28,15 @@ class DocumentElementEditable {
     }
     
     func updateCoreData(){
+        
+       // elementLoadable.element.objectWillChange.send()
         elementLoadable.element.updateValue(value: localValue)
+        elementLoadable.loadAsync()
         //watch for specific keys?
     }
     
     func createNewCoreData(document: Document){
-        var new = Document_Element(
+        let new = Document_Element(
             order: Int(self.elementLoadable.element.order),
             value: localValue,
             type: self.elementLoadable.element.type,
